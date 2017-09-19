@@ -36,7 +36,7 @@ class Map
 public:
 	Map();
 	Map(string nam);
-	void insertContinent(string nam, int numOfTerri);
+	void insertContinent(string nam, int contiBonus);
 	void insertTerritory(string nam, float pos[2], string contiNam);
 	int seekTerritoryID(string terriNam);
 	void linkAdjacentTerri(string terri, string adjacent);
