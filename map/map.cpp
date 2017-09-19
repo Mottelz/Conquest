@@ -1,18 +1,18 @@
-#include "map.h"
+#include "Map.h"
 
 
 
-map::map()
+Map::Map()
 {
 }
 
-map::map(string nam)
+Map::Map(string nam)
 {
 	mapNam = nam;
 }
 
 //insert a new continent
-void map::insertContinent(string nam, int numOfTerri)
+void Map::insertContinent(string nam, int numOfTerri)
 {
 	Continent _conti;
 	_conti.name = nam;
@@ -20,7 +20,7 @@ void map::insertContinent(string nam, int numOfTerri)
 	CONTINENTS.push_back(_conti);
 }
 
-void map::insertTerritory(string nam, float pos[2], string contiNam)
+void Map::insertTerritory(string nam, float pos[2], string contiNam)
 {
 	Territory _terri;
 	_terri.name = nam;
@@ -34,7 +34,7 @@ void map::insertTerritory(string nam, float pos[2], string contiNam)
 	}
 }
 
-int map::seekTerritoryID(string terriNam)
+int Map::seekTerritoryID(string terriNam)
 {
 	//int terriID;
 	for (int i = 0; i < TERRITORIES.size(); i++)
@@ -48,12 +48,12 @@ int map::seekTerritoryID(string terriNam)
 	return -1;
 }
 
-void map::linkAdjacentTerri(string terri, string adjacent)
+void Map::linkAdjacentTerri(string terri, string adjacent)
 {
 	TERRITORIES[seekTerritoryID(terri)].adjacent.push_back(&TERRITORIES[seekTerritoryID(adjacent)]);
 }
 
-void map::linkAdjacentTerri(string terri, vector<string> adjacent)
+void Map::linkAdjacentTerri(string terri, vector<string> adjacent)
 {
 	int _id = seekTerritoryID(terri);
 	for (int i = 0; i < adjacent.size(); i++) {
@@ -61,7 +61,7 @@ void map::linkAdjacentTerri(string terri, vector<string> adjacent)
 	}
 }
 
-void map::assignArmies(int player, string terri)
+void Map::assignArmies(int player, string terri)
 {
 	int _id = seekTerritoryID(terri);
 	if ((TERRITORIES[_id].owner == 0) || (TERRITORIES[_id].owner == player))
@@ -72,6 +72,6 @@ void map::assignArmies(int player, string terri)
 
 
 
-map::~map()
+Map::~Map()
 {
 }

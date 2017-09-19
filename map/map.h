@@ -24,17 +24,18 @@ struct Continent {
 	string name;
 	//number of all territories in the continent
 	int numOfAllTerri;
+	int continentBonus;
 	vector<Territory*> territories;
 };
 
 
 
 
-class map
+class Map
 {
 public:
-	map();
-	map(string nam);
+	Map();
+	Map(string nam);
 	void insertContinent(string nam, int numOfTerri);
 	void insertTerritory(string nam, float pos[2], string contiNam);
 	int seekTerritoryID(string terriNam);
@@ -43,7 +44,7 @@ public:
 
 	void assignArmies(int player, string terri);
 
-	~map();
+	~Map();
 
 
 private:
