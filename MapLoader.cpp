@@ -11,8 +11,7 @@
 
 using namespace std;
 
-const string MAP_FILE = "World.map";
-const string MAP_FILETEST = "C:\\Users\\Nyxeia\\Documents\\COMP 345\\Risk\\MapLoader\\MapLoader\\World.map";
+const string MAP_FILE = "C:\\Users\\Nyxeia\\Documents\\COMP 345\\Risk\\MapLoader\\MapLoader\\World.map";
 
 MapLoader::MapLoader()
 {
@@ -28,7 +27,7 @@ MapLoader::~MapLoader()
 
 void MapLoader::readMapFile(Map& mapObject)
 {
-	ifstream input(MAP_FILETEST); // Open the file
+	ifstream input(MAP_FILE); // Open the file
 
 	if (input.fail()) // Does the file exist? If not, exit the program
 	{
@@ -42,7 +41,6 @@ void MapLoader::readMapFile(Map& mapObject)
 	getline(input, skip); // Read and discard the end of line
 
 	string read;
-	//stringstream line;
 
 	string continent;
 	vector<string> continents;
@@ -60,9 +58,7 @@ void MapLoader::readMapFile(Map& mapObject)
 			getline(line, continent, '=');
 			continentBonus = atoi(continent.c_str());
 
-			//continentBonus = atoi(continents[1].c_str()); // continent[1] contains the bonus - convert to int
-			mapObject.insertContinent(continentName, continentBonus);  // continent[0] contains the continent name
-			//continents.clear(); // Clear the vector for new iteration
+			mapObject.insertContinent(continentName, continentBonus); 
 		}
 		else // If the line is empty
 		{
@@ -77,7 +73,6 @@ void MapLoader::readMapFile(Map& mapObject)
 	string territoryName;
 	string coordinateX;
 	string coordinateY;
-
 
 	while(!input.eof()) // Read until the end of file
 	{
