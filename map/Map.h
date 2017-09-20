@@ -6,6 +6,9 @@
 
 using namespace std;
 
+// call back
+struct Continent;
+
 //territory
 struct Territory {
 	string name;
@@ -16,7 +19,6 @@ struct Territory {
 	vector<Territory*> adjacent;
 	int owner = 0;
 	int armies = 0;
-
 };
 
 //continent

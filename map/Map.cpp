@@ -33,8 +33,10 @@ void Map::insertTerritory(string nam, float pos[2], string contiNam)
 		if (CONTINENTS[i].name == contiNam)
 		{
 			_terri.continent = &CONTINENTS[i];
+			TERRITORIES.push_back(_terri);
 			CONTINENTS[i].numOfAllTerri++;
 		}
+		break;
 	}
 }
 
