@@ -7,12 +7,16 @@ using namespace std;
 
 class MapLoader
 {
-	const string MAP_FILE;
+	string MAP_FILE;
 
 	public:
-		MapLoader();
+		MapLoader(const string MAP_NAME);
 		~MapLoader();
+		inline string getMapName() {
+			return MAP_FILE;
+		};
 		void readMapFile(Map& mapObject);
+		void testMap();
 		int main();
 
 	private: 

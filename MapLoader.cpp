@@ -11,19 +11,15 @@
 
 using namespace std;
 
-const string MAP_FILE = "C:\\Users\\Nyxeia\\Documents\\COMP 345\\Risk\\MapLoader\\MapLoader\\World.map";
-
-MapLoader::MapLoader()
+MapLoader::MapLoader(const string MAP_NAME)
 {
-
+	MAP_FILE = MAP_NAME;
 }
-
 
 MapLoader::~MapLoader()
 {
 
 }
-
 
 void MapLoader::readMapFile(Map& mapObject)
 {
@@ -62,8 +58,8 @@ void MapLoader::readMapFile(Map& mapObject)
 		}
 		else // If the line is empty
 		{
-			getline(input, skip); // Read past the [Territories] line
-			endOfContinentSection = true; // Exit loop
+			while (getline(input, skip) && (skip.empty())); // Check if next line is also empty; skip until the next line is not empty
+			endOfContinentSection = true; // Exit loop because we've reached the [Territories] section (assuming a valid map despite the number of empty lines between sections)
 		}
 			
 	}
@@ -109,13 +105,48 @@ void MapLoader::addTerritory(string territoryName, string coordinateX, string co
 	mapObject.insertTerritory(territoryName, position, continentName, neighbouringTerritories); // Insert the new territory
 }
 
+/*void MapLoader::testMap()
+{
+	// if (mapObject VALID)
+	//	cout << "The map " << maploader.getMapName() << " has been successfully created! " << endl;
+	// else
+	//	{
+	//		cout << "The map " << maploader.getMapName() << " is invalid. " << endl;
+	//		cout << "Please select another Map. " << endl;
+	// }
+}*/
+
 int main()
 {
-	MapLoader maploader;
-	Map mapObject;
+	MapLoader worldFile("World.map");
+	Map worldMap;
+	worldFile.readMapFile(worldMap);
+	worldMap.toString();
+	// worldFile.testMap();
 
-	maploader.readMapFile(mapObject);
-	mapObject.toString();
+	MapLoader canadaFile("Canada.map");
+	Map canadaMap;
+	canadaFile.readMapFile(canadaMap);
+	canadaMap.toString();
+	// canadaFile.testMap();
+
+	MapLoader caribbeanFile("Caribbean.map");
+	Map caribbeanMap;
+	caribbeanFile.readMapFile(caribbeanMap);
+	// caribbeanFile.testMap();
+	caribbeanMap.toString();
+
+	MapLoader invalidFile("Invalid.map");
+	Map invalidMap;
+	invalidFile.readMapFile(invalidMap);
+	// invalidFile.testMap();
+	invalidMap.toString();
+	
+	MapLoader invalidFile2("Invalid2.map");
+	Map invalidMap2;
+	invalidFile2.readMapFile(invalidMap2);
+	// invalidFile2.testMap();
+	invalidMap2.toString();
 
     return 0;
 }
