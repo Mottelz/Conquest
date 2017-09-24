@@ -47,6 +47,11 @@ int main() {
         //exchange armies and print result
         armies = Mottel.Exchange(testDeck2);
         std::cout << "Number of armies returned " << armies << std::endl;
-    } while (armies <= 21);
+
+        //refill hand
+        for (int i = Mottel.getHandSize(); i < 5; ++i) {
+            Mottel.addCard(testDeck2);
+        }
+    } while (armies < 20);
 
 }

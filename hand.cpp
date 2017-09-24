@@ -13,6 +13,11 @@ void Hand::addCard(Deck &deck){
     Cards.push_back(deck.Draw());
 }
 
+//return size of the hand
+int Hand::getHandSize() {
+    return Cards.size();
+}
+
 //Print all the cards in the Hand
 void Hand::printHand() {
     for(unsigned int i = 0; i < Cards.size(); i++){
@@ -54,9 +59,21 @@ int Hand::Exchange(Deck &deck) {
         cardsToSwap.push_back(cardObj2);
         cardsToSwap.push_back(cardObj3);
 
-//        Cards.erase(std::remove(Cards.begin(), Cards.end(), &Cards[card1]), Cards.end());
-//        Cards.erase(std::remove(Cards.begin(), Cards.end(), &Cards[card2]), Cards.end());
-//        Cards.erase(std::remove(Cards.begin(), Cards.end(), &Cards[card3]), Cards.end());
+        if (card2 > card1){
+            Cards.erase(Cards.begin()+card2-1);
+            if (card3 > card2) {
+                Cards.erase(Cards.begin()+card3-2);
+            } else {
+                Cards.erase(Cards.begin()+card3-1);
+            }
+        } else {
+            Cards.erase(Cards.begin()+card2);
+            if (card3 > card2) {
+                Cards.erase(Cards.begin()+card3-1);
+            } else {
+                Cards.erase(Cards.begin()+card3);
+            }
+        }
 
         return deck.Exchange(cardsToSwap);
 
@@ -71,9 +88,24 @@ int Hand::Exchange(Deck &deck) {
         cardsToSwap.push_back(cardObj2);
         cardsToSwap.push_back(cardObj3);
 
-//        Cards.erase(std::remove(Cards.begin(), Cards.end(), &Cards[card1]), Cards.end());
-//        Cards.erase(std::remove(Cards.begin(), Cards.end(), &Cards[card2]), Cards.end());
-//        Cards.erase(std::remove(Cards.begin(), Cards.end(), &Cards[card3]), Cards.end());
+        //delete the cards the if statements are there to make sure that no matter what order the numbers are entered in the results
+        Cards.erase(Cards.begin()+card1);
+
+        if (card2 > card1){
+            Cards.erase(Cards.begin()+card2-1);
+            if (card3 > card2) {
+                Cards.erase(Cards.begin()+card3-2);
+            } else {
+                Cards.erase(Cards.begin()+card3-1);
+            }
+        } else {
+            Cards.erase(Cards.begin()+card2);
+            if (card3 > card2) {
+                Cards.erase(Cards.begin()+card3-1);
+            } else {
+                Cards.erase(Cards.begin()+card3);
+            }
+        }
 
         return deck.Exchange(cardsToSwap);
     } else {
@@ -82,3 +114,4 @@ int Hand::Exchange(Deck &deck) {
     }
 
 }
+

@@ -15,6 +15,7 @@ class Hand {
         int Exchange(Deck &deck);
         void addCard(Deck &deck);
         void printHand();
+        int getHandSize();
 };
 
 
