@@ -1,13 +1,10 @@
-//map driver
-
-
 #include <iostream>
 #include "Map.h"
 
 
 using namespace std;
 
-int main() {
+int mapMain() {
 	Map newGameMap("America");
 
 	/*

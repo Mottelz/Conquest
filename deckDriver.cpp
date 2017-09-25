@@ -3,7 +3,7 @@
 #include "deck.h"
 #include "hand.h"
 
-int main() {
+int deckMain() {
 
     std::string cities[] = {"Montreal", "New York", "Ottawa", "Boston", "Tel Aviv", "London", "Hell", "Hogwarts", "Blooper Land"};
 
@@ -54,4 +54,5 @@ int main() {
         }
     } while (armies < 20);
 
+    return 0;
 }
