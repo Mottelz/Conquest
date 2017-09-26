@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int main() {
+int diceMain() {
 	int test;
 
 	//dice object that take 2 paramaters 1) number of dice 2) counter for dices
