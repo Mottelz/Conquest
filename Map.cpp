@@ -44,7 +44,7 @@ void Map::insertContinent(string nam, int contiBonus) throw(char)
 	if (seekContinentID(nam) != -1)
 	{
 		validMap = false;
-		throw "Invalid Map: Repeated continent. ";
+		throw "Invalid Map: Repeated continent.";
 	}
 	Continent _conti;
 	_conti.name = nam;
@@ -92,7 +92,7 @@ void Map::insertTerritory(string nam, float pos[2], string contiNam, vector<stri
 	else
 	{
 		validMap = false;
-		throw "Invalid Map: Invalid continent. ";
+		throw "Invalid Map: Invalid continent.";
 
 	}
 

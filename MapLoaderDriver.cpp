@@ -19,11 +19,11 @@ int main() {
 	mapList.push_back("maps/Earth.map");
 	//error maps
 	mapList.push_back("maps/Invalid.map");
-	mapList.push_back("maps/Invalid2.map");
+	//mapList.push_back("maps/Invalid2.map");
 	//doesnt exist
-	mapList.push_back("maps/invalid3.map");
+	//mapList.push_back("maps/invalid3.map");
 
-	mapList.push_back("maps/Canada.map");
+	//mapList.push_back("maps/Canada.map");
 	
 	vector<Map> MAPS;
 
@@ -40,7 +40,7 @@ int main() {
 			maploader.readMapFile(mapList[i], MAPS[i]);
 			//MAPS[i].toString();
 		}
-		catch ( const char *e) {
+		catch (const char *e) {
 			cout << "*****************************************" << endl;
 			cout << "Failed loading map file: " << MAPS[i].getMapNam() << endl;
 			cout << e << endl;

@@ -2,7 +2,7 @@
 	g++ -o 1 Map.o mapDriver.o
 
 2 : Map.o MapLoader.o MapLoaderDriver.o
-	g++ -o 2 Map.o mapDriver.o MapLoaderDriver.o
+	g++ -o 2 Map.o MapLoader.o MapLoaderDriver.o
 
 3 : Dice.o DiceDriver.o
 	g++ -o 3 Dice.o DiceDriver.o
@@ -19,7 +19,7 @@ mapDriver.o : mapDriver.cpp
 MapLoader.o : MapLoader.h MapLoader.cpp
 	g++ -c MapLoader.cpp
 
-MapLoaderDriver.o : MapLoaderDriver.h MapLoaderDriver.cpp
+MapLoaderDriver.o : MapLoaderDriver.cpp
 	g++ -c MapLoaderDriver.cpp
 
 Dice.o : Dice.cpp Dice.h

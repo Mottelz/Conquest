@@ -48,20 +48,20 @@ public:
 	string getMapNam();
 	void setMapValidate(bool boln);
 	bool isValid();
-	void insertContinent(string nam, int contiBonus);
-	void insertTerritory(string nam, float pos[2], string contiNam, vector<string> adjNam);
+	void insertContinent(string nam, int contiBonus) throw(char);
+	void insertTerritory(string nam, float pos[2], string contiNam, vector<string> adjNam) throw(char);
 	int seekContinentID(string contiNam);
 	int seekTerritoryID(string terriNam);
 	void linkAdjacentTerri(string terri, string adjacent);
 	void linkAdjacentTerri(string terri, vector<string> adjacent);
-	void linkAdjacentTerri(int terriID);
+	void linkAdjacentTerri(int terriID) throw(char);
 	void linkAdj();
 
 	void LinkAllTerri();
 
 	void assignArmies(int player, string terri);
 
-	bool isBadMap();
+	bool isBadMap() throw(char);
 
 	void displayConti();
 	void displayTerri();
