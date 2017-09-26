@@ -60,7 +60,7 @@ void Die::setValue(int v) {
 	}
 
 	//rollDice function to generate a random number for dice
-	int* DiceCup::rollDice() {
+	vector<int> DiceCup::rollDice() {
 
 		for (int i = 0; i < getNumOfDice(); i++) {
 

@@ -7,6 +7,9 @@
 3 : Dice.o DiceDriver.o
 	g++ -o 3 Dice.o DiceDriver.o
 
+4 : Cards.o Dice.o Player.o PlayerDriver.o
+	g++ -o 4 Cards.o Dice.o Player.o PlayerDriver.o
+
 5 : Cards.o CardsDriver.o
 	g++ -o 5 Cards.o CardsDriver.o
 
@@ -33,6 +36,12 @@ Cards.o : Cards.cpp Cards.h
 
 CardsDriver.o : CardsDriver.cpp
 	g++ -c CardsDriver.cpp
+
+Player.o : Player.cpp Player.h
+	g++ -c Player.cpp
+
+PlayerDriver.o : PlayerDriver.cpp
+	g++ -c PlayerDriver.cpp
 
 clean : 
 	rm 5 4 3 2 1 *.o
