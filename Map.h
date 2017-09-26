@@ -20,19 +20,21 @@ struct Territory {
 	vector<string> adjacentNam;
 	//node pointer
 	vector<Territory*> adjacent;
-	int owner = 0;
-	int armies = 0;
+	int owner;
+	int armies;
+	Territory();
 };
 //struct Territory;
 //continent
 struct Continent {
 	string name;
 	//number of all territories in the continent
-	int numOfAllTerri = 0;
-	int continentBonus = 0;
-	int contiLinks=0;
+	int numOfAllTerri;
+	int continentBonus;
+	int contiLinks;
 	vector<int> terri_id;
 	vector<Territory*> territories;
+	Continent();
 };
 
 
