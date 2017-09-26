@@ -1,5 +1,5 @@
-a : card.o deck.o hand.o deckDriver.o main.o Map.o mapDriver.o MapLoader.o Die.o DiceCup.o DiceDriver.o
-	g++ -o a card.o hand.o deck.o deckDriver.o main.o Map.o mapDriver.o MapLoader.o Die.o DiceCup.o DiceDriver.o
+a : card.o deck.o hand.o deckDriver.o main.o Map.o mapDriver.o MapLoader.o Die.o DiceCup.o DiceDriver.o MapLoaderDriver.o
+	g++ -o a card.o hand.o deck.o deckDriver.o main.o Map.o mapDriver.o MapLoader.o Die.o DiceCup.o DiceDriver.o MapLoaderDriver.o
 
 deckDriver.o : deckDriver.cpp
 	g++ -c deckDriver.cpp
@@ -31,5 +31,8 @@ DiceCup.o : DiceCup.cpp DiceCup.h
 DiceDriver.o : DiceDriver.cpp
 	g++ -c DiceDriver.cpp
 
+MapLoaderDriver.o : MapLoaderDriver.cpp
+	g++ -c MapLoaderDriver.cpp
+
 clean :
-	rm *.o p
+	rm *.o a

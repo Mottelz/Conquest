@@ -1,7 +1,4 @@
-#include <iostream>
-#include "mapDriver.cpp"
-#include "deckDriver.cpp"
-#include "DiceDriver.cpp"
+#include "Drivers.h"
 
 int main() {
     //from mapDriver
@@ -10,5 +7,6 @@ int main() {
     deckMain();
     //from DiceDriver
     diceMain();
+    mapLoaderMain();
     return 0;
 }

@@ -5,9 +5,9 @@
 #include <time.h>       // time 
 
 using namespace std;
-
+#include "Drivers.h"
 int diceMain() {
-	int test;
+	int test = 0;
 
 	//dice object that take 2 paramaters 1) number of dice 2) counter for dices
 	DiceCup dice1;
@@ -50,8 +50,8 @@ int diceMain() {
 	dice2.showPercentage();
 	cout << "==========================================";
 
-	cin >> test;
-	} while (test != -1);
+	test++;
+	} while (test < 3);
 	
 	return 0;
 }

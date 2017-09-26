@@ -2,7 +2,7 @@
 #include <iostream>
 #include "DiceCup.h"
 #include "Die.h"
-#include <vector>
+
 using namespace std;
 
 //members function definition
@@ -10,7 +10,7 @@ using namespace std;
 	//default constructor
 	DiceCup::DiceCup(){
 		numOfDice = 0;
-		container[0];
+		//container[0];
 		diceCounter = 0;
 	}
 
@@ -20,7 +20,7 @@ using namespace std;
 		cout << "error, number of dice can only be 1 to 3" << endl;
 		else{
 			setNumOfDice(nd);
-			container[nd];
+			//container[nd];
 			diceCounter = d;
 		}
 	}
@@ -103,8 +103,8 @@ using namespace std;
 	void DiceCup::showPercentage() {
 
 		for (int i = 0; i < 6; i++) {
-			cout.setf(ios::fixed);
-			cout.setf(ios::showpoint);
+			cout.setf(ios::fixed);
+			cout.setf(ios::showpoint);
 			cout.precision(2);
 
 			double percentNum = (double)trackPercent[i] / diceCounter * 100;
