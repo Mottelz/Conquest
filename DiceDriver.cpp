@@ -1,12 +1,11 @@
 
 #include <iostream>
-#include "DiceCup.h"
 #include <stdlib.h>     // srand, rand 
 #include <time.h>       // time 
-
+#include "Dice.h"
 using namespace std;
-#include "Drivers.h"
-int diceMain() {
+
+int main() {
 	int test = 0;
 
 	//dice object that take 2 paramaters 1) number of dice 2) counter for dices

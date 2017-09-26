@@ -1,10 +1,13 @@
-part1 : Map.o mapDriver.o
+1 : Map.o mapDriver.o
 	g++ -o 1 Map.o mapDriver.o
 
-part2 : Map.o MapLoader.o MapLoaderDriver.o
+2 : Map.o MapLoader.o MapLoaderDriver.o
 	g++ -o 2 Map.o mapDriver.o MapLoaderDriver.o
 
-part5 : Cards.o CardsDriver.o
+3 : Dice.o DiceDriver.o
+	g++ -o 3 Dice.o DiceDriver.o
+
+5 : Cards.o CardsDriver.o
 	g++ -o 5 Cards.o CardsDriver.o
 
 Map.o : Map.cpp Map.h
@@ -18,6 +21,12 @@ MapLoader.o : MapLoader.h MapLoader.cpp
 
 MapLoaderDriver.o : MapLoaderDriver.h MapLoaderDriver.cpp
 	g++ -c MapLoaderDriver.cpp
+
+Dice.o : Dice.cpp Dice.h
+	g++ -c Dice.cpp
+
+DiceDriver.o : DiceDriver.cpp
+	g++ -c DiceDriver.cpp
 
 Cards.o : Cards.cpp Cards.h
 	g++ -c Cards.cpp
