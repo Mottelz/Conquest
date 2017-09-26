@@ -1,38 +1,11 @@
-a : card.o deck.o hand.o deckDriver.o main.o Map.o mapDriver.o MapLoader.o Die.o DiceCup.o DiceDriver.o MapLoaderDriver.o
-	g++ -o a card.o hand.o deck.o deckDriver.o main.o Map.o mapDriver.o MapLoader.o Die.o DiceCup.o DiceDriver.o MapLoaderDriver.o
+part5 : Cards.o CardsDriver.o
+	g++ -o 5 Cards.o CardsDriver.o
 
-deckDriver.o : deckDriver.cpp
-	g++ -c deckDriver.cpp
+Cards.o : Cards.cpp Cards.h
+	g++ -c Cards.cpp
 
-card.o : card.h card.cpp
-	g++ -c card.cpp
+CardsDriver.o : CardsDriver.cpp
+	g++ -c CardsDriver.cpp
 
-deck.o : deck.h deck.cpp
-	g++ -c deck.cpp
-
-hand.o : hand.h hand.cpp
-	g++ -c hand.cpp
-
-Map.o : Map.h Map.cpp
-	g++ -c Map.cpp
-
-mapDriver.o : mapDriver.cpp
-	g++ -c mapDriver.cpp
-
-MapLoader.o : MapLoader.cpp MapLoader.h
-	g++ -c MapLoader.cpp
-
-Die.o : Die.cpp Die.h
-	g++ -c Die.cpp
-
-DiceCup.o : DiceCup.cpp DiceCup.h
-	g++ -c DiceCup.cpp
-
-DiceDriver.o : DiceDriver.cpp
-	g++ -c DiceDriver.cpp
-
-MapLoaderDriver.o : MapLoaderDriver.cpp
-	g++ -c MapLoaderDriver.cpp
-
-clean :
-	rm *.o a
+clean : 
+	rm 5 4 3 2 1 *.o

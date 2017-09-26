@@ -1,10 +1,7 @@
 #include <iostream>
-#include "card.h"
-#include "deck.h"
-#include "hand.h"
-#include "Drivers.h"
+#include "Cards.h"
 
-int deckMain() {
+int main() {
 
     std::string cities[] = {"Montreal", "New York", "Ottawa", "Boston", "Tel Aviv", "London", "Hell", "Hogwarts", "Blooper Land"};
 
@@ -53,7 +50,7 @@ int deckMain() {
         for (int i = Mottel.getHandSize(); i < 5; ++i) {
             Mottel.addCard(testDeck2);
         }
-    } while (armies < 20);
+    } while (armies < 15);
 
     return 0;
 }

@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Map.h"
-#include "Drivers.h"
 
 using namespace std;
 
@@ -238,8 +237,6 @@ int mapMain() {
 
 	newGameMap.displayConti();
 	newGameMap.displayTerri();
-
-	system("PAUSE");
 
 	return 0;
 }
