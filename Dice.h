@@ -1,4 +1,5 @@
 #pragma once
+#include<vector>
 
 class Die {
 
@@ -32,7 +33,7 @@ public:
 	int  setDiceCounter();
 
 	//function delcaration
-	int* rollDice();
+	std::vector<int> rollDice();
 	void keepTrack(int x);
 	void initializeArray();
 	void showPercentage();
@@ -42,7 +43,7 @@ private:
 	int numOfDice;
 	int diceCounter;
 	int trackPercent[6];
-	int container[];
+	std::vector<int> container;
 	
 	
 };
