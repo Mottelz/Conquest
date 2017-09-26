@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-	//MapLoader worldFile("World.map");
+	//MapLoader worldFile("maps/World.map");
 	//Map worldMap;
 	//worldFile.readMapFile(worldMap);
 	//worldMap.displayConti();
@@ -15,15 +15,15 @@ int main() {
 	// worldFile.testMap();
 	vector<string> mapList;
 	vector<int> errorIDList;
-	mapList.push_back("World.map");
-	mapList.push_back("Earth.map");
+	mapList.push_back("maps/World.map");
+	mapList.push_back("maps/Earth.map");
 	//error maps
-	mapList.push_back("Invalid.map");
-	mapList.push_back("Invalid2.map");
+	mapList.push_back("maps/Invalid.map");
+	mapList.push_back("maps/Invalid2.map");
 	//doesnt exist
-	mapList.push_back("invalid3.map");
+	mapList.push_back("maps/invalid3.map");
 
-	mapList.push_back("Canada.map");
+	mapList.push_back("maps/Canada.map");
 	
 	vector<Map> MAPS;
 
