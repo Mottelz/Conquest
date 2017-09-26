@@ -11,9 +11,29 @@ Map::Map(string nam)
 	mapNam = nam;
 }
 
-//insert a new continent
-void Map::insertContinent(string nam, int contiBonus)
+string Map::getMapNam()
 {
+	return this->mapNam;
+}
+
+void Map::setMapValidate(bool boln)
+{
+	this->validMap = boln;
+}
+
+bool Map::isValid()
+{
+	return this->validMap;
+}
+
+//insert a new continent
+void Map::insertContinent(string nam, int contiBonus) throw(char)
+{
+	if (seekContinentID(nam) != -1)
+	{
+		validMap = false;
+		throw "Invalid Map: Repeated continent. ";
+	}
 	Continent _conti;
 	_conti.name = nam;
 	_conti.continentBonus = contiBonus;
@@ -22,36 +42,58 @@ void Map::insertContinent(string nam, int contiBonus)
 }
 
 //insert Territory, its position, continent name, increase the number of territories in that continent
-void Map::insertTerritory(string nam, float pos[2], string contiNam, vector<string> adjNam)
+void Map::insertTerritory(string nam, float pos[2], string contiNam, vector<string> adjNam) throw(char)
 {
+	if (seekTerritoryID(nam) != -1)
+	{
+		validMap = false;
+		throw "Invalid Map: Repeated Territory. ";
+		return;
+	}
 	Territory _terri;
 	_terri.name = nam;
 	_terri.position[0] = pos[0];
 	_terri.position[1] = pos[1];
 	_terri.adjacentNam = adjNam;
-
+	
 	//link continent pointer
+	
+	if (seekContinentID(contiNam) > -1)
+	{
+		int tempContiID = seekContinentID(contiNam);
+		_terri.continent = &CONTINENTS[tempContiID];
+		TERRITORIES.push_back(_terri);
+		CONTINENTS[tempContiID].numOfAllTerri++;
+		//CONTINENTS[i].numOfAllTerri = CONTINENTS[i].numOfAllTerri+1;
+		CONTINENTS[tempContiID].terri_id.push_back(TERRITORIES.size()-1);
+		//cout << "size: " << TERRITORIES.size();
+		//cout << CONTINENTS[i].name << " = " << CONTINENTS[i].continentBonus << ", contains " << CONTINENTS[i].numOfAllTerri << endl;
+		//for (int j = 0; j < CONTINENTS[i].numOfAllTerri; ++j)
+		//{
+		//	cout << CONTINENTS[i].territories[j]->name << ", ";
+		//	cout << CONTINENTS[i].territories[j]->position[0] << ", ";
+		//	cout << CONTINENTS[i].territories[j]->position[1] << ", ";
+		//}
+			
+		//continue;
+	}
+	else
+	{
+		validMap = false;
+		throw "Invalid Map: Invalid continent. ";
+
+	}
+
+}
+
+int Map::seekContinentID(string contiNam) 
+{
 	for (int i = 0; i < CONTINENTS.size(); i++)
 	{
 		if (CONTINENTS[i].name == contiNam)
-		{
-			_terri.continent = &CONTINENTS[i];
-			TERRITORIES.push_back(_terri);
-			CONTINENTS[i].numOfAllTerri = CONTINENTS[i].numOfAllTerri+1;
-			CONTINENTS[i].terri_id.push_back(TERRITORIES.size()-1);
-			//cout << "size: " << TERRITORIES.size();
-			//cout << CONTINENTS[i].name << " = " << CONTINENTS[i].continentBonus << ", contains " << CONTINENTS[i].numOfAllTerri << endl;
-			//for (int j = 0; j < CONTINENTS[i].numOfAllTerri; ++j)
-			//{
-			//	cout << CONTINENTS[i].territories[j]->name << ", ";
-			//	cout << CONTINENTS[i].territories[j]->position[0] << ", ";
-			//	cout << CONTINENTS[i].territories[j]->position[1] << ", ";
-			//}
-			//break;
-			//continue;
-		}
-		
+			return i;
 	}
+	return -1;
 }
 
 //seek territory vector id by territory name
@@ -86,16 +128,27 @@ void Map::linkAdjacentTerri(string terri, vector<string> adjacent)
 }
 
 //link-adj function for literator
-void Map::linkAdjacentTerri(int terriID)
+void Map::linkAdjacentTerri(int terriID) throw(char)
 {
 	const vector<string> tempAdjList = TERRITORIES[terriID].adjacentNam;
+	int _TerriID;
 	for (int i = 0; i < tempAdjList.size(); i++) {
-		TERRITORIES[terriID].adjacent.push_back(&TERRITORIES[seekTerritoryID(tempAdjList[i])]);
+		_TerriID = seekTerritoryID(tempAdjList[i]);
+		if (_TerriID == -1)
+		{
+			validMap = false;
+			throw "Invalid Map: Invalid adjacent territory. ";
+		}
+		else
+		{
+			TERRITORIES[terriID].adjacent.push_back(&TERRITORIES[_TerriID]);
+
+		}
 	}
 }
 
 //link all adj for each terri
-void Map::linkAdj()
+void Map::linkAdj() 
 {
 	for (int i = 0; i < TERRITORIES.size(); i++)
 	{
@@ -104,7 +157,7 @@ void Map::linkAdj()
 	}
 }
 
-void Map::LinkAllTerri()
+void Map::LinkAllTerri() 
 {
 	for (int i = 0; i < CONTINENTS.size(); i++)
 	{
@@ -125,13 +178,62 @@ void Map::assignArmies(int player, string terri)
 	
 }
 
+bool Map::isBadMap() throw(char)
+{
+	if (validMap)
+	{
+		if (TERRITORIES.size() == 0 || CONTINENTS.size() == 0 || (TERRITORIES.size() <= CONTINENTS.size()))
+		{
+			validMap = false;
+			throw "Invalid Map: Empty territory list or continent list, or invalid data. ";
+		}
+		else
+		{
+			for (int i = 0; i < TERRITORIES.size(); i++)
+			{
+				//check each Territories must at least have one adj
+
+				if ((TERRITORIES[i].adjacentNam.size() < 1) || (TERRITORIES[i].adjacentNam.size() != TERRITORIES[i].adjacent.size()))
+				{
+					validMap = false;
+					throw "Invalid Map: isolated territory case. ";
+					return true;
+				}
+				for (int j = 0; j < TERRITORIES[i].adjacentNam.size(); j++)
+				{
+					if (TERRITORIES[i].adjacent[j]->continent->name != TERRITORIES[i].continent->name)
+					{
+						TERRITORIES[i].adjacent[j]->continent->contiLinks++;
+					}
+				}
+			}
+			for (int i = 0; i < CONTINENTS.size(); i++)
+			{
+				if (CONTINENTS[i].contiLinks == 0)
+				{
+					validMap = false;
+					throw "Invalid Map: Isolated continent. ";
+
+					return true;
+				}
+			}
+		}
+	}
+	else
+		return false;
+
+}
+
 void Map::displayConti()
 {
+	cout << endl;
+
 	cout << "All continents: " << endl;
 	for (int i = 0; i < CONTINENTS.size(); i++)
 	{
 		cout << CONTINENTS[i].name << " = " << CONTINENTS[i].continentBonus << ", contains " << CONTINENTS[i].numOfAllTerri << " territories" << endl;
 	}
+	cout << endl;
 }
 
 void Map::displayTerri()
@@ -183,6 +285,21 @@ void Map::displayTerri()
 		}
 		
 	}
+	cout << endl;
+}
+
+void Map::toString()
+{
+	cout << "=========================================" << endl;
+	cout << "Map: " << getMapNam() << endl;
+	cout << "=========================================" << endl;
+
+	displayConti();
+	cout << "-----------------------------------------" << endl;
+
+	displayTerri();
+	cout << "-----------------------------------------" << endl;
+	cout << endl;
 }
 
 

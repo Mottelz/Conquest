@@ -1,6 +1,7 @@
 // MapLoader.cpp : Defines the entry point for the console application.
 //
 
+//#include <stdafx.h>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -10,9 +11,9 @@
 
 using namespace std;
 
-MapLoader::MapLoader(const string MAP_NAME)
+MapLoader::MapLoader(/*const string MAP_NAME*/)
 {
-	m_MapFile = MAP_NAME;
+	//MAP_FILE = MAP_NAME;
 }
 
 MapLoader::~MapLoader()
@@ -20,16 +21,18 @@ MapLoader::~MapLoader()
 
 }
 
-void MapLoader::readMapFile(Map& mapObject)
+void MapLoader::readMapFile(string &MAP_FILE,  Map &mapObject) throw(char)
 {
-	ifstream input(m_MapFile); // Open the file
+	ifstream input(MAP_FILE); // Open the file
 
-	if (input.fail()) // Does the file exist? If not, exit the program
+	if (input.fail()) // Unable to open the file; may not exist or wrong file name or wrong directory
 	{
-		cout << "The file provided does not exist." << endl;
+		mapObject.setMapValidate(false);
+		throw "ERROR: Unable to open the file. ";
+
 		return;
 	}
-
+	
 	string skip;
 	getline(input, skip, ']'); // Read until the first ] is encountered (after [Map])
 	getline(input, skip, ']'); // Read until the second ] is encountered (after [Continents])
@@ -42,6 +45,7 @@ void MapLoader::readMapFile(Map& mapObject)
 	string continentName;
 	int continentBonus;
 	bool endOfContinentSection = false;
+	Map testingMap(MAP_FILE);
 
 	while (!endOfContinentSection)
 	{
@@ -53,7 +57,7 @@ void MapLoader::readMapFile(Map& mapObject)
 			getline(line, continent, '=');
 			continentBonus = atoi(continent.c_str());
 
-			mapObject.insertContinent(continentName, continentBonus); 
+			mapObject.insertContinent(continentName, continentBonus);
 		}
 		else // If the line is empty
 		{
@@ -68,6 +72,7 @@ void MapLoader::readMapFile(Map& mapObject)
 	string territoryName;
 	string coordinateX;
 	string coordinateY;
+	float position[2];
 
 	while(!input.eof()) // Read until the end of file
 	{
@@ -84,37 +89,25 @@ void MapLoader::readMapFile(Map& mapObject)
 				getline(line, neighbouringTerritory, ',');
 				neighbouringTerritories.push_back(neighbouringTerritory);
 			}
-
-			addTerritory(territoryName, coordinateX, coordinateY, continentName, neighbouringTerritories, mapObject); // Add a territory for every line read
+			
+			position[0] = stof(coordinateX);
+			position[1] = stof(coordinateY);
+			mapObject.insertTerritory(territoryName, position, continentName, neighbouringTerritories); // Add a territory for every line read
 			neighbouringTerritories.clear(); // Clear the vector for new iteration
 		}
 	}
 
 	input.close(); // We're done reading the file
 
-	// Linking the territories between each other and to the continent they belong to
 	mapObject.linkAdj();
+
 	mapObject.LinkAllTerri();
 
+	mapObject.isBadMap();
+
+	cout << "Map File: " << mapObject.getMapNam() << " is loaded successfully. " << endl;
+	cout << endl;
+
+
 }
-
-void MapLoader::addTerritory(string territoryName, string coordinateX, string coordinateY, string continentName, vector<string> neighbouringTerritories, Map& mapObject)
-{
-	float position[2];
-	position[0] = stof(coordinateX);
-	position[1] = stof(coordinateY);
-
-	mapObject.insertTerritory(territoryName, position, continentName, neighbouringTerritories); // Insert the new territory
-}
-
-/*void MapLoader::testMap()
-{
-	// if (mapObject VALID)
-	//	cout << "The map " << maploader.getMapName() << " has been successfully created! " << endl;
-	// else
-	//	{
-	//		cout << "The map " << maploader.getMapName() << " is invalid. " << endl;
-	//		cout << "Please select another Map. " << endl;
-	// }
-}*/
 

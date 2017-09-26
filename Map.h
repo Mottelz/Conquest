@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <exception>
 
 using namespace std;
 
@@ -29,6 +30,7 @@ struct Continent {
 	//number of all territories in the continent
 	int numOfAllTerri = 0;
 	int continentBonus = 0;
+	int contiLinks=0;
 	vector<int> terri_id;
 	vector<Territory*> territories;
 };
@@ -41,8 +43,12 @@ class Map
 public:
 	Map();
 	Map(string nam);
+	string getMapNam();
+	void setMapValidate(bool boln);
+	bool isValid();
 	void insertContinent(string nam, int contiBonus);
 	void insertTerritory(string nam, float pos[2], string contiNam, vector<string> adjNam);
+	int seekContinentID(string contiNam);
 	int seekTerritoryID(string terriNam);
 	void linkAdjacentTerri(string terri, string adjacent);
 	void linkAdjacentTerri(string terri, vector<string> adjacent);
@@ -52,8 +58,12 @@ public:
 	void LinkAllTerri();
 
 	void assignArmies(int player, string terri);
+
+	bool isBadMap();
+
 	void displayConti();
 	void displayTerri();
+	void toString();
 
 	~Map();
 
@@ -62,7 +72,7 @@ private:
 	vector<Territory> TERRITORIES;
 	vector<Continent> CONTINENTS;
 	string mapNam;
-	
+	bool validMap = true;
 
 };
 
