@@ -1,6 +1,18 @@
 #include "Map.h"
 
 using namespace std;
+Territory::Territory()
+{
+	this->owner = 0;
+	this->armies = 0;
+}
+
+Continent::Continent() 
+{
+	this->contiLinks = 0;
+	this->continentBonus = 0;
+	this->numOfAllTerri = 0;
+}
 
 Map::Map()
 {
@@ -55,7 +67,7 @@ void Map::insertTerritory(string nam, float pos[2], string contiNam, vector<stri
 	_terri.position[0] = pos[0];
 	_terri.position[1] = pos[1];
 	_terri.adjacentNam = adjNam;
-	
+
 	//link continent pointer
 	
 	if (seekContinentID(contiNam) > -1)
@@ -311,3 +323,4 @@ void Map::toString()
 Map::~Map()
 {
 }
+
