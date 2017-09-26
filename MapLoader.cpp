@@ -13,7 +13,7 @@ using namespace std;
 
 MapLoader::MapLoader(const string MAP_NAME)
 {
-	MAP_FILE = MAP_NAME;
+	m_MapFile = MAP_NAME;
 }
 
 MapLoader::~MapLoader()
@@ -23,7 +23,7 @@ MapLoader::~MapLoader()
 
 void MapLoader::readMapFile(Map& mapObject)
 {
-	ifstream input(MAP_FILE); // Open the file
+	ifstream input(m_MapFile); // Open the file
 
 	if (input.fail()) // Does the file exist? If not, exit the program
 	{
@@ -93,7 +93,10 @@ void MapLoader::readMapFile(Map& mapObject)
 
 	input.close(); // We're done reading the file
 
-	mapObject.linkAdjacentTerritories();
+	// Linking the territories between each other and to the continent they belong to
+	mapObject.linkAdj();
+	mapObject.LinkAllTerri();
+
 }
 
 void MapLoader::addTerritory(string territoryName, string coordinateX, string coordinateY, string continentName, vector<string> neighbouringTerritories, Map& mapObject)
@@ -121,32 +124,29 @@ int main()
 	MapLoader worldFile("World.map");
 	Map worldMap;
 	worldFile.readMapFile(worldMap);
-	worldMap.toString();
+	worldMap.displayTerri();
 	// worldFile.testMap();
 
 	MapLoader canadaFile("Canada.map");
 	Map canadaMap;
 	canadaFile.readMapFile(canadaMap);
-	canadaMap.toString();
 	// canadaFile.testMap();
 
 	MapLoader caribbeanFile("Caribbean.map");
 	Map caribbeanMap;
 	caribbeanFile.readMapFile(caribbeanMap);
 	// caribbeanFile.testMap();
-	caribbeanMap.toString();
 
 	MapLoader invalidFile("Invalid.map");
 	Map invalidMap;
 	invalidFile.readMapFile(invalidMap);
 	// invalidFile.testMap();
-	invalidMap.toString();
 	
 	MapLoader invalidFile2("Invalid2.map");
 	Map invalidMap2;
 	invalidFile2.readMapFile(invalidMap2);
 	// invalidFile2.testMap();
-	invalidMap2.toString();
+	invalidMap2.displayTerri();
 
     return 0;
 }

@@ -7,13 +7,13 @@ using namespace std;
 
 class MapLoader
 {
-	string MAP_FILE;
+	string m_MapFile;
 
 	public:
 		MapLoader(const string MAP_NAME);
 		~MapLoader();
 		inline string getMapName() {
-			return MAP_FILE;
+			return m_MapFile;
 		};
 		void readMapFile(Map& mapObject);
 		void testMap();
