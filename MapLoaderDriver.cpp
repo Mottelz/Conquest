@@ -1,35 +1,72 @@
+//map driver
+#include <iostream>
 #include "Map.h"
 #include "MapLoader.h"
-#include "Drivers.h"
 
-int mapLoaderMain()
-{
-	MapLoader worldFile("World.map");
-	Map worldMap;
-	worldFile.readMapFile(worldMap);
-	worldMap.displayTerri();
+using namespace std;
+
+int main() {
+	//MapLoader worldFile("World.map");
+	//Map worldMap;
+	//worldFile.readMapFile(worldMap);
+	//worldMap.displayConti();
+	//worldMap.displayTerri();
+
 	// worldFile.testMap();
+	vector<string> mapList;
+	vector<int> errorIDList;
+	mapList.push_back("World.map");
+	mapList.push_back("Earth.map");
+	//error maps
+	mapList.push_back("Invalid.map");
+	mapList.push_back("Invalid2.map");
+	//doesnt exist
+	mapList.push_back("invalid3.map");
 
-	MapLoader canadaFile("Canada.map");
-	Map canadaMap;
-	canadaFile.readMapFile(canadaMap);
-	// canadaFile.testMap();
-
-	MapLoader caribbeanFile("Caribbean.map");
-	Map caribbeanMap;
-	caribbeanFile.readMapFile(caribbeanMap);
-	// caribbeanFile.testMap();
-
-	MapLoader invalidFile("Invalid.map");
-	Map invalidMap;
-	invalidFile.readMapFile(invalidMap);
-	// invalidFile.testMap();
+	mapList.push_back("Canada.map");
 	
-	MapLoader invalidFile2("Invalid2.map");
-	Map invalidMap2;
-	invalidFile2.readMapFile(invalidMap2);
-	// invalidFile2.testMap();
-	invalidMap2.displayTerri();
+	vector<Map> MAPS;
 
-    return 0;
+	MapLoader maploader;
+
+	//Map Earth;
+	for(int i=0;i<mapList.size();i++)
+		MAPS.push_back( Map(mapList[i]));
+	//int offset = 0;
+	for (int i = 0; i < mapList.size(); i++)
+	{
+		//Map temp;
+		try {
+			maploader.readMapFile(mapList[i], MAPS[i]);
+			//MAPS[i].toString();
+		}
+		catch ( const char *e) {
+			cout << "*****************************************" << endl;
+			cout << "Failed loading map file: " << MAPS[i].getMapNam() << endl;
+			cout << e << endl;
+			cout << "*****************************************" << endl;
+			cout << endl;
+			errorIDList.push_back(i);
+		}
+	}
+
+	
+
+	//very important
+	//for (int i = errorIDList.size() - 1; i >= 0; i--)
+	//{
+	//	MAPS.erase(MAPS.begin()+errorIDList[i]);
+	//}
+
+	for (int i = 0; i < MAPS.size(); i++)
+	{
+		//if no MAPS.erase() above then you need this if statement
+		if(MAPS[i].isValid())
+		MAPS[i].toString();
+	}
+
+	cout << "Number of the invalid map files " << errorIDList.size() << endl;
+	cout << endl;
+
+	return 0;
 }

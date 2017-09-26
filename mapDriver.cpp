@@ -255,8 +255,5 @@ int main() {
 		cout << e << endl;
 	}
 
-
-	system("PAUSE");
-
 	return 0;
 }
