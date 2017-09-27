@@ -1,7 +1,10 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "Dice.h"
 #include "Cards.h"
+#include "Map.h"
+#include "MapLoader.h"
 
 
 class Player {
@@ -12,11 +15,13 @@ public:
 	void reinforce();
 	void attack();
 	void fortify();
-	std::vector<int> RollDice(int numToRoll);
-	void DrawCard(Deck &Deck);
-	void DisplayHand();
+	std::vector<int> rollDice(int numToRoll);
+	void drawCard(Deck &Deck);
+	void displayHand();
+	// void assignTerritories(int number, Map& map);
 
 private:
 	DiceCup m_DiceCup;
 	Hand m_Hand;
+	vector<Territory> m_PlayerTerritories;
 };

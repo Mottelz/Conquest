@@ -41,6 +41,7 @@ public:
 	Map();
 	Map(string name);
 	string getMapName();
+	int getTotalNumberOfTerritories();
 	void setMapValidate(bool boln);
 	bool isValid();
 	void insertContinent(string name, int continentBonus) throw(char);

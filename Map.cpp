@@ -28,6 +28,11 @@ string Map::getMapName()
 	return this->m_MapName;
 }
 
+int Map::getTotalNumberOfTerritories()
+{
+	return m_Territories.size();
+}
+
 void Map::setMapValidate(bool boln)
 {
 	this->m_ValidMap = boln;
