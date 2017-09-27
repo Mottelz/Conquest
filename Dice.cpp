@@ -80,7 +80,7 @@ void Die::setValue(int value) {
 
 			//store value into container array
 			m_Container.push_back(d.getValue());
-			cout <<"#" <<(i+1) <<" player rolled Number: " << m_Container[i] << endl;
+			cout <<"Die #" <<(i+1) <<" - Player rolled Number: " << m_Container[i] << endl;
 
 			//increment counter for dice each time we roll
 			m_DiceCounter++;
