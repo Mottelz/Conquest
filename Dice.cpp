@@ -51,7 +51,12 @@ void Die::setValue(int value) {
 
 	//setters
 	void DiceCup::setNumberOfDice(int numberOfDice) {
-		m_NumberOfDice = numberOfDice;
+		if(numberOfDice > 3){
+			cout << "Attempted to add more than 3 dice. Added 3 instead." << endl;
+			m_NumberOfDice = 3;
+		} else {
+			m_NumberOfDice = numberOfDice;
+		}
 	}
 
 	void DiceCup::setDiceCounter(int diceCounter) {

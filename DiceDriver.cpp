@@ -51,6 +51,6 @@ int main() {
 
 	test++;
 	} while (test < 3);
-	
+	cout << "\n";
 	return 0;
 }
