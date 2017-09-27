@@ -12,7 +12,7 @@ class MapLoader
 		MapLoader();
 		~MapLoader();
 		
-		void readMapFile(string &mapFile, Map &mapObject) throw(char);
+		void readMapFile(string &mapFile, Map &mapObject) throw(string);
 };
 
 

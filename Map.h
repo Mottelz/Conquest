@@ -43,19 +43,19 @@ public:
 	string getMapName();
 	void setMapValidate(bool boln);
 	bool isValid();
-	void insertContinent(string name, int continentBonus) throw(char);
-	void insertTerritory(string name, float position[2], string continentName, vector<string> adjacentTerritoriesNames) throw(char);
+	void insertContinent(string name, int continentBonus) throw(string);
+	void insertTerritory(string name, float position[2], string continentName, vector<string> adjacentTerritoriesNames) throw(string);
 	int seekContinentID(string continentName);
 	int seekTerritoryID(string territoryName);
 	void linkAdjacentTerritory(string territory, string adjacentTerritory);
 	void linkAdjacentTerritories(string territory, vector<string> adjacentTerritories);
-	void linkAdjacentTerritoryID(int territoryID) throw(char);
+	void linkAdjacentTerritoryID(int territoryID) throw(string);
 	void linkAllAdjacentTerritories();
 	void linkAllTerritories();
 
 	void assignArmies(int player, string terri);
 
-	bool isBadMap() throw(char);
+	bool isBadMap() throw(string);
 
 	void displayContinents();
 	void displayTerritories();

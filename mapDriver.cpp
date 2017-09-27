@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "Map.h"
 
 
@@ -212,7 +213,7 @@ int main() {
 		newGameMap.toString();
 
 	}
-	catch (char *e) {
+	catch (string e) {
 		cout << "Error: invalid map file. " << endl;
 		cout << e << endl;
 	}

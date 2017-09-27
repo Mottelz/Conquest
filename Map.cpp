@@ -39,12 +39,12 @@ bool Map::isValid()
 }
 
 // Insert a new continent
-void Map::insertContinent(string name, int continentBonus) throw(char)
+void Map::insertContinent(string name, int continentBonus) throw(string)
 {
 	if (seekContinentID(name) != -1)
 	{
 		m_ValidMap = false;
-		throw "Invalid Map: Repeated continent.";
+		throw string("Invalid Map: Repeated continent.");
 	}
 	Continent continent;
 	continent.m_ContinentName = name;
@@ -54,12 +54,12 @@ void Map::insertContinent(string name, int continentBonus) throw(char)
 }
 
 // Insert Territory, its position, continent name, increase the number of territories in that continent
-void Map::insertTerritory(string name, float position[2], string continentName, vector<string> adjacentTerritoriesNames) throw(char)
+void Map::insertTerritory(string name, float position[2], string continentName, vector<string> adjacentTerritoriesNames) throw(string)
 {
 	if (seekTerritoryID(name) != -1)
 	{
 		m_ValidMap = false;
-		throw "Invalid Map: Repeated Territory. ";
+		throw string("Invalid Map: Repeated Territory. ");
 		return;
 	}
 	Territory territory;
@@ -81,7 +81,7 @@ void Map::insertTerritory(string name, float position[2], string continentName, 
 	else
 	{
 		m_ValidMap = false;
-		throw "Invalid Map: Invalid continent.";
+		throw string("Invalid Map: Invalid continent.");
 	}
 }
 
@@ -127,7 +127,7 @@ void Map::linkAdjacentTerritories(string territory, vector<string> adjacentTerri
 }
 
 // Link-adj function for iterator
-void Map::linkAdjacentTerritoryID(int territoryID) throw(char)
+void Map::linkAdjacentTerritoryID(int territoryID) throw(string)
 {
 	const vector<string> tempAdjList = m_Territories[territoryID].m_AdjacentTerritoriesNames;
 	int territoryIDTest;
@@ -136,7 +136,7 @@ void Map::linkAdjacentTerritoryID(int territoryID) throw(char)
 		if (territoryIDTest == -1)
 		{
 			m_ValidMap = false;
-			throw "Invalid Map: Invalid adjacent territory. ";
+			throw string("Invalid Map: Invalid adjacent territory. ");
 		}
 		else
 		{
@@ -177,14 +177,14 @@ void Map::assignArmies(int player, string territory)
 	
 }
 
-bool Map::isBadMap() throw(char)
+bool Map::isBadMap() throw(string)
 {
 	if (m_ValidMap)
 	{
 		if (m_Territories.size() == 0 || m_Continents.size() == 0 || (m_Territories.size() <= m_Continents.size()))
 		{
 			m_ValidMap = false;
-			throw "Invalid Map: Empty territory list or continent list, or invalid data. ";
+			throw string("Invalid Map: Empty territory list or continent list, or invalid data. ");
 		}
 		else
 		{
@@ -195,7 +195,7 @@ bool Map::isBadMap() throw(char)
 				if ((m_Territories[i].m_AdjacentTerritoriesNames.size() < 1) || (m_Territories[i].m_AdjacentTerritoriesNames.size() != m_Territories[i].m_AdjacentTerritories.size()))
 				{
 					m_ValidMap = false;
-					throw "Invalid Map: isolated territory case. ";
+					throw string("Invalid Map: isolated territory case. ");
 					return true;
 				}
 				for (int j = 0; j < m_Territories[i].m_AdjacentTerritoriesNames.size(); j++)
@@ -211,7 +211,7 @@ bool Map::isBadMap() throw(char)
 				if (m_Continents[i].m_ContinentLinks == 0)
 				{
 					m_ValidMap = false;
-					throw "Invalid Map: Isolated continent. ";
+					throw string("Invalid Map: Isolated continent. ");
 
 					return true;
 				}

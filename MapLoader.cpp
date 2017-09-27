@@ -1,7 +1,6 @@
 // MapLoader.cpp : Defines the entry point for the console application.
-//
 
-//#include <stdafx.h>
+#include <exception>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -11,24 +10,18 @@
 
 using namespace std;
 
-MapLoader::MapLoader()
-{
+MapLoader::MapLoader(){}
 
-}
+MapLoader::~MapLoader(){}
 
-MapLoader::~MapLoader()
-{
-
-}
-
-void MapLoader::readMapFile(string &mapFile,  Map &mapObject) throw(char)
+void MapLoader::readMapFile(string &mapFile,  Map &mapObject) throw(string)
 {
 	ifstream input(mapFile); // Open the file
 
 	if (input.fail()) // Unable to open the file; may not exist or wrong file name or wrong directory
 	{
 		mapObject.setMapValidate(false);
-		throw "ERROR: Unable to open the file. ";
+		throw std::string("ERROR: Unable to open the file. ");
 
 		return;
 	}

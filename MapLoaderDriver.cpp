@@ -34,7 +34,7 @@ int main() {
 			maploader.readMapFile(mapList[i], maps[i]);
 
 		}
-		catch (const char *e) {
+		catch (string e) {
 			cout << "*****************************************" << endl;
 			cout << "Failed loading map file: " << maps[i].getMapName() << endl;
 			cout << e << endl;
