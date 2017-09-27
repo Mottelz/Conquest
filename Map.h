@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <exception>
+//#include "Player.h"
 
 using namespace std;
 
@@ -54,7 +55,7 @@ public:
 	void linkAllAdjacentTerritories();
 	void linkAllTerritories();
 
-	void assignArmies(int player, string terri);
+	void assignArmies(int _player, string territory);
 
 	bool isBadMap() throw(string);
 	vector<string> getAllTerritoryNames();

@@ -3,6 +3,7 @@
 #include "Map.h"
 
 
+
 using namespace std;
 
 int main() {
@@ -200,6 +201,8 @@ int main() {
 	ax_adj.push_back("AU");
 	ax_adj.push_back("AV");
 
+
+
 	newGameMap.insertTerritory("AX", ax_pos, "South America", ax_adj);
 
 	try {
@@ -217,6 +220,19 @@ int main() {
 		cout << "Error: invalid map file. " << endl;
 		cout << e << endl;
 	}
+
+	newGameMap.assignArmies(1, "AW");
+	newGameMap.assignArmies(1, "AW");
+	newGameMap.assignArmies(1, "AT");
+
+	newGameMap.assignArmies(2, "AW");
+
+	newGameMap.assignArmies(2, "AX");
+	newGameMap.assignArmies(2, "AV");
+
+	newGameMap.toString();
+
+	system("PAUSE");
 
 	return 0;
 }

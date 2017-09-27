@@ -1,4 +1,6 @@
 #include "Map.h"
+//#include "Player.h"
+
 
 using namespace std;
 Territory::Territory()
@@ -52,6 +54,8 @@ void Map::insertContinent(string name, int continentBonus) throw(string)
 		throw string("Invalid Map: Repeated continent.");
 	}
 	Continent continent;
+	//continent.m_ContinentLinks = 0;
+	//continent.m_NumberOfTerritories = 0;
 	continent.m_ContinentName = name;
 	continent.m_ContinentBonus = continentBonus;
 	m_Continents.push_back(continent);
@@ -68,6 +72,8 @@ void Map::insertTerritory(string name, float position[2], string continentName, 
 		return;
 	}
 	Territory territory;
+	//territory.m_Owner = 0;
+	//territory.m_Armies = 0;
 	territory.m_TerritoryName = name;
 	territory.m_Position[0] = position[0];
 	territory.m_Position[1] = position[1];
@@ -174,11 +180,14 @@ void Map::linkAllTerritories()
 
 
 // Assign one army of the current player into current territory if available
-void Map::assignArmies(int player, string territory)
+void Map::assignArmies(int _player, string territory)
 {
 	int _id = seekTerritoryID(territory);
-	if ((m_Territories[_id].m_Owner == 0) || (m_Territories[_id].m_Owner == player))
+	if ((m_Territories[_id].m_Owner == 0) || (m_Territories[_id].m_Owner == _player))
+	{
+		m_Territories[_id].m_Owner = _player;
 		m_Territories[_id].m_Armies++;
+	}
 	
 }
 
@@ -253,21 +262,24 @@ void Map::displayTerritories()
 		{
 			cout << ", " << m_Territories[i].m_AdjacentTerritories[j]->m_TerritoryName;
 		}
-		if (m_Territories[i].m_Owner == 0)
-			cout << endl;
-		else
+		if (m_Territories[i].m_Owner > 0)
 		{
 			cout << ", Player " << m_Territories[i].m_Owner;
 			cout << ", Armies " << m_Territories[i].m_Armies;
+
+			cout << endl;
+		}
+		else
+		{
 			cout << endl;
 		}
 	}
 	cout << endl;
 }
 
-vector<string> Map::getAllTerritoryNames(){
+vector<string> Map::getAllTerritoryNames() {
 	vector<string> toReturn;
-	for (int i = 0; i < m_Territories.size(); i++){
+	for (int i = 0; i < m_Territories.size(); i++) {
 		toReturn.push_back(m_Territories[i].m_TerritoryName);
 	}
 	return toReturn;
