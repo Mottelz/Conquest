@@ -7,8 +7,8 @@
 3 : Dice.o DiceDriver.o
 	g++ -o 3 Dice.o DiceDriver.o
 
-4 : Cards.o Dice.o Player.o PlayerDriver.o
-	g++ -o 4 Cards.o Dice.o Player.o PlayerDriver.o
+4 : Map.o Cards.o Dice.o Player.o PlayerDriver.o MapLoader.o
+	g++ -o 4 Cards.o Dice.o Player.o PlayerDriver.o Map.o MapLoader.o
 
 5 : Cards.o CardsDriver.o
 	g++ -o 5 Cards.o CardsDriver.o

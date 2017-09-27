@@ -45,7 +45,7 @@ void Card::printCard() {
 //constructors
 Deck::Deck() {}
 
-Deck::Deck(std::string countries[], int countriesLeng) {
+Deck::Deck(std::vector<std::string> countries, int countriesLeng) {
 
     for (unsigned int i = 0; i < countriesLeng; ++i) {
         //assign type based on mod 3

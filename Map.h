@@ -57,6 +57,7 @@ public:
 	void assignArmies(int player, string terri);
 
 	bool isBadMap() throw(string);
+	vector<string> getAllTerritoryNames();
 
 	void displayContinents();
 	void displayTerritories();

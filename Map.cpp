@@ -265,6 +265,14 @@ void Map::displayTerritories()
 	cout << endl;
 }
 
+vector<string> Map::getAllTerritoryNames(){
+	vector<string> toReturn;
+	for (int i = 0; i < m_Territories.size(); i++){
+		toReturn.push_back(m_Territories[i].m_TerritoryName);
+	}
+	return toReturn;
+}
+
 void Map::toString()
 {
 	cout << "=========================================" << endl;

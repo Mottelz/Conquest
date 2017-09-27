@@ -3,7 +3,13 @@
 
 int main() {
 
-    std::string cities[] = {"Montreal", "New York", "Ottawa", "Boston", "Tel Aviv", "London", "Hell", "Hogwarts", "Blooper Land"};
+    std::vector<std::string> cities;
+    
+    std::string temp[] = {"Montreal", "New York", "Ottawa", "Boston", "Tel Aviv", "London", "Hell", "Hogwarts", "Blooper Land"};
+
+    for(int i = 0; i < 9; i++){
+        cities.push_back(temp[i]);
+    }
 
     //create decks
     Deck testDeck1 = Deck(cities, 9);

@@ -28,7 +28,7 @@ class Deck {
         int m_ArmiesForExchange;
     public:
         Deck();
-        Deck(std::string countries[], int countriesLeng);
+        Deck(std::vector<std::string> countries, int countriesLeng);
         Card getCard(int i);
         int getNumberOfCards();
         ~Deck();
