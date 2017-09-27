@@ -5,35 +5,31 @@
 #include <vector>
 #include <string>
 #include <exception>
+//#include "Player.h"
 
 using namespace std;
 
-// call back
-struct Continent;
-//struct Territory;
-//territory
+
+struct Continent; // Forward declaration
+
 struct Territory {
-	string name;
-	float position[2];
-	//continent that the territory belongs to 
-	Continent* continent;
-	vector<string> adjacentNam;
-	//node pointer
-	vector<Territory*> adjacent;
-	int owner;
-	int armies;
+	string m_TerritoryName;
+	float m_Position[2];
+	Continent* m_Continent; // Continent that the territory belongs to 
+	vector<string> m_AdjacentTerritoriesNames;
+	vector<Territory*> m_AdjacentTerritories; // Node pointer
+	int m_Owner;
+	int m_Armies;
 	Territory();
 };
-//struct Territory;
-//continent
+
 struct Continent {
-	string name;
-	//number of all territories in the continent
-	int numOfAllTerri;
-	int continentBonus;
-	int contiLinks;
-	vector<int> terri_id;
-	vector<Territory*> territories;
+	string m_ContinentName;
+	int m_NumberOfTerritories; 	// Number of all territories in the continent
+	int m_ContinentBonus;
+	int m_ContinentLinks;
+	vector<int> m_TerritoryID;
+	vector<Territory*> m_ContinentTerritories;
 	Continent();
 };
 
@@ -44,37 +40,38 @@ class Map
 {
 public:
 	Map();
-	Map(string nam);
-	string getMapNam();
+	Map(string name);
+	string getMapName();
+	int getTotalNumberOfTerritories();
 	void setMapValidate(bool boln);
 	bool isValid();
-	void insertContinent(string nam, int contiBonus);
-	void insertTerritory(string nam, float pos[2], string contiNam, vector<string> adjNam);
-	int seekContinentID(string contiNam);
-	int seekTerritoryID(string terriNam);
-	void linkAdjacentTerri(string terri, string adjacent);
-	void linkAdjacentTerri(string terri, vector<string> adjacent);
-	void linkAdjacentTerri(int terriID);
-	void linkAdj();
+	void insertContinent(string name, int continentBonus) throw(string);
+	void insertTerritory(string name, float position[2], string continentName, vector<string> adjacentTerritoriesNames) throw(string);
+	int seekContinentID(string continentName);
+	int seekTerritoryID(string territoryName);
+	void linkAdjacentTerritory(string territory, string adjacentTerritory);
+	void linkAdjacentTerritories(string territory, vector<string> adjacentTerritories);
+	void linkAdjacentTerritoryID(int territoryID) throw(string);
+	void linkAllAdjacentTerritories();
+	void linkAllTerritories();
 
-	void LinkAllTerri();
+	void assignArmies(int _player, string territory);
 
-	void assignArmies(int player, string terri);
+	bool isBadMap() throw(string);
+	vector<string> getAllTerritoryNames();
 
-	bool isBadMap();
-
-	void displayConti();
-	void displayTerri();
+	void displayContinents();
+	void displayTerritories();
 	void toString();
 
 	~Map();
 
 
 private:
-	vector<Territory> TERRITORIES;
-	vector<Continent> CONTINENTS;
-	string mapNam;
-	bool validMap = true;
+	vector<Territory> m_Territories;
+	vector<Continent> m_Continents;
+	string m_MapName;
+	bool m_ValidMap = true;
 
 };
 
