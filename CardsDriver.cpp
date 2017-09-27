@@ -14,14 +14,14 @@ int main() {
     int numOfCav = 0;
     int numOfArt = 0;
 
-    for (int j = 0; j < testDeck1.GetNumOfCards(); ++j) {
+    for (int j = 0; j < testDeck1.getNumberOfCards(); ++j) {
         //temp card
-        Card tempCard = testDeck1.Draw();
-        if (tempCard.GetType() == 'a') {
+        Card tempCard = testDeck1.draw();
+        if (tempCard.getType() == 'a') {
             numOfArt++;
-        } else if (tempCard.GetType() == 'c') {
+        } else if (tempCard.getType() == 'c') {
             numOfCav++;
-        } else if (tempCard.GetType() == 'i') {
+        } else if (tempCard.getType() == 'i') {
             numOfInf++;
         }
     }
@@ -43,7 +43,7 @@ int main() {
 
     do {
         //exchange armies and print result
-        armies = Mottel.Exchange(testDeck2);
+        armies = Mottel.exchange(testDeck2);
         std::cout << "Number of armies returned " << armies << std::endl;
 
         //refill hand

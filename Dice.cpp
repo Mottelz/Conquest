@@ -4,65 +4,64 @@ using namespace std;
 
 //default ctor
 Die::Die() {
-	value = 0;
+	m_Value = 0;
 }
 
 //one parameter ctor
-Die::Die(int v) {
-	value = v;
+Die::Die(int value) {
+	m_Value = value;
 }
 
 //getters
 int Die::getValue(){
-	return value;
+	return m_Value;
 }
 
 //setters
-void Die::setValue(int v) {
-	value = v;
+void Die::setValue(int value) {
+	m_Value = value;
 }
 
 //members function definition
 
 	//default constructor
 	DiceCup::DiceCup(){
-		numOfDice = 0;
-		//container[0];
-		diceCounter = 0;
+		m_NumberOfDice = 0;
+		m_DiceCounter = 0;
 	}
 
-	//one parameter constructor
-	DiceCup::DiceCup(int nd, int d) {	
-		if (nd >= 4 || nd < 0)
+	//two parameter constructor
+	DiceCup::DiceCup(int numberOfDice, int diceCounter) {	
+		if (numberOfDice >= 4 || numberOfDice < 0)
 		cout << "error, number of dice can only be 1 to 3" << endl;
 		else{
-			setNumOfDice(nd);
+			setNumberOfDice(numberOfDice);
 			//container[nd];
-			diceCounter = d;
+			m_DiceCounter = diceCounter;
 		}
 	}
 	//getters
-	int DiceCup::getNumOfDice() {
-		return numOfDice;
+	int DiceCup::getNumberOfDice() {
+		return m_NumberOfDice;
 	}
 
 	int DiceCup::setDiceCounter() {
-		return diceCounter;
+		return m_DiceCounter;
 	}
 
 	//setters
-	void DiceCup::setNumOfDice(int nd) {
-		numOfDice = nd;
+	void DiceCup::setNumberOfDice(int numberOfDice) {
+		m_NumberOfDice = numberOfDice;
 	}
 
-	void DiceCup::setDiceCounter(int d) {
-		diceCounter = d;
+	void DiceCup::setDiceCounter(int diceCounter) {
+		m_DiceCounter = diceCounter;
 	}
 
 	//rollDice function to generate a random number for dice
 	vector<int> DiceCup::rollDice() {
 
-		for (int i = 0; i < getNumOfDice(); i++) {
+		for (int i = 0; i < getNumberOfDice(); i++) {
 
 			//generate a random number of 1-6 for dice
 			int rollDiceValue = rand() % 6 + 1;
@@ -75,43 +74,43 @@ void Die::setValue(int v) {
 			Die d(rollDiceValue);
 
 			//store value into container array
-			container[i] = d.getValue();
-			cout <<"#" <<(i+1) <<" player rolled Number: " << container[i] << endl;
+			m_Container.push_back(d.getValue());
+			cout <<"#" <<(i+1) <<" player rolled Number: " << m_Container[i] << endl;
 
 			//increment counter for dice each time we roll
-			diceCounter++;
+			m_DiceCounter++;
 
 			//call function to keep track of dice rolled
 			keepTrack(rollDiceValue);
 		}
-		return container;
+		return m_Container;
 	}
 
 	// keep track of how many time player rolled a dice - declare
 	void DiceCup::keepTrack(int x){		
 		switch (x) {		
 		case 1:
-			trackPercent[0]++;
+			m_TrackPercent[0]++;
 			break;
 		
 		case 2:
-			trackPercent[1]++;
+			m_TrackPercent[1]++;
 			break;
 
 		case 3:
-			trackPercent[2]++;
+			m_TrackPercent[2]++;
 			break;
 
 		case 4:
-			trackPercent[3]++;
+			m_TrackPercent[3]++;
 			break;
 
 		case 5:
-			trackPercent[4]++;
+			m_TrackPercent[4]++;
 			break;
 
 		case 6:
-			trackPercent[5]++;
+			m_TrackPercent[5]++;
 			break;
 		}
 	}
@@ -124,9 +123,9 @@ void Die::setValue(int v) {
 			cout.setf(ios::showpoint);
 			cout.precision(2);
 
-			double percentNum = (double)trackPercent[i] / diceCounter * 100;
+			double percentNum = (double)m_TrackPercent[i] / m_DiceCounter * 100;
 
-			cout << "the percentage of " << i+1 <<" (#" << trackPercent[i] << ")"<<
+			cout << "the percentage of " << i+1 <<" (#" << m_TrackPercent[i] << ")"<<
 				 " is: " << percentNum << "%"<<endl;
 		}
 	}
@@ -135,6 +134,6 @@ void Die::setValue(int v) {
 		
 		//initialize array of trackPercent with 1's
 		for (int i = 0; i < 6; i++) {
-			trackPercent[i] = 0;
+			m_TrackPercent[i] = 0;
 		}
 	}

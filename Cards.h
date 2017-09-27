@@ -7,42 +7,42 @@
 class Card{
 private:
     //intended to store the card type: infantry (i), calvary (c), or artillery (a)
-    char Type;
+    char m_Type;
     //the country name
-    std::string Country;
+    std::string m_Country;
 
 public:
     //create
     Card();
     Card(char type, std::string);
     //getters
-    char GetType();
-    std::string GetCountry();
-    void PrintCard();
+    char getType();
+    std::string getCountry();
+    void printCard();
 };
 
 class Deck {
     private:
-        std::vector<Card> Cards;
-        int NumOfCards;
-        int ArmiesForExchange;
+        std::vector<Card> m_Cards;
+        int m_NumberOfCards;
+        int m_ArmiesForExchange;
     public:
         Deck();
         Deck(std::string countries[], int countriesLeng);
-        Card GetCard(int i);
-        int GetNumOfCards();
+        Card getCard(int i);
+        int getNumberOfCards();
         ~Deck();
-        Card Draw();
-        int  Exchange(std::vector<Card>& cardsToSwap);
+        Card draw();
+        int exchange(std::vector<Card>& cardsToSwap);
 };
 
 class Hand {
 private:
-    std::vector<Card> Cards;
+    std::vector<Card> m_Cards;
 public:
     Hand();
     ~Hand();
-    int Exchange(Deck &deck);
+    int exchange(Deck &deck);
     void addCard(Deck &deck);
     void printHand();
     int getHandSize();

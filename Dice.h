@@ -6,15 +6,15 @@ class Die {
 public:
 	//ctor declaration
 	Die();
-	Die(int v);
+	Die(int value);
 
 	//function delcaration
 	int getValue();
-	void setValue(int v);
+	void setValue(int value);
 
 private:
 	//instance variables
-	int value;
+	int m_Value;
 };
 
 class DiceCup {
@@ -23,13 +23,13 @@ class DiceCup {
 public:
 	//ctor declaration
 	DiceCup();
-	DiceCup( int nd, int d);
+	DiceCup(int numberOfDice, int diceCounter);
 
 	//getters & setters declaration
-	int getNumOfDice();
-	void setNumOfDice(int nd);
+	int getNumberOfDice();
+	void setNumberOfDice(int numberOfDice);
 
-	void setDiceCounter(int d);
+	void setDiceCounter(int diceCounter);
 	int  setDiceCounter();
 
 	//function delcaration
@@ -40,10 +40,10 @@ public:
 
 private:
 	//instances variables
-	int numOfDice;
-	int diceCounter;
-	int trackPercent[6];
-	std::vector<int> container;
+	int m_NumberOfDice;
+	int m_DiceCounter;
+	int m_TrackPercent[6];
+	std::vector<int> m_Container;
 	
 	
 };

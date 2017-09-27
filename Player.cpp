@@ -17,6 +17,6 @@ void Player::attack() {}
 void Player::fortify() {}
 
 std::vector<int> Player::RollDice(int numToRoll){
-	m_DiceCup.setNumOfDice(numToRoll);
+	m_DiceCup.setNumberOfDice(numToRoll);
 	return m_DiceCup.rollDice();
 }

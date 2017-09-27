@@ -26,8 +26,8 @@ int main() {
 	do {
 	
 	//set ctor number of dice 
-	dice1.setNumOfDice(userDice1);
-	dice2.setNumOfDice(userDice2);
+	dice1.setNumberOfDice(userDice1);
+	dice2.setNumberOfDice(userDice2);
 
 	//******************************DICE1*********************************
 	cout << "\n\td1 dice rolled..." << endl;

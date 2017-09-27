@@ -11,9 +11,9 @@
 
 using namespace std;
 
-MapLoader::MapLoader(/*const string MAP_NAME*/)
+MapLoader::MapLoader()
 {
-	//MAP_FILE = MAP_NAME;
+
 }
 
 MapLoader::~MapLoader()
@@ -21,9 +21,9 @@ MapLoader::~MapLoader()
 
 }
 
-void MapLoader::readMapFile(string &MAP_FILE,  Map &mapObject) throw(char)
+void MapLoader::readMapFile(string &mapFile,  Map &mapObject) throw(char)
 {
-	ifstream input(MAP_FILE); // Open the file
+	ifstream input(mapFile); // Open the file
 
 	if (input.fail()) // Unable to open the file; may not exist or wrong file name or wrong directory
 	{
@@ -45,7 +45,6 @@ void MapLoader::readMapFile(string &MAP_FILE,  Map &mapObject) throw(char)
 	string continentName;
 	int continentBonus;
 	bool endOfContinentSection = false;
-	Map testingMap(MAP_FILE);
 
 	while (!endOfContinentSection)
 	{
@@ -99,13 +98,13 @@ void MapLoader::readMapFile(string &MAP_FILE,  Map &mapObject) throw(char)
 
 	input.close(); // We're done reading the file
 
-	mapObject.linkAdj();
+	mapObject.linkAllAdjacentTerritories();
 
-	mapObject.LinkAllTerri();
+	mapObject.linkAllTerritories();
 
 	mapObject.isBadMap();
 
-	cout << "Map File: " << mapObject.getMapNam() << " is loaded successfully. " << endl;
+	cout << "Map File: " << mapObject.getMapName() << " is loaded successfully. " << endl;
 	cout << endl;
 
 

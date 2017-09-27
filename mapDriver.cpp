@@ -1,8 +1,4 @@
-//map driver
-
-
 #include <iostream>
-//#include <exception>
 #include "Map.h"
 
 
@@ -11,48 +7,15 @@ using namespace std;
 int main() {
 	Map newGameMap("America");
 
-	/*
-	North America=7
-	Central America=4
-	South America=3
-	*/
 	newGameMap.insertContinent("North America", 7);
 	newGameMap.insertContinent("Central America", 4);
 	newGameMap.insertContinent("South America", 3);
 
-	/*
-	AA,40,120,North America,AB
-	AB,105,155,North America,AA,AC,AF,AJ
-	AC,130,130,North America,AB,AF,AG,AD
-	AD,210,60,North America,AC,AG,AE,AI
-	AE,305,80,North America,AD,AI
-	AF,140,165,North America,AB,AC,AG,AJ,AK
-	AG,170,165,North America,AF,AC,AD,AH,AK,AL
-	AH,200,175,North America,AG,AI,AL,AM
-	AI,235,170,North America,AH,AD,AE,AM
-	AJ,120,210,North America,AB,AF,AK,AO,AN
-	AK,145,205,North America,AJ,AF,AG,AL,AO
-	AL,175,215,North America,AK,AG,AH,AM,AO
-	AM,205,215,North America,AL,AH,AI,AP
-	AN,40,250,North America,AJ,AT
-
-	AO,160,250,Central America,AJ,AK,AL,AQ
-	AP,215,260,Central America,AM,AQ,AS
-	AQ,185,270,Central America,AO,AP,AR
-	AR,230,300,Central America,AQ,AS,AT
-	AS,255,300,Central America,AR,AP,AU,AV
-
-	AT,230,335,South America,AN,AR,AU,AW,AX
-	AU,260,340,South America,AT,AS,AV,AX
-	AV,300,335,South America,AU,AS,AX
-	AW,240,390,South America,AT,AX
-	AX,260,395,South America,AW,AT,AU,AV
-	*/
 	//north america
 	float aa_pos[] = { 40,120 };
 	vector<string> aa_adj;
 	aa_adj.push_back("AB");
-	newGameMap.insertTerritory("AA", aa_pos, "North America",aa_adj);
+	newGameMap.insertTerritory("AA", aa_pos, "North America", aa_adj);
 
 	float ab_pos[] = { 105,155 };
 	vector<string> ab_adj;
@@ -159,7 +122,7 @@ int main() {
 	an_adj.push_back("AJ");
 	an_adj.push_back("AT");
 	newGameMap.insertTerritory("AN", an_pos, "North America", an_adj);
-	
+
 	//central america
 	float ao_pos[] = { 160,250 };
 	vector<string> ao_adj;
@@ -197,7 +160,7 @@ int main() {
 	as_adj.push_back("AU");
 	as_adj.push_back("AV");
 	newGameMap.insertTerritory("AS", as_pos, "Central America", as_adj);
-	
+
 	//south america
 	float at_pos[] = { 230,335 };
 	vector<string> at_adj;
@@ -235,14 +198,13 @@ int main() {
 	ax_adj.push_back("AT");
 	ax_adj.push_back("AU");
 	ax_adj.push_back("AV");
-	//ax_adj.push_back("AZ");
 
 	newGameMap.insertTerritory("AX", ax_pos, "South America", ax_adj);
 
 	try {
-		newGameMap.linkAdj();
+		newGameMap.linkAllAdjacentTerritories();
 
-		newGameMap.LinkAllTerri();
+		newGameMap.linkAllTerritories();
 
 
 		newGameMap.isBadMap();
