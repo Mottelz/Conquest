@@ -8,11 +8,20 @@ using namespace std;
 
 class MapLoader
 {
+	
+
 	public:
-		MapLoader();
+		MapLoader(/*const string MAP_NAME*/);
 		~MapLoader();
 		
-		void readMapFile(string &mapFile, Map &mapObject) throw(string);
+		void readMapFile(string &MAP_FILE, Map &mapObject);
+	
+	private:
+		//string MAP_FILE;
+		//inline string getMapName() {
+		//	return MAP_FILE;
+		//};
+		
 };
 
 

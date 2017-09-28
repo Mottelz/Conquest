@@ -60,6 +60,9 @@ public:
 	Territory* getTerriAddress(string territory);
 	vector<Territory*> terriOfPlayer(int _player);
 
+	bool seekPath(string startTerri, string endTerri, vector<string> &path);
+	bool isRepeated(vector<string> &list, string obj);
+
 	bool isBadMap() throw(string);
 	vector<string> getAllTerritoryNames();
 

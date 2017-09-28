@@ -215,6 +215,46 @@ vector<Territory*> Map::terriOfPlayer(int _player)
 	return myTerri;
 }
 
+bool Map::seekPath(string startTerri, string endTerri, vector<string> &path)
+{
+	//vector<string> path;
+	if (path.size() == 0)
+		path.push_back(startTerri);
+	int startID = seekTerritoryID(startTerri);
+	for (int i = 0; i < m_Territories[startID].m_AdjacentTerritories.size(); i++)
+	{
+		if (!isRepeated(path, m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName))
+		{
+			if (m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName == endTerri)
+			{
+				path.push_back(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName);
+				return true;
+			}
+			else
+			{
+				path.push_back(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName);
+				if (seekPath(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName, endTerri, path))
+					return true;
+				else
+					path.pop_back();
+			}
+
+		}
+	}
+	return false;
+}
+
+
+bool Map::isRepeated(vector<string> &list, string obj)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		if (list[i] == obj)
+			return true;
+	}
+	return false;
+}
+
 bool Map::isBadMap() throw(string)
 {
 	if (m_ValidMap)
@@ -256,7 +296,7 @@ bool Map::isBadMap() throw(string)
 			}
 		}
 	}
-		return false;
+	return false;
 
 }
 
