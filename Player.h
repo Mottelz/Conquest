@@ -11,6 +11,7 @@ class Player {
 
 public:
 	Player();
+	Player(std::string name);
 
 	void reinforce();
 	void attack();
@@ -24,4 +25,5 @@ private:
 	DiceCup m_DiceCup;
 	Hand m_Hand;
 	vector<Territory> m_PlayerTerritories;
+	std::string m_Name;
 };

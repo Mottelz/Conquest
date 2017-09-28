@@ -5,23 +5,33 @@
 using namespace std;
 
 int main() {
-	
+	//Load map
 	string mapFile = "maps/World.map";
 	Map map;
 	MapLoader maploader;
 	maploader.readMapFile(mapFile, map);
-
-	// SHOW THAT PLAYER HAS CARDS
-	cout << "Mottel's cards: " << endl;
+	//Make Deck
 	Deck testDeck = Deck(map.getAllTerritoryNames(), map.getTotalNumberOfTerritories());
-	Player Mottel = Player();
+	//Make Player
+	Player Mottel = Player("Mottel");
+
+	//Player Picks Cards
 	for (int i = 0; i < 5; ++i) {
 		Mottel.drawCard(testDeck);
 	}
+
+	//Display Player's Hand
+	cout << "Mottel's cards: " << endl;
 	Mottel.displayHand();
-	
-	// SHOW THAT PLAYER HAS DICE
+
+
+	//Player Rolls Dice
 	cout << "\nMottel's dice: " << endl;
 	Mottel.rollDice(3);
-	return 0;
+	
+
+	//Player does the other things
+	Mottel.reinforce();
+	Mottel.fortify();
+	Mottel.attack();
 }

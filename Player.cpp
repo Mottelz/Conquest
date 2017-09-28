@@ -12,11 +12,24 @@ int numberOfDice;
 Player::Player() {
 	m_DiceCup = DiceCup();
 	m_Hand = Hand();
+	m_Name = "Nameless";
 }
 
-void Player::reinforce() {}
-void Player::attack() {}
-void Player::fortify() {}
+Player::Player(std::string name){
+	m_Name = name;
+	m_DiceCup = DiceCup();
+	m_Hand = Hand();
+};
+
+void Player::reinforce() {
+	cout << m_Name << " just got reinforcements!" << endl;
+}
+void Player::attack() {
+	cout << m_Name <<" just attacked!" << endl;
+}
+void Player::fortify() {
+	cout << m_Name << " just fortified their territories!" << endl;
+}
 
 std::vector<int> Player::rollDice(int numToRoll){
 	m_DiceCup.setNumberOfDice(numToRoll);
