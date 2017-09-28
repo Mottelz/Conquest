@@ -57,6 +57,9 @@ public:
 
 	void assignArmies(int _player, string territory);
 
+	Territory* getTerriAddress(string territory);
+	vector<Territory*> terriOfPlayer(int _player);
+
 	bool isBadMap() throw(string);
 	vector<string> getAllTerritoryNames();
 
@@ -71,7 +74,7 @@ private:
 	vector<Territory> m_Territories;
 	vector<Continent> m_Continents;
 	string m_MapName;
-	bool m_ValidMap = true;
+	bool m_ValidMap;
 
 };
 

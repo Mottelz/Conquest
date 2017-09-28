@@ -18,11 +18,14 @@ Continent::Continent()
 
 Map::Map()
 {
+	this->m_ValidMap = true;
 }
 
 Map::Map(string name)
 {
-	m_MapName = name;
+	this->m_MapName = name;
+	this->m_ValidMap = true;
+
 }
 
 string Map::getMapName()
@@ -189,6 +192,27 @@ void Map::assignArmies(int _player, string territory)
 		m_Territories[_id].m_Armies++;
 	}
 	
+}
+
+Territory* Map::getTerriAddress(string territory)
+{
+	int territoryID = seekTerritoryID(territory);
+	return &m_Territories[territoryID];
+}
+
+
+vector<Territory*> Map::terriOfPlayer(int _player)
+{
+	vector<Territory*> myTerri;
+	for (int i = 0; i < m_Territories.size(); i++)
+	{
+		if (m_Territories[i].m_Owner == _player)
+		{
+			myTerri.push_back(&m_Territories[i]);
+		}
+
+	}
+	return myTerri;
 }
 
 bool Map::isBadMap() throw(string)

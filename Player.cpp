@@ -46,15 +46,22 @@ void Player::displayHand()
 	m_Hand.printHand();
 }
 
-//void Player::assignTerritories(int number, Map& map) 
-//{
-//	srand((int)time(0));
-//	int random;
-//	int totalNumberOfTerritories = map.getTotalNumberOfTerritories();
-//	for (int i = 0; i < number; i++)
-//	{
-//		random = (rand() % totalNumberOfTerritories);
-//		
-//	}
-//
-//}
+
+void Player::assignTerritory(string territoryName, Map& map)
+{
+	map.assignArmies(1, territoryName);
+	m_PlayerTerritories.push_back(map.getTerriAddress(territoryName));
+}
+
+void Player::displayPlayerTerritories()
+{
+	cout << "Player " << this->m_Name << endl;
+	cout << "My territories: " << endl;
+	for (int i = 0; i < m_PlayerTerritories.size(); i++)
+	{
+
+		cout << m_PlayerTerritories[i]->m_TerritoryName ;
+		cout << ", Armies " << m_PlayerTerritories[i]->m_Armies << endl;
+
+	}
+}
