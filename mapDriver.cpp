@@ -224,15 +224,10 @@ int main() {
 	newGameMap.assignArmies(1, "AW");
 	newGameMap.assignArmies(1, "AW");
 	newGameMap.assignArmies(1, "AT");
-
 	newGameMap.assignArmies(2, "AW");
-
 	newGameMap.assignArmies(2, "AX");
 	newGameMap.assignArmies(2, "AV");
-
 	newGameMap.toString();
-
-	system("PAUSE");
 
 	return 0;
 }
