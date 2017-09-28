@@ -20,8 +20,8 @@ public:
 	void drawCard(Deck &Deck);
 	void displayHand();
 
-	void Player::assignTerritory(string territoryName, Map& map);
-	void Player::displayPlayerTerritories();
+	void assignTerritory(string territoryName, Map& map);
+	void displayPlayerTerritories();
 
 private:
 	DiceCup m_DiceCup;

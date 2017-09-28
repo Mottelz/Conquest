@@ -256,7 +256,6 @@ bool Map::isBadMap() throw(string)
 			}
 		}
 	}
-	else
 		return false;
 
 }
