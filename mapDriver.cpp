@@ -7,6 +7,9 @@
 using namespace std;
 
 int main() {
+	//valid map
+	cout << "Map1 " <<endl;
+
 	Map newGameMap("America");
 
 	newGameMap.insertContinent("North America", 7);
@@ -200,10 +203,6 @@ int main() {
 	ax_adj.push_back("AT");
 	ax_adj.push_back("AU");
 	ax_adj.push_back("AV");
-	//ax_adj.push_back("AZ");
-
-
-
 	newGameMap.insertTerritory("AX", ax_pos, "South America", ax_adj);
 
 	try {
@@ -218,6 +217,7 @@ int main() {
 
 	}
 	catch (string e) {
+		cout << endl;
 		cout << "Error: invalid map file. " << endl;
 		cout << e << endl;
 	}
@@ -233,7 +233,101 @@ int main() {
 
 	newGameMap.toString();
 
-	system("PAUSE");
+	// seeking path
+	vector<string> myPath;
+
+	newGameMap.seekPath("AA", "AT", myPath);
+
+	cout << "Path from " << myPath[0] << " to " << myPath[myPath.size() - 1] << endl;
+	cout << myPath[0];
+	for (int i = 1; i < myPath.size(); i++)
+	{
+		cout << " --> " << myPath[i];
+	}
+	cout << endl;
+	
+	//invalid map
+	cout << "Map2 " << endl;
+
+	Map invalidMap("America");
+
+	invalidMap.insertContinent("North America", 7);
+	invalidMap.insertContinent("Central America", 4);
+	invalidMap.insertContinent("South America", 3);
+
+	//north america
+	invalidMap.insertTerritory("AA", aa_pos, "North America", aa_adj);
+
+	invalidMap.insertTerritory("AB", ab_pos, "North America", ab_adj);
+
+	invalidMap.insertTerritory("AC", ac_pos, "North America", ac_adj);
+
+	invalidMap.insertTerritory("AD", ad_pos, "North America", ad_adj);
+
+	invalidMap.insertTerritory("AE", ae_pos, "North America", ae_adj);
+
+	invalidMap.insertTerritory("AF", af_pos, "North America", af_adj);
+
+	invalidMap.insertTerritory("AG", ag_pos, "North America", ag_adj);
+
+	invalidMap.insertTerritory("AH", ah_pos, "North America", ah_adj);
+
+	invalidMap.insertTerritory("AI", ai_pos, "North America", ai_adj);
+
+	invalidMap.insertTerritory("AJ", aj_pos, "North America", aj_adj);
+
+	invalidMap.insertTerritory("AK", ak_pos, "North America", ak_adj);
+
+	invalidMap.insertTerritory("AL", al_pos, "North America", al_adj);
+
+	invalidMap.insertTerritory("AM", am_pos, "North America", am_adj);
+
+	invalidMap.insertTerritory("AN", an_pos, "North America", an_adj);
+
+	//central america
+	invalidMap.insertTerritory("AO", ao_pos, "Central America", ao_adj);
+
+	invalidMap.insertTerritory("AP", ap_pos, "Central America", ap_adj);
+
+	invalidMap.insertTerritory("AQ", aq_pos, "Central America", aq_adj);
+
+	invalidMap.insertTerritory("AR", ar_pos, "Central America", ar_adj);
+
+	invalidMap.insertTerritory("AS", as_pos, "Central America", as_adj);
+
+	//south america
+	invalidMap.insertTerritory("AT", at_pos, "South America", at_adj);
+
+	invalidMap.insertTerritory("AU", au_pos, "South America", au_adj);
+
+	invalidMap.insertTerritory("AV", av_pos, "South America", av_adj);
+
+	invalidMap.insertTerritory("AW", aw_pos, "South America", aw_adj);
+	
+	//error input
+	ax_adj.push_back("AZ");
+	invalidMap.insertTerritory("AX", ax_pos, "South America", ax_adj);
+
+	try {
+		invalidMap.linkAllAdjacentTerritories();
+
+		invalidMap.linkAllTerritories();
+
+
+		invalidMap.isBadMap();
+
+		invalidMap.toString();
+
+	}
+	catch (string e) {
+		cout << endl;
+		cout << "Error: invalid map file. " << endl;
+		cout << e << endl;
+	}
+
+
+	cout << endl;
+
 
 	return 0;
 }

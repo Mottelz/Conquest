@@ -18,11 +18,14 @@ Continent::Continent()
 
 Map::Map()
 {
+	this->m_ValidMap = true;
 }
 
 Map::Map(string name)
 {
-	m_MapName = name;
+	this->m_MapName = name;
+	this->m_ValidMap = true;
+
 }
 
 string Map::getMapName()
@@ -191,6 +194,67 @@ void Map::assignArmies(int _player, string territory)
 	
 }
 
+Territory* Map::getTerriAddress(string territory)
+{
+	int territoryID = seekTerritoryID(territory);
+	return &m_Territories[territoryID];
+}
+
+
+vector<Territory*> Map::terriOfPlayer(int _player)
+{
+	vector<Territory*> myTerri;
+	for (int i = 0; i < m_Territories.size(); i++)
+	{
+		if (m_Territories[i].m_Owner == _player)
+		{
+			myTerri.push_back(&m_Territories[i]);
+		}
+
+	}
+	return myTerri;
+}
+
+bool Map::seekPath(string startTerri, string endTerri, vector<string> &path)
+{
+	//vector<string> path;
+	if (path.size() == 0)
+		path.push_back(startTerri);
+	int startID = seekTerritoryID(startTerri);
+	for (int i = 0; i < m_Territories[startID].m_AdjacentTerritories.size(); i++)
+	{
+		if (!isRepeated(path, m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName))
+		{
+			if (m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName == endTerri)
+			{
+				path.push_back(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName);
+				return true;
+			}
+			else
+			{
+				path.push_back(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName);
+				if (seekPath(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName, endTerri, path))
+					return true;
+				else
+					path.pop_back();
+			}
+
+		}
+	}
+	return false;
+}
+
+
+bool Map::isRepeated(vector<string> &list, string obj)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		if (list[i] == obj)
+			return true;
+	}
+	return false;
+}
+
 bool Map::isBadMap() throw(string)
 {
 	if (m_ValidMap)
@@ -232,8 +296,7 @@ bool Map::isBadMap() throw(string)
 			}
 		}
 	}
-	else
-		return false;
+	return false;
 
 }
 
