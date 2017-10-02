@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <stdlib.h>     // srand, rand 
 #include <time.h>       // time 
@@ -12,45 +11,44 @@ int main() {
 	DiceCup dice1;
 	DiceCup dice2;
 
-	//set array to 0's
-	dice1.initializeArray();
-	dice2.initializeArray();
-
 	//seed to generate random numbers
 	srand(time(NULL));
-	int userDice1,userDice2;
+	int userDice1, userDice2;
 	cout << "Please enter enter the number of dices for player1 (1-3 max):" << endl;
 	cin >> userDice1;
 	cout << "Please enter enter the number of dices  for player2 (1-3 max):" << endl;
 	cin >> userDice2;
 	do {
-	
-	//set ctor number of dice 
-	dice1.setNumberOfDice(userDice1);
-	dice2.setNumberOfDice(userDice2);
-
-	//******************************DICE1*********************************
-	cout << "\n\td1 dice rolled..." << endl;
-	cout << "==========================================" << endl;
-	dice1.rollDice();
-	cout << "==========================================";
-
-	cout << "\n\tThe percentage of dice1" << endl;
-	dice1.showPercentage();
-	cout << "==========================================" << endl;
-	
-	//******************************DICE2*********************************
-	cout << "\n\td2 dice rolled..." << endl;
-	cout << "==========================================" << endl;
-	dice2.rollDice();
-	cout << "==========================================";
-
-	cout << "\n\tThe percentage of dice2" << endl;
-	dice2.showPercentage();
-	cout << "==========================================";
-
-	test++;
-	} while (test < 3);
+		//set ctor number of dice 
+		dice1.setNumberOfDice(userDice1);
+		dice2.setNumberOfDice(userDice2);
+		//******************************DICE1*********************************
+		cout << "\n********d1 dice rolled...********" << endl;
+		cout << "==========================================" << endl;
+		
+		for (int i = 0; i < dice1.getNumberOfDice(); i++) {
+			dice1.storeDiceValue(dice1.rollDice());
+			dice1.displayCup();
+			dice1.resetContainer();
+			cout << "==========================================";
+			cout << "\n\tThe percentage of dice1" << endl;
+			dice1.showPercentage();
+			cout << "==========================================" << endl;
+		}
+		//******************************DICE2*********************************
+		cout << "\n********d2 dice rolled...********" << endl;
+		cout << "==========================================" << endl;
+		for (int i = 0; i < dice2.getNumberOfDice(); i++) {
+			dice2.storeDiceValue(dice2.rollDice());
+			dice2.displayCup();
+			dice2.resetContainer();
+			cout << "==========================================";
+			cout << "\n\tThe percentage of dice2" << endl;
+			dice2.showPercentage();
+			cout << "==========================================" << endl;
+		}
+		cin >> test;
+	} while (test != -1);
 	cout << "\n";
 	return 0;
 }
