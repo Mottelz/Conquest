@@ -4,7 +4,6 @@
 #include "Dice.h"
 #include "Cards.h"
 #include "Map.h"
-#include "MapLoader.h"
 
 
 class Player {

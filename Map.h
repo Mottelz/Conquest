@@ -5,8 +5,6 @@
 #include <vector>
 #include <string>
 #include <exception>
-//#include "Player.h"
-
 using namespace std;
 
 
@@ -80,5 +78,15 @@ private:
 	bool m_ValidMap;
 
 };
+
+class MapLoader
+{
+	public:
+		MapLoader();
+		~MapLoader();
+		
+		void readMapFile(string &mapFile, Map &mapObject) throw(string);
+};
+
 
 #endif // MAP_H
