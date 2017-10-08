@@ -13,13 +13,39 @@ Player::Player() {
 	m_DiceCup = DiceCup();
 	m_Hand = Hand();
 	m_Name = "Nameless";
+	m_PlayerID = 0;
 }
 
 Player::Player(std::string name){
 	m_Name = name;
 	m_DiceCup = DiceCup();
 	m_Hand = Hand();
+	m_PlayerID = 0;  // To be set at startup
 };
+
+int Player::getPlayerID() {
+	return m_PlayerID;
+}
+
+int Player::getNumberOfTerritories() {
+	return m_PlayerTerritories.size();
+}
+
+string Player::getName() {
+	return m_Name;
+}
+
+vector<string> Player::getPlayerTerritoryNames() {
+	vector<string> toReturn;
+	for (int i = 0; i < m_PlayerTerritories.size(); i++) {
+		toReturn.push_back(m_PlayerTerritories[i]->m_TerritoryName);
+	}
+	return toReturn;
+}
+
+void Player::setPlayerID(int ID) {
+	m_PlayerID = ID;
+}
 
 void Player::reinforce() {
 	cout << m_Name << " just got reinforcements!" << endl;
@@ -31,7 +57,7 @@ void Player::fortify() {
 	cout << m_Name << " just fortified their territories!" << endl;
 }
 
-std::vector<int> Player::rollDice(int numToRoll){
+int Player::rollDice(int numToRoll){
 	m_DiceCup.setNumberOfDice(numToRoll);
 	return m_DiceCup.rollDice();
 }
@@ -49,19 +75,35 @@ void Player::displayHand()
 
 void Player::assignTerritory(string territoryName, Map& map)
 {
-	map.assignArmies(1, territoryName);
 	m_PlayerTerritories.push_back(map.getTerriAddress(territoryName));
+}
+
+string Player::deallocateTerritory()
+{
+	// Delete and return the last element in the vector
+	string territory = m_PlayerTerritories[m_PlayerTerritories.size() - 1]->m_TerritoryName;
+	m_PlayerTerritories.pop_back();
+	return territory;
 }
 
 void Player::displayPlayerTerritories()
 {
-	cout << "Player " << this->m_Name << endl;
-	cout << "My territories: " << endl;
 	for (int i = 0; i < m_PlayerTerritories.size(); i++)
 	{
 
 		cout << m_PlayerTerritories[i]->m_TerritoryName ;
-		cout << ", Armies " << m_PlayerTerritories[i]->m_Armies << endl;
+		cout << ", Armies : " << m_PlayerTerritories[i]->m_Armies << endl;
 
 	}
+}
+
+int Player::numberOfArmiesAssigned()
+{
+	int count=0;
+	for (int i = 0; i < m_PlayerTerritories.size(); i++)
+	{
+		count += m_PlayerTerritories[i]->m_Armies;
+	}
+	
+	return count;
 }
