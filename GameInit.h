@@ -11,9 +11,9 @@ class GameInit {
 private:
     vector<string> m_MapNames;
     vector<Player> m_Players;
-    MapLoader m_MapLoader;
-    Map m_Map;
-    Deck m_Deck;
+    MapLoader *m_MapLoader;
+    Map *m_Map;
+    Deck *m_Deck;
     string m_SelectedMap;
 public:
     GameInit();

@@ -4,9 +4,9 @@ using namespace std;
 
 //Just creates the empty objects
 GameInit::GameInit(){
-    Map m_Map = Map();
-    Deck m_Deck = Deck();
-    MapLoader m_MapLoader = MapLoader();
+    m_Map = new Map();
+    m_Deck = new Deck();
+    m_MapLoader = new MapLoader();
     m_MapNames = vector<string>();
     m_Players = vector<Player>();
     m_MapNames.push_back("Canada.map");
@@ -19,9 +19,9 @@ GameInit::GameInit(){
 
 //Destory everything!
 GameInit::~GameInit(){
-    m_Map.~Map();
-    m_Deck.~Deck();
-    m_MapLoader.~MapLoader();
+    m_Map->~Map();
+    m_Deck->~Deck();
+    m_MapLoader->~MapLoader();
     m_MapNames.clear();
     m_Players.clear();
 }
@@ -57,25 +57,20 @@ void GameInit::getUserPrefernces(){
         haveMap = true;
         m_SelectedMap = "maps/" + m_MapNames[askUserForMapSelection()];
         try{
-            m_MapLoader.readMapFile(m_SelectedMap, m_Map);
+            m_MapLoader->readMapFile(m_SelectedMap, *m_Map);
         } catch (string error){
+            delete m_Map;
+            m_Map = new Map();
             cerr << "We got an error trying to load the map: " << endl << error << endl;
             haveMap = false;
         }
     } while (!haveMap);
 
-    m_Deck = Deck(m_Map.getAllTerritoryNames(), m_Map.getTotalNumberOfTerritories());
+    m_Deck = new Deck(m_Map->getAllTerritoryNames(), m_Map->getTotalNumberOfTerritories());
 }
 
 void GameInit::toString(){
     cout << "Here's the map:" << endl;
-    m_Map.toString();
-
-    
-    m_Deck.toString();
-
-    cout << "Here are the players: " << endl;
-    for(int i = 0; i < m_Players.size(); i++){
-        m_Players[i].toString();
-    };
+    m_Map->toString();
+    m_Deck->toString();
 }
