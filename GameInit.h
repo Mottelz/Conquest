@@ -22,4 +22,5 @@ public:
     void createDeck();
     void getUserPrefernces();
     int askUserForMapSelection();
+    void toString();
 };

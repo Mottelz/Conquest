@@ -104,6 +104,13 @@ int Deck::exchange(std::vector<Card> &cardsToSwap) {
     return m_ArmiesForExchange;
 }
 
+void Deck::toString(){
+    std::cout << "Here is the deck:" << std::endl;
+    for(int i = 0; i < m_Cards.size(); i++){
+        m_Cards[i].printCard();
+    }
+}
+
 //Constructor and Destructor
 Hand::Hand() {}
 Hand::~Hand() {

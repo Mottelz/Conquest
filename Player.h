@@ -28,6 +28,7 @@ public:
 	string deallocateTerritory();
 	void displayPlayerTerritories();
 	int numberOfArmiesAssigned();
+	void toString();
 
 private:
 	DiceCup m_DiceCup;

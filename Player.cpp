@@ -107,3 +107,13 @@ int Player::numberOfArmiesAssigned()
 	
 	return count;
 }
+
+void Player::toString(){
+	cout << "Here's what " << m_Name << " has:" << endl;
+
+	cout << "Cards: " << endl;
+	displayHand();
+
+	cout << "Territories: " << endl;
+	displayPlayerTerritories();
+}

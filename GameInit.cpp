@@ -7,7 +7,8 @@ GameInit::GameInit(){
     Map m_Map = Map();
     Deck m_Deck = Deck();
     MapLoader m_MapLoader = MapLoader();
-    vector<string> m_MapNames;
+    m_MapNames = vector<string>();
+    m_Players = vector<Player>();
     m_MapNames.push_back("Canada.map");
     m_MapNames.push_back("Earth.map");
     m_MapNames.push_back("Invalid.map");
@@ -28,9 +29,9 @@ GameInit::~GameInit(){
 int GameInit::askUserForMapSelection(){
     int tempMap = -1;
     do {
-        cout << "Use the numbers to select a map" << cout;
+        cout << "Use the numbers to select a map" << endl;
         for(int i = 0; i < m_MapNames.size(); i++){
-            cout << char(i) << ": " << m_MapNames[i] << endl;
+            cout << i << ": " << m_MapNames[i] << endl;
         }
         cin >> tempMap;
     } while (tempMap >= m_MapNames.size() || tempMap < 0);
@@ -48,20 +49,33 @@ void GameInit::getUserPrefernces(){
         cin >> tempPlayers;
     } while (tempPlayers < 2 || tempPlayers > 6);
     
-    for(int i = 0; i <= tempPlayers; i++) {
+    for(int i = 0; i < tempPlayers; i++) {
         m_Players.push_back(Player());
     }
     
     do {
-        m_SelectedMap = m_MapNames[askUserForMapSelection()];
+        haveMap = true;
+        m_SelectedMap = "maps/" + m_MapNames[askUserForMapSelection()];
         try{
             m_MapLoader.readMapFile(m_SelectedMap, m_Map);
         } catch (string error){
             cerr << "We got an error trying to load the map: " << endl << error << endl;
-            break;
+            haveMap = false;
         }
-        haveMap = true;
     } while (!haveMap);
 
     m_Deck = Deck(m_Map.getAllTerritoryNames(), m_Map.getTotalNumberOfTerritories());
+}
+
+void GameInit::toString(){
+    cout << "Here's the map:" << endl;
+    m_Map.toString();
+
+    
+    m_Deck.toString();
+
+    cout << "Here are the players: " << endl;
+    for(int i = 0; i < m_Players.size(); i++){
+        m_Players[i].toString();
+    };
 }
