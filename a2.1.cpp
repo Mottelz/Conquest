@@ -5,5 +5,6 @@ int main() {
 
     theGame.getUserPrefernces();
     theGame.toString();
-    theGame.~GameInit();
+
+    return 0;
 }

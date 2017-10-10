@@ -19,11 +19,11 @@ GameInit::GameInit(){
 
 //Destory everything!
 GameInit::~GameInit(){
-    m_Map->~Map();
-    m_Deck->~Deck();
-    m_MapLoader->~MapLoader();
     m_MapNames.clear();
     m_Players.clear();
+    m_MapLoader->~MapLoader();
+    m_Map->~Map();
+    m_Deck->~Deck();
 }
 
 int GameInit::askUserForMapSelection(){
@@ -73,4 +73,8 @@ void GameInit::toString(){
     cout << "Here's the map:" << endl;
     m_Map->toString();
     m_Deck->toString();
+
+    for (int i = 0; i < m_Players.size(); ++i) {
+        m_Players[i].toString();
+    }
 }
