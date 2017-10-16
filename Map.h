@@ -54,6 +54,7 @@ public:
 	void linkAllTerritories();
 
 	void assignArmies(int _player, string territory);
+	int Map::computeTotalBonus(int playerID);
 
 	Territory* getTerriAddress(string territory);
 	vector<Territory*> terriOfPlayer(int _player);

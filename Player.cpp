@@ -107,3 +107,9 @@ int Player::numberOfArmiesAssigned()
 	
 	return count;
 }
+
+int Player::getPlayerContinentBonus(Map& map)
+{
+	int bonus = map.computeTotalBonus(m_PlayerID);
+	return bonus;
+}

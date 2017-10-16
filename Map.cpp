@@ -198,6 +198,30 @@ void Map::assignArmies(int _player, string territory)
 	
 }
 
+// Returns the total bonus a player gets for owning one or more continents
+int Map::computeTotalBonus(int playerID)
+{
+	int totalBonus = 0;
+	bool ownsContinent;
+	for (int i = 0; i < m_Continents.size(); i++)
+	{
+		ownsContinent = true;
+		for (int j = 0; j < m_Continents[i].m_ContinentTerritories.size(); i++)
+		{
+			if (m_Continents[i].m_ContinentTerritories[j]->m_Owner != playerID)
+			{
+				ownsContinent = false;  
+				break; // If one of the territories from this continent doesn't belong to the player then the player doesn't own the territory
+			}
+		}
+
+		if (ownsContinent == true) // If we didn't break from the loop then the player owned all the territories from this continent
+			totalBonus += m_Continents[i].m_ContinentBonus;  // Add the bonus of this continent to the total
+	}
+
+	return totalBonus;
+}
+
 Territory* Map::getTerriAddress(string territory)
 {
 	int territoryID = seekTerritoryID(territory);
