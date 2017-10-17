@@ -206,12 +206,12 @@ int Map::computeTotalBonus(int playerID)
 	for (int i = 0; i < m_Continents.size(); i++)
 	{
 		ownsContinent = true;
-		for (int j = 0; j < m_Continents[i].m_ContinentTerritories.size(); i++)
+		for (int j = 0; j < m_Continents[i].m_ContinentTerritories.size(); j++)
 		{
 			if (m_Continents[i].m_ContinentTerritories[j]->m_Owner != playerID)
 			{
 				ownsContinent = false;  
-				break; // If one of the territories from this continent doesn't belong to the player then the player doesn't own the territory
+				break; // If one of the territories from this continent doesn't belong to the player then the player doesn't own the continent
 			}
 		}
 
