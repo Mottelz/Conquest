@@ -28,6 +28,7 @@ public:
 	string deallocateTerritory();
 	void displayPlayerTerritories();
 	int numberOfArmiesAssigned();
+	bool checkOwnedCountry(string territory, Player p);
 	int getPlayerContinentBonus(Map& map);
 
 private:
