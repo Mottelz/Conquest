@@ -108,6 +108,18 @@ int Player::numberOfArmiesAssigned()
 	return count;
 }
 
+//check if player own a country
+bool Player::checkOwnedCountry(string territory, Player p) {
+
+	for (int i = 0; i < p.getNumberOfTerritories()-1; i++) {
+
+		if (p.m_PlayerTerritories[i]->m_TerritoryName == territory) {
+			return true;		
+		}
+	}
+	return false;
+}
+
 int Player::getPlayerContinentBonus(Map& map)
 {
 	int bonus = map.computeTotalBonus(m_PlayerID);
