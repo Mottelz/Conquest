@@ -9,8 +9,42 @@ using namespace std;
 
 Territory::Territory()
 {
-	this->m_Owner = 0;
+	this->m_OwnerID = 0;
 	this->m_Armies = 0;
+	this->m_Owner = NULL;
+}
+
+bool Territory::enemyNeighbourExists()
+{
+	for (int i = 0; i < m_AdjacentTerritories.size(); i++)
+	{
+		if (this->m_Owner != this->m_AdjacentTerritories[i]->getOwnerPointer())
+			return true;
+	}
+	return false;
+}
+
+void Territory::enemyNeighboursDisplay()
+{
+	cout << "Enemy Adjacent Territories of " << this->m_TerritoryName << ": " << endl;
+	for (int i = 0; i < this->m_AdjacentTerritories.size(); i++)
+	{
+		if (this->getOwnerPointer() != this->m_AdjacentTerritories[i]->getOwnerPointer())
+		{
+			printf("[%03d]|%s|Armies: %d \n", this->m_AdjacentTerritories[i]->getTerriID(), this->m_AdjacentTerritories[i]->getTerriNam().c_str(), this->m_AdjacentTerritories[i]->getNumOfArmies());
+		}
+	}
+	cout << endl;
+}
+
+bool Territory::friendNeighbourExists()
+{
+	for (int i = 0; i < m_AdjacentTerritories.size(); i++)
+	{
+		if (this->m_Owner == this->m_AdjacentTerritories[i]->getOwnerPointer())
+			return true;
+	}
+	return false;
 }
 
 Continent::Continent() 
@@ -18,6 +52,35 @@ Continent::Continent()
 	this->m_ContinentLinks = 0;
 	this->m_ContinentBonus = 0;
 	this->m_NumberOfTerritories = 0;
+	this->m_OwnerID = 0;
+	this->m_Owner = NULL;
+}
+
+bool Continent::contiUpdate(Territory * terri)
+{
+	Player *tempP = terri->getOwnerPointer();
+	if (tempP == this->getOwnerPointer())
+		return false;
+	else {
+		for (int i = 0; i < m_NumberOfTerritories; i++)
+		{
+			if (tempP != m_ContinentTerritories[i]->getOwnerPointer())
+			{
+				if (this->getOwnerPointer() == NULL)
+					return false;
+				else
+				{
+					this->m_Owner = NULL;
+					this->m_OwnerID = 0;
+
+					return true;
+				}
+			}
+		}
+		this->m_Owner = tempP;
+		this->m_OwnerID = m_ContinentTerritories[0]->getOwnerID();
+		return true;
+	}
 }
 
 Map::Map()
@@ -42,6 +105,11 @@ int Map::getTotalNumberOfTerritories()
 	return m_Territories.size();
 }
 
+int Map::getTotalNumberOfContinents()
+{
+	return this->m_Continents.size();
+}
+
 void Map::setMapValidate(bool boln)
 {
 	this->m_ValidMap = boln;
@@ -50,6 +118,16 @@ void Map::setMapValidate(bool boln)
 bool Map::isValid()
 {
 	return this->m_ValidMap;
+}
+
+bool Map::isAdjacent(int terriID_1, int terriID_2)
+{
+	for(int i=0; i<m_Territories[terriID_1].m_AdjacentTerritories.size();i++)
+	{
+		if (m_Territories[terriID_1].m_AdjacentTerritories[i] == &m_Territories[terriID_2])
+			return true;
+	}
+	return false;
 }
 
 // Insert a new continent
@@ -92,6 +170,7 @@ void Map::insertTerritory(string name, float position[2], string continentName, 
 	{
 		int tempContinentID = seekContinentID(continentName);
 		territory.m_Continent = &m_Continents[tempContinentID];
+		territory.m_TerritoryID = m_Territories.size();
 		m_Territories.push_back(territory);
 		m_Continents[tempContinentID].m_NumberOfTerritories++;
 		m_Continents[tempContinentID].m_TerritoryID.push_back(m_Territories.size()-1);
@@ -127,6 +206,36 @@ int Map::seekTerritoryID(string territoryName)
 		}
 	}
 	return -1;
+}
+
+string Map::getTerritoryNam(int terriID)
+{
+	return m_Territories[terriID].m_TerritoryName;
+}
+
+int Map::getOwnerIDOfTheTerritory(int terriID)
+{
+	return this->m_Territories[terriID].getOwnerID();
+}
+
+Player * Map::getOwnerOfTheTerritory(int terriID)
+{
+	return this->m_Territories[terriID].getOwnerPointer();
+}
+
+int Map::getOwnerIDOfTheContinent(int contiID)
+{
+	return this->m_Continents[contiID].getOwnerID();
+}
+
+Player * Map::getOwnerOfTheContinent(int contiID)
+{
+	return this->m_Continents[contiID].getOwnerPointer();
+}
+
+int Map::getArmyNumOfTheTerritory(int terriID)
+{
+	return this->m_Territories[terriID].getNumOfArmies();
 }
 
 // Link one adjacent territory to the current territory
@@ -187,16 +296,65 @@ void Map::linkAllTerritories()
 
 
 // Assign one army of the current player into current territory if available
-void Map::assignArmies(int _player, string territory)
+bool Map::assignArmies(Player *_player, string territory)
 {
 	int _id = seekTerritoryID(territory);
-	if ((m_Territories[_id].m_Owner == 0) || (m_Territories[_id].m_Owner == _player))
+	if ((m_Territories[_id].m_Owner == NULL) || (m_Territories[_id].m_Owner == _player))
 	{
 		m_Territories[_id].m_Owner = _player;
+		m_Territories[_id].m_OwnerID = _player->getPlayerID();
 		m_Territories[_id].m_Armies++;
+		_player->myTerriUpdate(this);
+		if(m_Territories[_id].m_Continent->contiUpdate(&m_Territories[_id]))
+			_player->myContiUpdate(this);
+		return true;
 	}
+	return false;
 	
 }
+
+bool Map::removeArmies(Player * _player, string territory)
+{
+	int _id = seekTerritoryID(territory);
+	if ((m_Territories[_id].m_Armies > 0) && (m_Territories[_id].m_Owner == _player))
+	{
+		m_Territories[_id].m_Armies--;
+		if (m_Territories[_id].m_Armies == 0)
+		{
+			m_Territories[_id].m_Owner = NULL;
+			m_Territories[_id].m_OwnerID = 0;
+		}
+		_player->myTerriUpdate(this);
+		if (m_Territories[_id].m_Continent->contiUpdate(&m_Territories[_id]))
+			_player->myContiUpdate(this);
+
+		return true;
+	}
+	return false;
+}
+
+bool Map::allTerriAssigned()
+{
+	for (int i = 0; i < m_Territories.size(); i++)
+	{
+		if (m_Territories[i].getOwnerPointer() == NULL)
+			return false;
+	}
+	return true;
+}
+
+bool Map::isAssigned(int terriID)
+{
+	if(this->m_Territories[terriID].getOwnerPointer() == NULL)
+		return false;
+	else
+	{
+		return true;
+	}
+}
+
+
+
 
 // Returns the total bonus a player gets for owning one or more continents
 int Map::computeTotalBonus(int playerID)
@@ -206,12 +364,12 @@ int Map::computeTotalBonus(int playerID)
 	for (int i = 0; i < m_Continents.size(); i++)
 	{
 		ownsContinent = true;
-		for (int j = 0; j < m_Continents[i].m_ContinentTerritories.size(); j++)
+		for (int j = 0; j < m_Continents[i].m_ContinentTerritories.size(); i++)
 		{
-			if (m_Continents[i].m_ContinentTerritories[j]->m_Owner != playerID)
+			if (m_Continents[i].m_ContinentTerritories[j]->m_OwnerID != playerID)
 			{
 				ownsContinent = false;  
-				break; // If one of the territories from this continent doesn't belong to the player then the player doesn't own the continent
+				break; // If one of the territories from this continent doesn't belong to the player then the player doesn't own the territory
 			}
 		}
 
@@ -228,13 +386,23 @@ Territory* Map::getTerriAddress(string territory)
 	return &m_Territories[territoryID];
 }
 
+Territory * Map::getTerriAddress(int terriID)
+{
+	return &m_Territories[terriID];
+}
+
+Continent * Map::getContiAddress(int contiID)
+{
+	return &m_Continents[contiID];
+}
+
 
 vector<Territory*> Map::terriOfPlayer(int _player)
 {
 	vector<Territory*> myTerri;
 	for (int i = 0; i < m_Territories.size(); i++)
 	{
-		if (m_Territories[i].m_Owner == _player)
+		if (m_Territories[i].m_OwnerID == _player)
 		{
 			myTerri.push_back(&m_Territories[i]);
 		}
@@ -243,30 +411,44 @@ vector<Territory*> Map::terriOfPlayer(int _player)
 	return myTerri;
 }
 
-bool Map::seekPath(string startTerri, string endTerri, vector<string> &path)
+bool Map::enemyNeighbourExists(int terriID)
+{
+	return m_Territories[terriID].enemyNeighbourExists();
+}
+
+bool Map::friendNeighbourExists(int terriID)
+{
+	return  m_Territories[terriID].friendNeighbourExists();
+}
+
+bool Map::seekPath(Player * _player, string startTerri, string endTerri, vector<string> &path)
 {
 	//vector<string> path;
 	if (path.size() == 0)
 		path.push_back(startTerri);
 	int startID = seekTerritoryID(startTerri);
-	for (int i = 0; i < m_Territories[startID].m_AdjacentTerritories.size(); i++)
+	if ((m_Territories[startID].getOwnerPointer() == _player) && (m_Territories[seekTerritoryID(endTerri)].getOwnerPointer() == _player))
 	{
-		if (!isRepeated(path, m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName))
+		for (int i = 0; i < m_Territories[startID].m_AdjacentTerritories.size(); i++)
 		{
-			if (m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName == endTerri)
+			if ((m_Territories[startID].m_AdjacentTerritories[i]->getOwnerPointer() == _player) 
+				&& (!isRepeated(path, m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName)))
 			{
-				path.push_back(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName);
-				return true;
-			}
-			else
-			{
-				path.push_back(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName);
-				if (seekPath(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName, endTerri, path))
+				if (m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName == endTerri)
+				{
+					path.push_back(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName);
 					return true;
+				}
 				else
-					path.pop_back();
-			}
+				{
+					path.push_back(m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName);
+					if (seekPath(_player, m_Territories[startID].m_AdjacentTerritories[i]->m_TerritoryName, endTerri, path))
+						return true;
+					else
+						path.pop_back();
+				}
 
+			}
 		}
 	}
 	return false;
@@ -353,9 +535,9 @@ void Map::displayTerritories()
 		{
 			cout << ", " << m_Territories[i].m_AdjacentTerritories[j]->m_TerritoryName;
 		}
-		if (m_Territories[i].m_Owner > 0)
+		if (m_Territories[i].m_OwnerID > 0)
 		{
-			cout << ", Player " << m_Territories[i].m_Owner;
+			cout << ", Player " << m_Territories[i].m_OwnerID;
 			cout << ", Armies " << m_Territories[i].m_Armies;
 
 			cout << endl;
@@ -388,6 +570,11 @@ void Map::toString()
 	displayTerritories();
 	cout << "-----------------------------------------" << endl;
 	cout << endl;
+}
+
+void Map::enemyTerriOf(int terriID)
+{
+	m_Territories[terriID].enemyNeighboursDisplay();
 }
 
 //destructor

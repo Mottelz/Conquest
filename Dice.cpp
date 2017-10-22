@@ -31,7 +31,7 @@ void Die::setDiceCounter(int dc) {
 	m_DiceCounter = dc;
 }
 
-int Die::rollDice() {
+const int Die::rollDice() {
 		//generate a random number of 1-6 for dice
 		int rollDiceValue = rand() % 6 + 1;
 
@@ -42,7 +42,7 @@ int Die::rollDice() {
 		//increment counter for number of dice each time function get called
 		m_DiceCounter++;
 	
-		return rollDiceValue;
+		return (const int)rollDiceValue;
 }
 //members function definition
 
@@ -84,6 +84,46 @@ void DiceCup::storeDiceValue(int x) {
 
 		//call function to keep track of dice rolled
 				keepTrack(valueOfDice);
+}
+
+const vector<int> DiceCup::shakeDiceCup(int numOfDice)
+{
+	
+	//clear up first incase of some unexpected cases
+	this->m_Container.clear();
+
+	for (int i = 0; i < numOfDice; i++)
+	{
+		m_Container.push_back(rollDice());
+	}
+	//sort container descendingly
+	descendingSort();
+
+	//displayCup();
+
+	return  m_Container;
+	
+}
+
+//sort container descendingly
+void DiceCup::descendingSort()
+{
+	int temp = m_Container[0];
+	if (m_Container.size() > 1)
+	{
+		for (int j = 1; j < m_Container.size(); j++)
+		{
+			for (int i = 0; i < m_Container.size() - j; i++)
+			{
+				if (m_Container[i] < m_Container[i + 1])
+				{
+					temp = m_Container[i];
+					m_Container[i] = m_Container[i + 1];
+					m_Container[i + 1] = temp;
+				}
+			}
+		}
+	}
 }
 
 // keep track of how many time player rolled a dice - declare
@@ -136,6 +176,12 @@ void DiceCup::resetContainer() {
 }
 
 void DiceCup::displayCup() {
-	for(unsigned int i = 0; i < m_Container.size(); i++)
-	cout << "Player rolled Number: " << m_Container[i] << endl;
+	cout << "Player rolled Number: " << m_Container[0];
+	
+	if (m_Container.size() >= 2)
+	{
+		for (unsigned int i = 1; i < m_Container.size(); i++)
+			cout << " | " << m_Container[0];
+	}
+	cout << endl;
 }
