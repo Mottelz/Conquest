@@ -28,8 +28,9 @@ public:
 	string deallocateTerritory();
 	void displayPlayerTerritories();
 	int numberOfArmiesAssigned();
-	bool checkOwnedCountry(string territory, Player p);
 	int getPlayerContinentBonus(Map& map);
+	bool checkOwnedCountry(string territory, Player p);
+	void toString();
 
 private:
 	DiceCup m_DiceCup;

@@ -34,6 +34,7 @@ class Deck {
         ~Deck();
         Card draw();
         int exchange(std::vector<Card>& cardsToSwap);
+        void toString();
 };
 
 class Hand {
