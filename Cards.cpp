@@ -1,5 +1,6 @@
 #include <iostream>
 #include <random>
+#include <algorithm>
 #include <vector>
 #include <string>
 #include "Cards.h"
@@ -222,4 +223,27 @@ int Hand::exchange(Deck &deck) {
         return 0;
     }
 
+}
+
+bool Hand::exchangeable()
+{
+	if (this->getHandSize()<3)
+		return false;
+	else
+	{
+		int typeA = 0, typeC = 0, typeI = 0;
+		for (int i = 0; i < this->getHandSize(); i++)
+		{
+			if (this->m_Cards[i].getType() == 'a')
+				typeA++;
+			if (this->m_Cards[i].getType() == 'c')
+				typeC++;
+			if (this->m_Cards[i].getType() == 'i')
+				typeI++;
+
+		}
+		if (typeA >= 3 || typeC >= 3 || typeI >= 3 || (typeA > 0 && typeC > 0 && typeI > 0))
+			return true;
+	}
+	return false;
 }

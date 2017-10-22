@@ -44,6 +44,7 @@ public:
     Hand();
     ~Hand();
     int exchange(Deck &deck);
+	bool exchangeable();
     void addCard(Deck &deck);
     void printHand();
     int getHandSize();

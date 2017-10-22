@@ -1,6 +1,8 @@
 #pragma once
 #include<vector>
 
+using namespace std;
+
 class Die {
 
 public:
@@ -13,7 +15,7 @@ public:
 	void setValue(int value);
 	int getDiceCounter();
 	void setDiceCounter(int dc);
-	int rollDice();
+	const int rollDice();
 
 private:
 	//instance variables
@@ -35,15 +37,21 @@ public:
 
 	//function delcaration
 	/*std::vector<int> rollDice();*/
-	void keepTrack(int x);
+	void keepTrack(int x);//**
 	void showPercentage();
 	void displayCup();
 	void resetContainer();
-	void storeDiceValue(int x);
+	void storeDiceValue(int x);//**
+
+	const vector<int> shakeDiceCup(int numOfDice);
+	
 
 private:
 	//instances variables
 	int m_NumberOfDice;
 	int m_TrackPercent[6];
+	
 	std::vector<int> m_Container;
+
+	void descendingSort();
 };
