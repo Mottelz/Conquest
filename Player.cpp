@@ -87,7 +87,7 @@ void Player::reinforcement(Map * map, Deck &deck)
 		}
 		else
 		{
-			string exchange = NULL;
+			string exchange = "";
 			do {
 				cout << "Do you want to exchange your cards? [Y/N] " << endl;
 				cin >> exchange;
@@ -162,7 +162,7 @@ void Player::reinforcement(Map * map, Deck &deck)
 
 int Player::reinforcement_cardExchange(Deck &deck)
 {
-	return m_Hand.exchange(deck);
+	return this->m_Hand.exchange(deck);
 }
 
 int Player::reinforcement_availableAssignedArmies(int exchangedArmies)
