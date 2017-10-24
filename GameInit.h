@@ -18,8 +18,6 @@ private:
 public:
     GameInit();
     ~GameInit();
-    void createMap();
-    void createDeck();
     void getUserPrefernces();
     int askUserForMapSelection();
     void toString();

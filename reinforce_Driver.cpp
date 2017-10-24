@@ -1,12 +1,10 @@
 #include <iostream>
-
 #include <ctime>
-
 #include "Player.h"
-//#include "AttackPhase.h"
 using namespace std;
 
 int main() {
+
 	MapLoader loader;
 	string filePath = "maps/World.map";
 	Map gameMap("World.map");
@@ -23,21 +21,15 @@ int main() {
 		
 	}
 
-
-	gameMap.toString();
-
-	
 	vector<string> cards = gameMap.getAllTerritoryNames();
 	
 	Deck gameDeck(cards, cards.size());
-	
 
 	vector<Player> playerList;
 	playerList.push_back(Player("Melodie"));
 	playerList.push_back(Player("Mottel"));
 	playerList.push_back(Player("Vickel"));
 	playerList.push_back(Player("Yefei"));
-
 
 	for (int i = 0; i < playerList.size(); i++)
 	{
@@ -58,26 +50,23 @@ int main() {
 			int temp = rand() % gameMap.getTotalNumberOfTerritories();
 			if (gameMap.allTerriAssigned())
 			{
-				gameMap.assignArmies(&playerList[j], gameMap.getTerritoryNam(temp));
+				gameMap.assignArmies(&playerList[j], gameMap.getTerritoryName(temp));
 			}
 			else
 			{
 				while (gameMap.isAssigned(temp)) {
 					temp = rand() % gameMap.getTotalNumberOfTerritories();
 				}
-				gameMap.assignArmies(&playerList[j], gameMap.getTerritoryNam(temp));
+				playerList[j].assignTerritory(gameMap.getTerritoryName(temp), gameMap);
+				gameMap.assignArmies(&playerList[j], gameMap.getTerritoryName(temp));
 			}
 		}
 	}
-//	for()
+
 	gameMap.toString();
 
-	//AttackPhase myAtkPhase(gameMap);
 
-	while (true)
-	{
-
-		for (int i = 0; i < playerList.size(); i++)
+	for (int i = 0; i < playerList.size(); i++)
 		{
 			cout << endl;
 			cout << "==============================================================================" << endl;
@@ -89,11 +78,10 @@ int main() {
 				playerList[i].drawCard(gameDeck);
 
 			}
-		//	playerList[i].test_REIN_setCards(my_card);
-			playerList[i].REINFORCEMENT(&gameMap, gameDeck);
+
+			playerList[i].reinforcement(&gameMap, gameDeck);
 			
 		}
-	}
 
 
 	return 0;

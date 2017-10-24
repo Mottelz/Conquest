@@ -10,7 +10,7 @@ Fortification::Fortification(){}
 Fortification::~Fortification() {}
 
 // move number of armies based on user input
-void Fortification::moveArmy( string sourceCountry, string targetCountry, Map& map, Player& p) {
+void Fortification::moveArmy(string sourceCountry, string targetCountry, Map& map, Player& p) {
 	
 	int m_moveArmy;
 	cout << "please input the number of armies you wish to moves" << endl;
@@ -35,9 +35,9 @@ void Fortification::moveArmy( string sourceCountry, string targetCountry, Map& m
 	//move army to neighbor, make sure 1 army left in source country
 	//remove the army in the map of source country
 		for (int i = 0; i < m_moveArmy; i++)
-			map.removeArmies(p, sourceCountry);
+			map.removeArmies(&p, sourceCountry);
 
 	//assign the new armies into map of target country
 	for (int i = 0; i < m_moveArmy; i++)
-		map.assignArmies(p, targetCountry);
+		map.assignArmies(&p, targetCountry);
 }

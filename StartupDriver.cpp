@@ -16,9 +16,9 @@ int main()
 	players.push_back(Player("Jon"));
 	players.push_back(Player("Daenerys"));
 	players.push_back(Player("Cersei"));
-	//players.push_back(Player("Tyrion"));
-	//players.push_back(Player("Arya"));
-	//players.push_back(Player("Sansa"));
+	players.push_back(Player("Tyrion"));
+	players.push_back(Player("Arya"));
+	players.push_back(Player("Sansa"));
 
 	//TEST THE STARTUP CLASS
 	Startup startup(players);
@@ -31,7 +31,7 @@ int main()
 	//DISPLAY THE RESULTS AFTER DISTRIBUTION OF COUNTRIES (Proves that the right number of armies was distributed)
 	for (int i = 0; i < players.size(); i++)
 	{
-		cout << "Player #" << players[i].getPlayerID() << " (" << players[i].getName() << ") has "
+		cout << players[i].getName() << " (Player # " << players[i].getPlayerID() << ") has "
 			<< players[i].getNumberOfTerritories() << " territories, and distributed "
 			<< players[i].numberOfArmiesAssigned() << " armies! \n" << endl;
 		players[i].displayPlayerTerritories();

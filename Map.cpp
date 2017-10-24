@@ -31,7 +31,7 @@ void Territory::enemyNeighboursDisplay()
 	{
 		if (this->getOwnerPointer() != this->m_AdjacentTerritories[i]->getOwnerPointer())
 		{
-			printf("[%03d]|%s|Armies: %d \n", this->m_AdjacentTerritories[i]->getTerriID(), this->m_AdjacentTerritories[i]->getTerriNam().c_str(), this->m_AdjacentTerritories[i]->getNumOfArmies());
+			printf("[%03d]|%s|Armies: %d \n", this->m_AdjacentTerritories[i]->getTerriID(), this->m_AdjacentTerritories[i]->getTerriName().c_str(), this->m_AdjacentTerritories[i]->getNumOfArmies());
 		}
 	}
 	cout << endl;
@@ -108,6 +108,13 @@ int Map::getTotalNumberOfTerritories()
 int Map::getTotalNumberOfContinents()
 {
 	return this->m_Continents.size();
+}
+
+void Map::setTerritoryOwner(string territory, Player* player)
+{
+	int _id = seekTerritoryID(territory);
+	m_Territories[_id].m_Owner = player;
+	m_Territories[_id].m_OwnerID = player->getPlayerID();
 }
 
 void Map::setMapValidate(bool boln)
@@ -208,7 +215,7 @@ int Map::seekTerritoryID(string territoryName)
 	return -1;
 }
 
-string Map::getTerritoryNam(int terriID)
+string Map::getTerritoryName(int terriID)
 {
 	return m_Territories[terriID].m_TerritoryName;
 }
@@ -299,14 +306,10 @@ void Map::linkAllTerritories()
 bool Map::assignArmies(Player *_player, string territory)
 {
 	int _id = seekTerritoryID(territory);
-	if ((m_Territories[_id].m_Owner == NULL) || (m_Territories[_id].m_Owner == _player))
+	if (m_Territories[_id].m_Owner == _player)
 	{
-		m_Territories[_id].m_Owner = _player;
-		m_Territories[_id].m_OwnerID = _player->getPlayerID();
 		m_Territories[_id].m_Armies++;
-		_player->myTerriUpdate(this);
-		if(m_Territories[_id].m_Continent->contiUpdate(&m_Territories[_id]))
-			_player->myContiUpdate(this);
+
 		return true;
 	}
 	return false;

@@ -26,7 +26,7 @@ struct Territory {
 	int m_Armies;
 	Player * m_Owner;
 	Territory();
-	string getTerriNam() { return this->m_TerritoryName; }
+	string getTerriName() { return this->m_TerritoryName; }
 	int getTerriID() { return this->m_TerritoryID; }
 	int getOwnerID(){ return this->m_OwnerID; }
 	int getNumOfArmies() { return this->m_Armies; }
@@ -48,7 +48,7 @@ struct Continent {
 	vector<int> m_TerritoryID;
 	vector<Territory*> m_ContinentTerritories;
 	Continent();
-	string getContiNam() { return this->m_ContinentName; }
+	string getContiName() { return this->m_ContinentName; }
 	int getContiID() { return this->m_ContinentID; }
 	int getOwnerID() { return this->m_OwnerID; }
 	Player* getOwnerPointer() { return this->m_Owner; }
@@ -67,6 +67,7 @@ public:
 	string getMapName();
 	int getTotalNumberOfTerritories();
 	int getTotalNumberOfContinents();
+	void setTerritoryOwner(string territory, Player* player);
 	void setMapValidate(bool boln);
 	bool isValid();
 	bool isAdjacent(int terriID_1, int terriID_2);
@@ -74,7 +75,7 @@ public:
 	void insertTerritory(string name, float position[2], string continentName, vector<string> adjacentTerritoriesNames) throw(string);
 	int seekContinentID(string continentName);
 	int seekTerritoryID(string territoryName);
-	string getTerritoryNam(int terriID);
+	string getTerritoryName(int terriID);
 	int getOwnerIDOfTheTerritory(int terriID);
 	Player* getOwnerOfTheTerritory(int terriID);
 	int getOwnerIDOfTheContinent(int contiID);

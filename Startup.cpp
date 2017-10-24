@@ -15,21 +15,16 @@ Startup::Startup()
 
 Startup::Startup(vector<Player> &players)
 {
+	// Shuffles the content of the Player vector so that the order of play is determined randomly
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); // seed
+	std::shuffle(std::begin(players), std::end(players), std::default_random_engine(seed));
+
 	m_NumberOfPlayers = players.size();
 	
 	// Copies the reference to the players in the Player pointer vector
 	for (int i = 0; i < m_NumberOfPlayers; i++)
 	{
-		m_Players.push_back(&players[i]);
-	}
-
-	// Shuffles the content of the Player pointer vector so that the order of play is determined randomly
-	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); // seed
-	std::shuffle(std::begin(m_Players), std::end(m_Players), std::default_random_engine(seed));
-
-	// After the shuffling, assign an ID to the players (corresponds to the order of play)
-	for (int i = 0; i < m_NumberOfPlayers; i++)
-	{
+		m_Players.push_back(&players[i]);	
 		m_Players[i]->setPlayerID(i + 1);
 	}
 
@@ -52,7 +47,7 @@ void Startup::distributeTerritories(Map &map)
 		randomIndex = rand() % territories.size();
 		randomTerritory = territories[randomIndex]; 
 		
-		// Assign the territory in round-robin fashion. Starts at index 0 (m_NumberOfPlayers % m_NumberOfPLayers) then we increment the count.
+		// Assign the territory in round-robin fashion. Starts at index 0then we increment the count.
 		m_Players[count % m_NumberOfPlayers]->assignTerritory(randomTerritory, map); 
 
 		// Puts the randomly selected territory in the last position, then delete it from container
@@ -105,7 +100,7 @@ void Startup::placeArmies(Map &map)
 		randomTerritory = rand() % playerNumberOfTerritories; // Chooses a random territory from the individual player's list
 
 		// Assign one army to one territory
-		map.assignArmies(m_Players[index]->getPlayerID(), playerTerritories[randomTerritory]);
+		map.assignArmies(m_Players[index], playerTerritories[randomTerritory]);
 
 		armiesToPlace--;
 		count++;

@@ -30,11 +30,11 @@ public:
 	void reinforce();
 	void attack();
 	void fortify();
-	void REINFORCEMENT(Map* map, Deck &deck);
-	int REIN_CARD_EXCHANGE(Deck &deck);
-	int REIN_AVAILBLE_ASSIGNED_ARMIES(int exchangedArmies);
-	void ATTACK(Map* map);
-	void FORTIFICATION(Map* map);
+	void reinforcement(Map* map, Deck &deck);
+	int reinforcement_cardExchange(Deck &deck);
+	int reinforcement_availableAssignedArmies(int exchangedArmies);
+	void attack(Map* map);
+	void fortification(Map* map);
 
 	//int rollDice(int numToRoll);
 	void drawCard(Deck &Deck);
@@ -62,8 +62,8 @@ private:
 	std::string m_Name;
 	int m_PlayerID;
 	int conti_ctrl_value;
-	void REIN_PLACE_ARMIES(int assign_to, int place_num, Map* map);
-	bool REIN_CARD_EXCHANGEABLE();
-	void ATK_ATTACKING(int from, int to, Map * map);
-	void FORT_MOVE_ARMIES(int move_from, int move_to, int move_num, Map* map);
+	void reinforcement_placeArmies(int assign_to, int place_num, Map* map);
+	bool reinforcement_cardExchangeable();
+	void attack_attacking(int from, int to, Map * map);
+	void fortification_moveArmies(int move_from, int move_to, int move_num, Map* map);
 };

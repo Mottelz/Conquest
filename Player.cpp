@@ -61,7 +61,7 @@ void Player::fortify() {
 	cout << m_Name << " just fortified their territories!" << endl;
 }
 
-void Player::REINFORCEMENT(Map * map, Deck &deck)
+void Player::reinforcement(Map * map, Deck &deck)
 {
 	
 	int assign_terri_ID = -1, assign_num = 0;
@@ -71,11 +71,10 @@ void Player::REINFORCEMENT(Map * map, Deck &deck)
 	int exchangedArmies = 0;
 
 	my_card = this->getMyCard();
-	//testing code
-	//my_card = this->test_REIN_myCards;
+
 	cout << "Currently, you have " << my_card << " cards in your hand. " << endl;
 	this->displayHand();
-	if (this->REIN_CARD_EXCHANGEABLE() == true)
+	if (this->reinforcement_cardExchangeable() == true)
 	{
 		cout << "Your have exchangeable cards. " << endl;
 		if (my_card > 5)
@@ -83,7 +82,7 @@ void Player::REINFORCEMENT(Map * map, Deck &deck)
 			cout << "Since you have more than 5 cards, you must exchange. " << endl;
 			
 			while(exchangedArmies ==0)
-				exchangedArmies = this->REIN_CARD_EXCHANGE(deck);
+				exchangedArmies = this->reinforcement_cardExchange(deck);
 
 		}
 		else
@@ -94,7 +93,7 @@ void Player::REINFORCEMENT(Map * map, Deck &deck)
 				cin >> exchange;
 				if (exchange == "Y" || exchange == "y")
 				{
-					exchangedArmies = this->REIN_CARD_EXCHANGE(deck);
+					exchangedArmies = this->reinforcement_cardExchange(deck);
 					if(exchangedArmies!=0)
 						break;
 				}
@@ -120,7 +119,7 @@ void Player::REINFORCEMENT(Map * map, Deck &deck)
 	}
 		
 		int valid_assigned_armies;
-		valid_assigned_armies = this->REIN_AVAILBLE_ASSIGNED_ARMIES(exchangedArmies);
+		valid_assigned_armies = this->reinforcement_availableAssignedArmies(exchangedArmies);
 
 
 	do {
@@ -151,7 +150,7 @@ void Player::REINFORCEMENT(Map * map, Deck &deck)
 
 			if (assign_num >= 0 && assign_num <= valid_assigned_armies)
 			{
-				this->REIN_PLACE_ARMIES(assign_terri_ID, assign_num, map);
+				this->reinforcement_placeArmies(assign_terri_ID, assign_num, map);
 				valid_assigned_armies -= assign_num;
 				break;
 			}
@@ -169,10 +168,9 @@ void Player::REINFORCEMENT(Map * map, Deck &deck)
 	
 }
 
-int Player::REIN_CARD_EXCHANGE(Deck &deck)
+int Player::reinforcement_cardExchange(Deck &deck)
 {
-	//card exchange method *** need real one from deck
-	//m_Hand.exchange();
+
 	int exchangedArmy;
 	
 	exchangedArmy = m_Hand.exchange(deck);
@@ -180,7 +178,7 @@ int Player::REIN_CARD_EXCHANGE(Deck &deck)
 	return exchangedArmy;
 }
 
-int Player::REIN_AVAILBLE_ASSIGNED_ARMIES(int exchangedArmies)
+int Player::reinforcement_availableAssignedArmies(int exchangedArmies)
 {
 	int avail_AssignedArmies;
 	avail_AssignedArmies = this->getNumberOfTerritories()/3;
@@ -192,7 +190,7 @@ int Player::REIN_AVAILBLE_ASSIGNED_ARMIES(int exchangedArmies)
 	return avail_AssignedArmies;
 }
 
-void Player::ATTACK(Map * map)
+void Player::attack(Map * map)
 {
 	bool attack_state;
 
@@ -310,7 +308,7 @@ void Player::ATTACK(Map * map)
 			{
 				if (map->getArmyNumOfTheTerritory(attack_to) > 0)
 				{
-					this->ATK_ATTACKING(attack_from, attack_to, map);
+					this->attack_attacking(attack_from, attack_to, map);
 					if (map->getArmyNumOfTheTerritory(attack_from) > 1 && map->getArmyNumOfTheTerritory(attack_to) > 0)
 					{
 						bool change_terri;
@@ -372,8 +370,8 @@ void Player::ATTACK(Map * map)
 
 					for (int i = 0; i < assign_num_of_armies; i++)
 					{
-						map->removeArmies(this, map->getTerritoryNam(attack_from));
-						map->assignArmies(this, map->getTerritoryNam(attack_to));
+						map->removeArmies(this, map->getTerritoryName(attack_from));
+						map->assignArmies(this, map->getTerritoryName(attack_to));
 					}
 
 					cout << "Territory captured. " << endl;
@@ -390,7 +388,7 @@ void Player::ATTACK(Map * map)
 		cout << endl;
 		this->statusDisplay(myTerritories);
 		//recursive loop
-		ATTACK(map);
+		attack(map);
 	}
 	else
 	{
@@ -399,7 +397,7 @@ void Player::ATTACK(Map * map)
 	}
 }
 
-void Player::FORTIFICATION(Map * map)
+void Player::fortification(Map * map)
 {
 	bool fortify_state;
 
@@ -441,36 +439,37 @@ void Player::FORTIFICATION(Map * map)
 			{
 				cout << "Fortification phase is over. " << endl;
 				return;
-			}else
-			if (move_from >= 0)
-			{
-				if ((map->getOwnerOfTheTerritory(move_from)) == this)
+			}
+			else
+				if (move_from >= 0)
 				{
-					if (map->getArmyNumOfTheTerritory(move_from) > 1)
+					if ((map->getOwnerOfTheTerritory(move_from)) == this)
 					{
-						if (!map->friendNeighbourExists(move_from))
+						if (map->getArmyNumOfTheTerritory(move_from) > 1)
 						{
-							cout << "INVALID INPUT: you must choose one of your territories having at least one friend neighbour. " << endl;
+							if (!map->friendNeighbourExists(move_from))
+							{
+								cout << "INVALID INPUT: you must choose one of your territories having at least one friend neighbour. " << endl;
+								continue;
+							}
+						}
+						else
+						{
+							cout << "INVALID INPUT: you must choose one of your territories assigned more than one armies. " << endl;
 							continue;
 						}
 					}
 					else
 					{
-						cout << "INVALID INPUT: you must choose one of your territories assigned more than one armies. " << endl;
+						cout << "INVALID INPUT: the territory that you select is not your territory. " << endl;
 						continue;
 					}
 				}
 				else
 				{
-					cout << "INVALID INPUT: the territory that you select is not your territory. " << endl;
+					cout << "INVALID INPUT: invalid territory ID. " << endl;
 					continue;
 				}
-			}
-			else
-			{
-				cout << "INVALID INPUT: invalid territory ID. " << endl;
-				continue;
-			}
 
 
 			//choose territory attack to 
@@ -480,7 +479,7 @@ void Player::FORTIFICATION(Map * map)
 			if (move_to >= 0)
 			{
 				fortifyPath.clear();
-				if (map->seekPath(this, map->getTerritoryNam(move_from), map->getTerritoryNam(move_to), fortifyPath))
+				if (map->seekPath(this, map->getTerritoryName(move_from), map->getTerritoryName(move_to), fortifyPath))
 				{
 					do {
 
@@ -505,13 +504,14 @@ void Player::FORTIFICATION(Map * map)
 
 		} while (true);
 
-		this->FORT_MOVE_ARMIES(move_from, move_to, move_num, map);
-
+		this->fortification_moveArmies(move_from, move_to, move_num, map);
+		this->fortification(map);
 	}
-
-
-	this->FORTIFICATION(map);
-
+	else
+	{
+		cout << "Fortification phase is over. " << endl;
+		return;
+	}
 
 }
 
@@ -582,26 +582,16 @@ vector<int> Player::shakeMyDiceCup(int armiesOfATerri, bool atk/*, int numOfDice
 	}
 }
 
-// Assign one army of the current player into current territory if available
-//void Map::assignArmies(int _playerID, string territory)
-//{
-//	int _id = seekTerritoryID(territory);
-//	if ((m_Territories[_id].m_OwnerID == 0) || (m_Territories[_id].m_OwnerID == _playerID))
-//	{
-//		m_Territories[_id].m_OwnerID = _playerID;
-//		m_Territories[_id].m_Armies++;
-//	}
-//
-//}
 
 void Player::assignTerritory(string territoryName, Map& map)
 {
-	m_PlayerTerritories.push_back(map.getTerriAddress(territoryName));
+	map.setTerritoryOwner(territoryName, this); // Assigns the player directly to the map
+	m_PlayerTerritories.push_back(map.getTerriAddress(territoryName)); // Adds the territory to the player's list
 }
 
 string Player::deallocateTerritory()
 {
-	// Delete and return the last element in the vector
+	// Delete and return the last element in the vector. For now this is just to facilitate Driver 2.3
 	string territory = m_PlayerTerritories[m_PlayerTerritories.size() - 1]->m_TerritoryName;
 	m_PlayerTerritories.pop_back();
 	return territory;
@@ -656,7 +646,6 @@ bool Player::checkOwnedCountry(string territory, Player p) {
 
 void Player::statusDisplay(playerStatus myStatus)
 {
-	//string plyStr = "";
 	switch (myStatus)
 	{
 	case myTerritories:
@@ -669,18 +658,17 @@ void Player::statusDisplay(playerStatus myStatus)
 		cout << "Territories Owned: \n";
 		for (int i = 0; i < m_PlayerTerritories.size(); i++)
 		{
-			// terriNam = ((char[])m_PlayerTerritories[i]->getTerriNam());
 			printf("[%03d] | %18s | Armies: (%2d) | Enemy Adjacent Territories: ", 
-				m_PlayerTerritories[i]->getTerriID(), m_PlayerTerritories[i]->getTerriNam().c_str(), m_PlayerTerritories[i]->getNumOfArmies());
+				m_PlayerTerritories[i]->getTerriID(), m_PlayerTerritories[i]->getTerriName().c_str(), m_PlayerTerritories[i]->getNumOfArmies());
 			for (int j = 0; j < m_PlayerTerritories[i]->m_AdjacentTerritories.size(); j++)
 			{
 				if (m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getOwnerPointer() != this)
 				{
 					printf("[%03d]%s(%d), ",
-						m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriID(), m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriNam().c_str(), m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getNumOfArmies());
+						m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriID(), m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriName().c_str(), m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getNumOfArmies());
 				}
 			}
-			//cout << "("<< m_PlayerTerritories[i]->getTerriNam();
+
 			cout << endl;
 		}
 
@@ -699,18 +687,18 @@ void Player::statusDisplay(playerStatus myStatus)
 		cout << "Territories Owned: \n";
 		for (int i = 0; i < m_PlayerTerritories.size(); i++)
 		{
-			// terriNam = ((char[])m_PlayerTerritories[i]->getTerriNam());
+
 			printf("[%03d] | %18s | Armies: (%2d) | Enemy Adjacent Territories: ",
-				m_PlayerTerritories[i]->getTerriID(), m_PlayerTerritories[i]->getTerriNam().c_str(), m_PlayerTerritories[i]->getNumOfArmies());
+				m_PlayerTerritories[i]->getTerriID(), m_PlayerTerritories[i]->getTerriName().c_str(), m_PlayerTerritories[i]->getNumOfArmies());
 			for (int j = 0; j < m_PlayerTerritories[i]->m_AdjacentTerritories.size(); j++)
 			{
 				if (m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getOwnerPointer() != this)
 				{
 					printf("[%03d]%s(%d), ",
-						m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriID(), m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriNam().c_str(), m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getNumOfArmies());
+						m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriID(), m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriName().c_str(), m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getNumOfArmies());
 				}
 			}
-			//cout << "("<< m_PlayerTerritories[i]->getTerriNam();
+
 			cout << endl;
 		}
 
@@ -722,10 +710,10 @@ void Player::statusDisplay(playerStatus myStatus)
 			for (int i = 0; i < m_PlayerContinents.size(); i++)
 			{
 				if (i == 0)
-					cout << m_PlayerContinents[i]->getContiNam();
+					cout << m_PlayerContinents[i]->getContiName();
 				else
 				{
-					cout <<", "<< m_PlayerContinents[i]->getContiNam();
+					cout <<", "<< m_PlayerContinents[i]->getContiName();
 				}
 			}
 		}
@@ -743,29 +731,28 @@ void Player::statusDisplay(playerStatus myStatus)
 		cout << "Territories Owned: \n";
 		for (int i = 0; i < m_PlayerTerritories.size(); i++)
 		{
-			// terriNam = ((char[])m_PlayerTerritories[i]->getTerriNam());
 			printf("[%03d] | %18s | Armies: (%2d) | Adjacent Territories: ",
-				m_PlayerTerritories[i]->getTerriID(), m_PlayerTerritories[i]->getTerriNam().c_str(), m_PlayerTerritories[i]->getNumOfArmies());
+				m_PlayerTerritories[i]->getTerriID(), m_PlayerTerritories[i]->getTerriName().c_str(), m_PlayerTerritories[i]->getNumOfArmies());
 			for (int j = 0; j < m_PlayerTerritories[i]->m_AdjacentTerritories.size(); j++)
 			{
 				if (m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getOwnerPointer() == this)
 				{
 					printf("[%03d]%s(%d), ",
 						m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriID(),
-						m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriNam().c_str(),
+						m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriName().c_str(),
 						m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getNumOfArmies());
 				}
 				else
 				{
 					
 						printf("%s(%d), ",
-							m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriNam().c_str(), 
+							m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getTerriName().c_str(), 
 							m_PlayerTerritories[i]->m_AdjacentTerritories[j]->getNumOfArmies());
 					
 
 				}
 			}
-			//cout << "("<< m_PlayerTerritories[i]->getTerriNam();
+
 			cout << endl;
 		}
 
@@ -812,21 +799,21 @@ bool Player::isMyTerritory(Territory * terri)
 	}
 }
 
-void Player::REIN_PLACE_ARMIES(int assign_to, int place_num, Map* map)
+void Player::reinforcement_placeArmies(int assign_to, int place_num, Map* map)
 {
 	for (int i = 0; i < place_num; i++)
 	{
-		map->assignArmies(this, map->getTerritoryNam(assign_to));
+		map->assignArmies(this, map->getTerritoryName(assign_to));
 	}
 		
 }
 
-bool Player::REIN_CARD_EXCHANGEABLE()
+bool Player::reinforcement_cardExchangeable()
 {
 	return m_Hand.exchangeable();
 }
 
-void Player::ATK_ATTACKING(int from, int to, Map * map)
+void Player::attack_attacking(int from, int to, Map * map)
 {
 	vector<int> myRolledList, enemyRolledList;
 
@@ -876,7 +863,7 @@ void Player::ATK_ATTACKING(int from, int to, Map * map)
 			cout << myRolledList[i] << " > " << enemyRolledList[i] << " --> ";
 			cout << "Player " << map->getOwnerOfTheTerritory(to)->getPlayerID() << ", "
 				<< map->getOwnerOfTheTerritory(to)->getName() << ", lost one army. " << endl;
-			map->removeArmies((map->getOwnerOfTheTerritory(to)), map->getTerritoryNam(to));
+			map->removeArmies(map->getOwnerOfTheTerritory(to), map->getTerritoryName(to));
 
 		}
 		else
@@ -884,7 +871,7 @@ void Player::ATK_ATTACKING(int from, int to, Map * map)
 			cout << myRolledList[i] << " <= " << enemyRolledList[i] << " --> ";
 			cout << "Player " << this->getPlayerID() << ", "
 				<< map->getOwnerOfTheTerritory(from)->getName() << ", lost one army. " << endl;
-			map->removeArmies(this, map->getTerritoryNam(from));
+			map->removeArmies(this, map->getTerritoryName(from));
 
 
 		}
@@ -893,12 +880,12 @@ void Player::ATK_ATTACKING(int from, int to, Map * map)
 }
 
 
-void Player::FORT_MOVE_ARMIES(int move_from, int move_to, int move_num, Map * map)
+void Player::fortification_moveArmies(int move_from, int move_to, int move_num, Map * map)
 {
 	for (int i = 0; i < move_num; i++)
 	{
-		map->removeArmies(this,map->getTerritoryNam(move_from));
-		map->assignArmies(this, map->getTerritoryNam(move_to));
+		map->removeArmies(this,map->getTerritoryName(move_from));
+		map->assignArmies(this, map->getTerritoryName(move_to));
 
 	}
 }

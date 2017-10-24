@@ -3,7 +3,7 @@
 #include <ctime>
 
 #include "Player.h"
-//#include "AttackPhase.h"
+
 using namespace std;
 
 int main() {
@@ -23,8 +23,6 @@ int main() {
 		cout << endl;
 		
 	}
-
-	gameMap.toString();
 
 	vector<Player> playerList;
 	playerList.push_back(Player("Melodie"));
@@ -52,34 +50,29 @@ int main() {
 			int temp = rand() % gameMap.getTotalNumberOfTerritories();
 			if (gameMap.allTerriAssigned())
 			{
-				gameMap.assignArmies(&playerList[j], gameMap.getTerritoryNam(temp));
+				gameMap.assignArmies(&playerList[j], gameMap.getTerritoryName(temp));
 			}
 			else
 			{
 				while (gameMap.isAssigned(temp)) {
 					temp = rand() % gameMap.getTotalNumberOfTerritories();
 				}
-				gameMap.assignArmies(&playerList[j], gameMap.getTerritoryNam(temp));
+				playerList[j].assignTerritory(gameMap.getTerritoryName(temp), gameMap);
+				gameMap.assignArmies(&playerList[j], gameMap.getTerritoryName(temp));
 			}
 		}
 	}
-//	for()
+
 	gameMap.toString();
 
-	//AttackPhase myAtkPhase(gameMap);
-
-	while (true)
+	for (int i = 0; i < playerList.size(); i++)
 	{
+		cout << endl;
+		cout << "==============================================================================" << endl;
+		cout << "Player " << playerList[i].getPlayerID() << ", " << playerList[i].getName() << ", Attack Phase: " << endl;
+		cout << "------------------------------------------------------------------------------" << endl;
 
-		for (int i = 0; i < playerList.size(); i++)
-		{
-			cout << endl;
-			cout << "==============================================================================" << endl;
-			cout << "Player " << playerList[i].getPlayerID() << ", " << playerList[i].getName() << ", Attack Phase: " << endl;
-			cout << "------------------------------------------------------------------------------" << endl;
-			
-			playerList[i].ATTACK(&gameMap);
-		}
+		playerList[i].attack(&gameMap);
 	}
 
 

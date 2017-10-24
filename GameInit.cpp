@@ -17,7 +17,7 @@ GameInit::GameInit(){
     m_MapNames.shrink_to_fit();
 }
 
-//Destory everything!
+//Destroy everything!
 GameInit::~GameInit(){
     m_MapNames.clear();
     m_Players.clear();
