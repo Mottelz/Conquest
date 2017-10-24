@@ -2,9 +2,6 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
-#include <stdlib.h> 
-#include <time.h> 
-#include <chrono> 
 #include "Startup.h"
 
 
@@ -16,8 +13,8 @@ Startup::Startup()
 Startup::Startup(vector<Player> &players)
 {
 	// Shuffles the content of the Player vector so that the order of play is determined randomly
-	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); // seed
-	std::shuffle(std::begin(players), std::end(players), std::default_random_engine(seed));
+	auto rng = (std::default_random_engine ());
+	std::shuffle(std::begin(players), std::end(players), rng);
 
 	m_NumberOfPlayers = players.size();
 	

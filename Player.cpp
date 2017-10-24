@@ -79,9 +79,9 @@ void Player::reinforcement(Map * map, Deck &deck)
 		cout << "Your have exchangeable cards. " << endl;
 		if (my_card > 5)
 		{
-			cout << "Since you have more than 5 cards, you must exchange. " << endl;
+			cout << "Since you have more than 5 cards you must exchange. " << endl;
 			
-			while(exchangedArmies ==0)
+			while(exchangedArmies == 0)
 				exchangedArmies = this->reinforcement_cardExchange(deck);
 
 		}
@@ -97,35 +97,29 @@ void Player::reinforcement(Map * map, Deck &deck)
 					if(exchangedArmies!=0)
 						break;
 				}
+				else if (exchange == "N" || exchange == "n")
+				{
+					exchangedArmies = 0;
+					break;
+				}
 				else
 				{
-					if (exchange == "N" || exchange == "n")
-					{
-						exchangedArmies = 0;
-						break;
-					}
-					else
-					{
-						cout << "INVALID INPUT " << endl;
-					}
-
+					cout << "INVALID INPUT " << endl;
 				}
 			} while (true);
 		}
 	}
 	else
 	{
-		cout << "Currently, you do not have exchangeable cards. " << endl;
+		cout << "You cannot exchange cards at this time. " << endl;
 	}
 		
-		int valid_assigned_armies;
-		valid_assigned_armies = this->reinforcement_availableAssignedArmies(exchangedArmies);
-
+		int valid_assigned_armies = this->reinforcement_availableAssignedArmies(exchangedArmies);
 
 	do {
-		cout << "Your available unassigned new armies: " << valid_assigned_armies << endl;
+		cout << "You have " << valid_assigned_armies << " troop(s) left to deploy." << endl;
 		//choose territory attack from
-		cout << "Please select the territory ID (integer) that you want to assign your armies: " << endl;
+		cout << "Please select ID of the territory where you want to assign your armies: " << endl;
 		cin >> assign_terri_ID;
 
 		if (assign_terri_ID >= 0)
@@ -133,9 +127,7 @@ void Player::reinforcement(Map * map, Deck &deck)
 			if ((map->getOwnerOfTheTerritory(assign_terri_ID)) != this)
 			{
 				cout << "INVALID INPUT: the territory that you select is not your territory. " << endl;
-
 				continue;
-
 			}
 		}
 		else
@@ -145,7 +137,7 @@ void Player::reinforcement(Map * map, Deck &deck)
 		}
 
 		do {
-			cout << "Please enter how many armies that you want to place to this territory: " << endl;
+			cout << "Please enter the number of armies that you want to place on this territory: " << endl;
 			cin >> assign_num;
 
 			if (assign_num >= 0 && assign_num <= valid_assigned_armies)
@@ -170,18 +162,12 @@ void Player::reinforcement(Map * map, Deck &deck)
 
 int Player::reinforcement_cardExchange(Deck &deck)
 {
-
-	int exchangedArmy;
-	
-	exchangedArmy = m_Hand.exchange(deck);
-	
-	return exchangedArmy;
+	return m_Hand.exchange(deck);
 }
 
 int Player::reinforcement_availableAssignedArmies(int exchangedArmies)
 {
-	int avail_AssignedArmies;
-	avail_AssignedArmies = this->getNumberOfTerritories()/3;
+	int avail_AssignedArmies = this->getNumberOfTerritories()/3;
 	if (avail_AssignedArmies < 3)
 		avail_AssignedArmies = 3;
 	for (int i = 0; i < m_PlayerContinents.size(); i++)
@@ -652,8 +638,8 @@ void Player::statusDisplay(playerStatus myStatus)
 	{
 		cout << "\nPlayer status: \n";
 		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "\nPlayer " + this->getPlayerID();
-		cout << ": " + this->getName() +"\n";
+		cout << "\nPlayer " << this->getPlayerID();
+		cout << ": " << this->getName() <<"\n";
 		cout << "------------------------------------------------------------------------------" << endl;;
 		cout << "Territories Owned: \n";
 		for (int i = 0; i < m_PlayerTerritories.size(); i++)
@@ -681,8 +667,8 @@ void Player::statusDisplay(playerStatus myStatus)
 	{
 		cout << "\nPlayer status: \n";
 		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "\nPlayer " + this->getPlayerID();
-		cout << ": " + this->getName() + "\n";
+		cout << "\nPlayer " << this->getPlayerID();
+		cout << ": " << this->getName() << "\n";
 		cout << "------------------------------------------------------------------------------" << endl;;
 		cout << "Territories Owned: \n";
 		for (int i = 0; i < m_PlayerTerritories.size(); i++)
@@ -725,8 +711,8 @@ void Player::statusDisplay(playerStatus myStatus)
 	{
 		cout << "\nPlayer status: \n";
 		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "\nPlayer " + this->getPlayerID();
-		cout << ": " + this->getName() + "\n";
+		cout << "\nPlayer " << this->getPlayerID();
+		cout << ": " << this->getName() << "\n";
 		cout << "------------------------------------------------------------------------------" << endl;;
 		cout << "Territories Owned: \n";
 		for (int i = 0; i < m_PlayerTerritories.size(); i++)

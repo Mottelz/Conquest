@@ -1,4 +1,6 @@
 #The main parts
+all : 1 4 5 6 2 3
+
 1 : GameInitDriver.o Map.o Dice.o Cards.o Player.o GameInit.o
 	g++ -o 1 GameInitDriver.o Map.o Dice.o Cards.o Player.o GameInit.o
 
