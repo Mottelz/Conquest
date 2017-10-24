@@ -1,6 +1,5 @@
 #ifndef GAMELOOP_H
 #define GAMELOOP_H
-
 #include "Startup.h"
 
 class GameLoop{

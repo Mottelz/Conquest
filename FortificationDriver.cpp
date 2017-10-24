@@ -1,9 +1,6 @@
 #include <iostream>
-
 #include <ctime>
-
 #include "Player.h"
-
 using namespace std;
 
 int main() {
@@ -17,11 +14,11 @@ int main() {
 	}
 	catch (string e) {
 		cout << "*****************************************" << endl;
-		cout << "Failed loading map file: " <<gameMap.getMapName() << endl;
+		cout << "Failed loading map file: " << gameMap.getMapName() << endl;
 		cout << e << endl;
 		cout << "*****************************************" << endl;
 		cout << endl;
-		
+
 	}
 
 	vector<Player> playerList;
@@ -33,7 +30,7 @@ int main() {
 
 	for (int i = 0; i < playerList.size(); i++)
 	{
-		playerList[i].setPlayerID(i+1);
+		playerList[i].setPlayerID(i + 1);
 		cout << "Player " << playerList[i].getPlayerID() << ", " << playerList[i].getName() << endl;
 	}
 
@@ -63,18 +60,18 @@ int main() {
 		}
 	}
 
+
 	gameMap.toString();
 
 	for (int i = 0; i < playerList.size(); i++)
 	{
 		cout << endl;
 		cout << "==============================================================================" << endl;
-		cout << "Player " << playerList[i].getPlayerID() << ", " << playerList[i].getName() << ", Attack Phase: " << endl;
+		cout << "Player " << playerList[i].getPlayerID() << ", " << playerList[i].getName() << ", Fortification Phase: " << endl;
 		cout << "------------------------------------------------------------------------------" << endl;
 
-		playerList[i].attack(&gameMap);
+		playerList[i].fortification(&gameMap);
 	}
 
-
-	return 0 ;
+	return 0;
 }

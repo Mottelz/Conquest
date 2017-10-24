@@ -92,7 +92,7 @@ public:
 	bool allTerriAssigned();
 	bool isAssigned(int terriID);
 
-	int Map::computeTotalBonus(int playerID);
+	int computeTotalBonus(int playerID);
 
 	Territory* getTerriAddress(string territory);
 	Territory* getTerriAddress(int territory);
