@@ -306,9 +306,14 @@ void Map::linkAllTerritories()
 bool Map::assignArmies(Player *_player, string territory)
 {
 	int _id = seekTerritoryID(territory);
-	if (m_Territories[_id].m_Owner == _player)
+	if ((m_Territories[_id].m_Owner == NULL) || (m_Territories[_id].m_Owner == _player)) 
 	{
+		m_Territories[_id].m_Owner = _player;
+		m_Territories[_id].m_OwnerID = _player->getPlayerID();
 		m_Territories[_id].m_Armies++;
+		_player->myTerriUpdate(this);
+		if (m_Territories[_id].m_Continent->contiUpdate(&m_Territories[_id]))
+			_player->myContiUpdate(this);
 
 		return true;
 	}
