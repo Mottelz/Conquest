@@ -1,23 +1,33 @@
 #include "GameLoop.h"
 
-
+/**
+ * Constructor creates the Startup object. 
+ * \see Startup.Startup()
+ */
 GameLoop::GameLoop()
 {
 	m_Startup = Startup();
 }
 
+/**
+ * Constrcutor if you already have the Startup and Map objects.
+ * \param startup The Startup object.
+ * \param map The Map.
+ */
 GameLoop::GameLoop(Startup &startup, Map &map)
 {
 	m_Startup = startup;
 	m_Map = map;
 }
 
+/**
+ * Destructor. No special things removed.
+ */
+GameLoop::~GameLoop() {}
 
-GameLoop::~GameLoop()
-{
-
-}
-
+/**
+ * The main game loop. This goes through the entire game.
+ */
 void GameLoop::loop()
 {
 	int index;
@@ -56,13 +66,6 @@ void GameLoop::loop()
 
 		count++;
 	}
-}
-
-// Method to give every players' territories to player one (for temporary testing)
-void GameLoop::giveTerritory(Player &player)
-{
-	string territory = player.deallocateTerritory(); // Remove a territory from the player
-	m_Startup.m_Players[0]->assignTerritory(territory, m_Map); // Gives it to player #1 
 }
 
 

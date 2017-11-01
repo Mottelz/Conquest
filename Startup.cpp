@@ -3,18 +3,26 @@
 #include <algorithm>
 #include <random>
 #include "Startup.h"
+using namespace std;
 
 
+/**
+ * Constructor with zero players.
+ */
 Startup::Startup()
 {
 	m_NumberOfPlayers = 0;
 }
 
+/**
+ * Constructor with Players.
+ * \param players A vector of players to be used. 
+ */
 Startup::Startup(vector<Player> &players)
 {
 	// Shuffles the content of the Player vector so that the order of play is determined randomly
-	auto rng = (std::default_random_engine ());
-	std::shuffle(std::begin(players), std::end(players), rng);
+	auto rng = (default_random_engine ());
+	shuffle(begin(players), end(players), rng);
 
 	m_NumberOfPlayers = players.size();
 	
@@ -27,8 +35,15 @@ Startup::Startup(vector<Player> &players)
 
 }
 
+/**
+ * Destructor. Destroys nothing special. 
+ */
 Startup::~Startup() {}
 
+/**
+ * Randomly distribute territories/countries between the players. 
+ * \param map The Map being used for the game.
+ */
 void Startup::distributeTerritories(Map &map)
 {
 	srand(time(0)); // Seed for the random number generator
@@ -57,6 +72,10 @@ void Startup::distributeTerritories(Map &map)
 
 }
 
+/**
+ * Randomly places armies in a round robin fashion. 
+ * \param map The Map where the stuff will be placed.
+ */
 void Startup::placeArmies(Map &map)
 {
 	int armiesAtStart;

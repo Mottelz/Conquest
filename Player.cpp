@@ -3,11 +3,11 @@
 #include <cstdlib>
 #include <ctime>
 #include "Player.h"
+using namespace std;
 
-
-
-int numberOfDice;
-
+/**
+ * Constrcutor that creates the player with the basics. Names the Player Nameless.
+ */
 Player::Player() {
 	m_DiceCup = DiceCup();
 	m_Hand = Hand();
@@ -15,30 +15,49 @@ Player::Player() {
 	m_PlayerID = 0;
 }
 
-Player::Player(std::string name){
+/**
+ * Constrcutor that creates the player with the basics and the name it's given.
+ * \param name The name of the player.
+ */
+Player::Player(string name){
 	m_Name = name;
 	m_DiceCup = DiceCup();
 	m_Hand = Hand();
 	m_PlayerID = 0;  // To be set at startup
 };
 
+/**
+ * Returns the player's id.
+ */
 int Player::getPlayerID() {
 	return m_PlayerID;
 }
 
+/**
+ * Returns the number of territories.
+ */
 int Player::getNumberOfTerritories() {
 	return m_PlayerTerritories.size();
 }
 
-int Player::getMyCard()
+/**
+ * Returns the number of cards in Hand.
+ */
+int Player::getHandSize()
 {
 	return m_Hand.getHandSize();
 }
 
+/**
+ * Returns the player's name.
+ */
 string Player::getName() {
 	return m_Name;
 }
 
+/**
+ * Returns a string of all the territory names. 
+ */
 vector<string> Player::getPlayerTerritoryNames() {
 	vector<string> toReturn;
 	for (int i = 0; i < m_PlayerTerritories.size(); i++) {
@@ -47,34 +66,34 @@ vector<string> Player::getPlayerTerritoryNames() {
 	return toReturn;
 }
 
+/**
+ * Sets the player's ID. 
+ * \param ID The id you want to set.
+ */
 void Player::setPlayerID(int ID) {
 	m_PlayerID = ID;
 }
 
-void Player::reinforce() {
-	cout << m_Name << " just got reinforcements!" << endl;
-}
-void Player::attack() {
-	cout << m_Name <<" just attacked!" << endl;
-}
-void Player::fortify() {
-	cout << m_Name << " just fortified their territories!" << endl;
-}
 
-void Player::reinforcement(Map * map, Deck &deck)
+/**
+ * The method for the reinforcement phase. 
+ * \param map The game's Map.
+ * \param deck The game's Deck.
+ */
+void Player::reinforce(Map * map, Deck &deck)
 {
 	
 	int assign_terri_ID = -1, assign_num = 0;
-	this->statusDisplay(myTerri_REIN);
+	this->statusDisplay(myTerritoryReinforce);
 
 	int my_card;
 	int exchangedArmies = 0;
 
-	my_card = this->getMyCard();
+	my_card = this->getHandSize();
 
 	cout << "Currently, you have " << my_card << " cards in your hand. " << endl;
 	this->displayHand();
-	if (this->reinforcement_cardExchangeable() == true)
+	if (m_Hand.exchangeable() == true)
 	{
 		cout << "Your have exchangeable cards. " << endl;
 		if (my_card > 5)
@@ -82,7 +101,7 @@ void Player::reinforcement(Map * map, Deck &deck)
 			cout << "Since you have more than 5 cards you must exchange. " << endl;
 			
 			while(exchangedArmies == 0)
-				exchangedArmies = this->reinforcement_cardExchange(deck);
+				exchangedArmies = this->exchangeCards(deck);
 
 		}
 		else
@@ -93,7 +112,7 @@ void Player::reinforcement(Map * map, Deck &deck)
 				cin >> exchange;
 				if (exchange == "Y" || exchange == "y")
 				{
-					exchangedArmies = this->reinforcement_cardExchange(deck);
+					exchangedArmies = this->exchangeCards(deck);
 					if(exchangedArmies!=0)
 						break;
 				}
@@ -114,7 +133,7 @@ void Player::reinforcement(Map * map, Deck &deck)
 		cout << "You cannot exchange cards at this time. " << endl;
 	}
 		
-		int valid_assigned_armies = this->reinforcement_availableAssignedArmies(exchangedArmies);
+		int valid_assigned_armies = this->assignedAvailableArmies(exchangedArmies);
 
 	do {
 		cout << "You have " << valid_assigned_armies << " troop(s) left to deploy." << endl;
@@ -142,7 +161,7 @@ void Player::reinforcement(Map * map, Deck &deck)
 
 			if (assign_num >= 0 && assign_num <= valid_assigned_armies)
 			{
-				this->reinforcement_placeArmies(assign_terri_ID, assign_num, map);
+				this->placeArmiesDuringReinforcement(assign_terri_ID, assign_num, map);
 				valid_assigned_armies -= assign_num;
 				break;
 			}
@@ -153,19 +172,28 @@ void Player::reinforcement(Map * map, Deck &deck)
 		} while (true);
 		
 		cout << endl;
-		this->statusDisplay(myTerri_REIN);
+		this->statusDisplay(myTerritoryReinforce);
 
 	} while (valid_assigned_armies > 0);
 	
 	
 }
 
-int Player::reinforcement_cardExchange(Deck &deck)
+/**
+ * Exchanges the cards in the hand with the Deck.
+ * \see Hand.exchange
+ * \param deck The Deck that is being used in the game.
+ */
+int Player::exchangeCards(Deck &deck)
 {
 	return this->m_Hand.exchange(deck);
 }
 
-int Player::reinforcement_availableAssignedArmies(int exchangedArmies)
+/**
+ * Calulates the armies to deploy beyond the number given. The number given is calulated by exchanging cards.
+ * \param exchangedArmies Number of armies already set to be deployed.
+ */
+int Player::assignedAvailableArmies(int exchangedArmies)
 {
 	int avail_AssignedArmies = this->getNumberOfTerritories()/3;
 	if (avail_AssignedArmies < 3)
@@ -176,6 +204,11 @@ int Player::reinforcement_availableAssignedArmies(int exchangedArmies)
 	return avail_AssignedArmies;
 }
 
+/**
+ * The method for the attack phase.
+ * \param map The game's map.
+ * 
+ */
 void Player::attack(Map * map)
 {
 	bool attack_state;
@@ -294,7 +327,7 @@ void Player::attack(Map * map)
 			{
 				if (map->getArmyNumOfTheTerritory(attack_to) > 0)
 				{
-					this->attack_attacking(attack_from, attack_to, map);
+					this->engageInBattle(attack_from, attack_to, map);
 					if (map->getArmyNumOfTheTerritory(attack_from) > 1 && map->getArmyNumOfTheTerritory(attack_to) > 0)
 					{
 						bool change_terri;
@@ -383,7 +416,11 @@ void Player::attack(Map * map)
 	}
 }
 
-void Player::fortification(Map * map)
+/**
+ * The method for the fortification phase.
+ * \param map The game's map.
+ */
+void Player::fortify(Map * map)
 {
 	bool fortify_state;
 
@@ -415,7 +452,7 @@ void Player::fortification(Map * map)
 	{
 		int move_from = -1, move_to = -1, move_num = 0;
 		vector<string> fortifyPath;
-		this->statusDisplay(myTerri_FORT);
+		this->statusDisplay(myTerritoryFortify);
 		do
 		{
 			cout << "Please select the source territory ID (integer) that you want to move your armies from: " << endl;
@@ -490,8 +527,8 @@ void Player::fortification(Map * map)
 
 		} while (true);
 
-		this->fortification_moveArmies(move_from, move_to, move_num, map);
-		this->fortification(map);
+		this->moveArmiesDuringFortification(move_from, move_to, move_num, map);
+		this->fortify(map);
 	}
 	else
 	{
@@ -501,23 +538,30 @@ void Player::fortification(Map * map)
 
 }
 
-//int Player::rollDice(int numToRoll){
-//	m_DiceCup.setNumberOfDice(numToRoll);
-//	return m_DiceCup.rollDice();
-//}
-
+/**
+ * Adds a card from the given Deck to player's Hand.
+ * \param deck The Deck to draw a card from.
+ */
 void Player::drawCard(Deck& deck)
 {
 	m_Hand.addCard(deck);
 }
 
-
+/**
+ * Prints out m_Hand 
+ * \see Hand.toString
+ */
 void Player::displayHand()
 {
-	m_Hand.printHand();
+	cout << m_Hand.toString();
 }
 
-vector<int> Player::shakeMyDiceCup(int armiesOfATerri, bool atk/*, int numOfDice*/)
+/**
+ * Determines number of Dice allowed and rolls them.
+ * \param armiesOfATerri The number of armies the player has in the relvant territory.
+ * \param atk True if player is attacking, false otherwise.
+ */
+vector<int> Player::shakeMyDiceCup(int armiesOfATerri, bool atk)
 {
 	int numOfDice;
 	int maxDiceLimit;
@@ -568,13 +612,20 @@ vector<int> Player::shakeMyDiceCup(int armiesOfATerri, bool atk/*, int numOfDice
 	}
 }
 
-
+/**
+ * Assigns a given territory on the given map to player.
+ * \param territoryName The name of the territory the player is being given.
+ * \param map The map we are using in this game.
+ */
 void Player::assignTerritory(string territoryName, Map& map)
 {
 	map.setTerritoryOwner(territoryName, this); // Assigns the player directly to the map
 	m_PlayerTerritories.push_back(map.getTerriAddress(territoryName)); // Adds the territory to the player's list
 }
 
+/**
+ * Talkes a territory away from the player. 
+ */
 string Player::deallocateTerritory()
 {
 	// Delete and return the last element in the vector. For now this is just to facilitate Driver 2.3
@@ -583,6 +634,9 @@ string Player::deallocateTerritory()
 	return territory;
 }
 
+/**
+ * Prints out all the player's territories.
+ */
 void Player::displayPlayerTerritories()
 {
 	for (int i = 0; i < m_PlayerTerritories.size(); i++)
@@ -594,6 +648,9 @@ void Player::displayPlayerTerritories()
 	}
 }
 
+/**
+ * Returns the tota number of assigned armies.
+ */
 int Player::numberOfArmiesAssigned()
 {
 	int count=0;
@@ -605,6 +662,9 @@ int Player::numberOfArmiesAssigned()
 	return count;
 }
 
+/**
+ * Prints out all the player's stats.
+ */
 void Player::toString(){
 	cout << "Here's what " << m_Name << " has:" << endl;
 
@@ -615,11 +675,21 @@ void Player::toString(){
 	displayPlayerTerritories();
 }
 
+/**
+ * Calculates army bonus that the player gets for owning a continent.
+ * \param map The game's map. 
+ */
 int Player::getPlayerContinentBonus(Map& map)
 {
 	int bonus = map.computeTotalBonus(m_PlayerID);
 	return bonus;
 }
+
+/**
+ * Checks if the player owns the the given territory. 
+ * \param territory The name of the territory. 
+ * \param p The play whose ownership we're checking.
+ */
 bool Player::checkOwnedCountry(string territory, Player p) {
   for (int i = 0; i < p.getNumberOfTerritories()-1; i++) {
 
@@ -630,6 +700,10 @@ bool Player::checkOwnedCountry(string territory, Player p) {
 	return false;
 }
 
+/**
+ * Prints out the player's info based on a given status.
+ * \param myStatus an enum of different statuses
+ */
 void Player::statusDisplay(playerStatus myStatus)
 {
 	switch (myStatus)
@@ -663,7 +737,7 @@ void Player::statusDisplay(playerStatus myStatus)
 	}
 
 
-	case myTerri_REIN:
+	case myTerritoryReinforce:
 	{
 		cout << "\nPlayer status: \n";
 		cout << "------------------------------------------------------------------------------" << endl;
@@ -707,7 +781,7 @@ void Player::statusDisplay(playerStatus myStatus)
 		break;
 	}
 
-	case myTerri_FORT:
+	case myTerritoryFortify:
 	{
 		cout << "\nPlayer status: \n";
 		cout << "------------------------------------------------------------------------------" << endl;
@@ -751,6 +825,10 @@ void Player::statusDisplay(playerStatus myStatus)
 	}
 }
 
+/**
+ * Updates m_PlayerTerritories.
+ * \param map The game's map.
+ */
 void Player::myTerriUpdate(Map* map)
 {
 	m_PlayerTerritories.clear();
@@ -763,6 +841,10 @@ void Player::myTerriUpdate(Map* map)
 	}
 }
 
+/**
+ * Updates m_PlayerContinents.
+ * \param map The game's map.
+ */
 void Player::myContiUpdate(Map * map)
 {
 	m_PlayerContinents.clear();
@@ -774,10 +856,13 @@ void Player::myContiUpdate(Map * map)
 		}
 	}
 }
-
-bool Player::isMyTerritory(Territory * terri)
+/**
+ * Checks if the player owns a territory.
+ * \param territoryToCheck The territory we are checking the owner of. 
+ */
+bool Player::isMyTerritory(Territory * territoryToCheck)
 {
-	if (terri->getOwnerPointer() == this)
+	if (territoryToCheck->getOwnerPointer() == this)
 		return true;
 	else
 	{
@@ -785,7 +870,13 @@ bool Player::isMyTerritory(Territory * terri)
 	}
 }
 
-void Player::reinforcement_placeArmies(int assign_to, int place_num, Map* map)
+/**
+ * Places armies to place.
+ * \param assign_to ID of territory being applied. 
+ * \param place_num Number of territories to place.
+ * \param map The map.
+ */
+void Player::placeArmiesDuringReinforcement(int assign_to, int place_num, Map* map)
 {
 	for (int i = 0; i < place_num; i++)
 	{
@@ -794,12 +885,14 @@ void Player::reinforcement_placeArmies(int assign_to, int place_num, Map* map)
 		
 }
 
-bool Player::reinforcement_cardExchangeable()
-{
-	return m_Hand.exchangeable();
-}
 
-void Player::attack_attacking(int from, int to, Map * map)
+/**
+ * Method that actually triggers a battle.
+ * \param from ID of territory we're attacking from.
+ * \param to ID of territory being attacked.
+ * \param map The map where the battle is taking place.
+ */
+void Player::engageInBattle(int from, int to, Map * map)
 {
 	vector<int> myRolledList, enemyRolledList;
 
@@ -865,8 +958,14 @@ void Player::attack_attacking(int from, int to, Map * map)
 
 }
 
-
-void Player::fortification_moveArmies(int move_from, int move_to, int move_num, Map * map)
+/**
+ * Moves armies around.
+ * \param move_from ID where the troops are moving from.
+ * \param move_to ID where the troops are moving to.
+ * \param move_num Number of people moving.
+ * \param map The map where this is all taking place.
+ */
+void Player::moveArmiesDuringFortification(int move_from, int move_to, int move_num, Map * map)
 {
 	for (int i = 0; i < move_num; i++)
 	{

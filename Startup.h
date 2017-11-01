@@ -5,10 +5,14 @@
 #include "Player.h"
 #include <vector>
 
+/**
+ * The class that starts up the game.
+ * \param m_NumberOfPlayers Number of players. 
+ * \param m_Players Vector of Players to be used. 
+ */
+
 class Startup {
-
 	friend class GameLoop;
-
 public:
 	Startup();
 	Startup(vector<Player> &players);

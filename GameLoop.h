@@ -2,8 +2,12 @@
 #define GAMELOOP_H
 #include "Startup.h"
 
-class GameLoop{
-
+/**
+ * This is the main game loop. It is the main object that runs the game.
+ * \param m_Startup The Startup object.
+ * \param m_Map The map to be used. 
+ */
+class GameLoop {
 public:
 	GameLoop();
 	GameLoop(Startup &startup, Map &map);
@@ -13,7 +17,6 @@ public:
 private:
 	Startup m_Startup;
 	Map m_Map;
-	void giveTerritory(Player &player);
 };
 
 

@@ -6,7 +6,15 @@
 #include "Cards.h"
 using namespace std;
 
-
+/**
+ * The class that initializes the game. 
+ * \param m_MapNames The complete list of all possible maps to be added.
+ * \param m_Players The list of Players.
+ * \param m_MapLoader Pointer to the Maploader to be used.
+ * \param m_Map Pointer to the Map object used.
+ * \param m_Deck Pointer to the Deck used.
+ * \param m_SelectedMap The name of the selected map.
+ */
 class GameInit {
 private:
     vector<string> m_MapNames;

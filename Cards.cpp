@@ -4,10 +4,14 @@
 #include <vector>
 #include <string>
 #include "Cards.h"
+using namespace std;
 
-//constructors
-Card::Card(char type, std::string country) {
-    //Use switch to make sure it's a valid card type
+/**
+ * Constrctor that makes sure you entered a valid type. 
+ * \param type A char to set the m_type. 
+ * \param country A string with the name of the country/territory. 
+ */
+Card::Card(char type, string country) {
     try {switch(type){
         case 'a':
         case 'c':
@@ -18,35 +22,54 @@ Card::Card(char type, std::string country) {
             throw "Invalid card type!";
     }
     } catch(const char* e){
-        std::cout << e << std::endl;
+        cout << e << endl;
     }
     m_Country = country;
 };
-
+/**
+ * Default Constructor. Creates card of type x. 
+ */
 Card::Card() {
 	m_Type = 'x';
 	m_Country = "Unknown";
 
 }
 
-//card getters
+/**
+ * Returns the type of the card. 
+ */
 char Card::getType() {
     return m_Type;
 };
-
-std::string Card::getCountry() {
+/**
+ * Returns the name of the territory on the card. 
+ */
+string Card::getCountry() {
     return m_Country;
 };
 
-//card printer
-void Card::printCard() {
-    std::cout << "Type: " << getType() << " Territory: " << getCountry() << std::endl;
+/**
+ * Returns a string that looks like "Type: a Territory: Montreal"
+ */
+string Card::toString() {
+    string toReturn; 
+    toReturn += "Type: "; 
+    toReturn += getType();
+    toReturn += " Territory: " + getCountry();
+    return toReturn;
 }
 
-//constructors
+/**
+ * Default constrcutor. Creates an empty Deck. 
+ */
 Deck::Deck() {}
 
-Deck::Deck(std::vector<std::string> countries, int countriesLeng) {
+/**
+ * Constructor that creates and populates the deck.
+ * \param countries Vector of all the countries/territories. 
+ * \param countriesLeng The total number of countries. 
+ */
+Deck::Deck(vector<string> countries, int countriesLeng) {
 
     for (unsigned int i = 0; i < countriesLeng; ++i) {
         //assign type based on mod 3
@@ -68,23 +91,34 @@ Deck::Deck(std::vector<std::string> countries, int countriesLeng) {
 	m_ArmiesForExchange = 0;
 }
 
+/**
+ * Destructor. clears out the cards vector. 
+ */
 Deck::~Deck() {
 	m_Cards.clear();
 }
 
-//card getter
+/**
+ * Returns card at a given index. 
+ * \param i Int representing the wanted index. 
+ */
 Card Deck::getCard(int i) {
     return m_Cards[i];
 }
 
+/**
+ * Returns the total number of cards in play. Not the current deck size. 
+ */
 int Deck::getNumberOfCards() {
     return m_NumberOfCards;
 }
 
-
+/**
+ * Rerutns a random card from the Deck.
+ */
 Card Deck::draw() {
     //this is a psuedo random method for shuffling (i think), but it does always return a random one :)
-    std::random_shuffle(m_Cards.begin(), m_Cards.end());
+    random_shuffle(m_Cards.begin(), m_Cards.end());
     //temp grab card
     Card cardToReturn = m_Cards[0];
     //remove card and resize deck
@@ -94,8 +128,11 @@ Card Deck::draw() {
     return cardToReturn;
 }
 
-
-int Deck::exchange(std::vector<Card> &cardsToSwap) {
+/**
+ * Puts the cards back in the deck and returns the number of armies to add as a bonus. 
+ * \param cardsToSwap The vector of cards to be added. 
+ */
+int Deck::exchange(vector<Card> &cardsToSwap) {
     //put the cards back
     for (int i = 0; i < cardsToSwap.size(); ++i) {
         m_Cards.push_back(cardsToSwap[i]);
@@ -105,62 +142,90 @@ int Deck::exchange(std::vector<Card> &cardsToSwap) {
     return m_ArmiesForExchange;
 }
 
-void Deck::toString(){
-    std::cout << "Here is the deck:" << std::endl;
+/**
+ * Returns a string made of all the cards in the deck. 
+ * \see Card.toString()
+ */
+string Deck::toString(){
+    string toReturn;
+    toReturn += "Here is the deck: \n";
     for(int i = 0; i < m_Cards.size(); i++){
-        m_Cards[i].printCard();
+        toReturn += m_Cards[i].toString() +"\n";
     }
+    return toReturn;
 }
 
-//Constructor and Destructor
+/**
+ * The default constructor. Creates an empty hand. 
+ */
 Hand::Hand() {}
+
+/**
+ * Destuctor. Clears out the hand. 
+ */
 Hand::~Hand() {
 	m_Cards.clear();
 }
 
-//Draw a card from a Deck
+/**
+ * Draws a card from the given Deck.
+ * \see Deck.draw
+ * \param deck The deck that the card will be drawn from. 
+ */
 void Hand::addCard(Deck &deck){
 	m_Cards.push_back(deck.draw());
 }
 
-//return size of the hand
+/**
+ * Gives the actual number of cards in the Hand. 
+ */
 int Hand::getHandSize() {
     return m_Cards.size();
 }
 
-//Print all the cards in the Hand
-void Hand::printHand() {
+/**
+ * Returns a string a which shows all the cards in the hand. 
+ */
+string Hand::toString() {
+    string toReturn;
     for(unsigned int i = 0; i < m_Cards.size(); i++){
-        std::cout << "Card #" << i << ": " << m_Cards[i].getType() << " " << m_Cards[i].getCountry() << std::endl;
+        toReturn += "Card #"; 
+        toReturn += i;
+        toReturn += ": " + m_Cards[i].toString();
     }
+    return toReturn;
 }
 
-//swap a valid set for the armies
+/**
+ * Checks for valid set and exchanges it with the fed into the Deck.
+ * \param deck The Deck that the cards will be put back in. 
+ * \see Deck.exchange
+ */
 int Hand::exchange(Deck &deck) {
     int card1;
     int card2;
     int card3;
 
     //show hand and ask for cards
-    printHand();
-    std::cout << "Please select three cards to exchange by entering their numbers with a line break or space between them. \n"
-            "The cards must each all have the same type or be one of each type.\n" << std::endl;
+    cout << toString();
+    cout << "Please select three cards to exchange by entering their numbers with a line break or space between them. \n"
+            "The cards must each all have the same type or be one of each type.\n" << endl;
 
     //read in cards
-    std::cin >> card1;
-    std::cin >> card2;
-    std::cin >> card3;
+    cin >> card1;
+    cin >> card2;
+    cin >> card3;
 
-	m_Cards[card1].printCard();
-	m_Cards[card2].printCard();
-	m_Cards[card3].printCard();
+	cout << m_Cards[card1].toString();
+	cout << m_Cards[card2].toString();
+	cout << m_Cards[card3].toString();
 
 
 
     //validate choices
     if((m_Cards[card1].getType() == m_Cards[card2].getType()) && (m_Cards[card2].getType() == m_Cards[card3].getType())){
 
-        std::vector<Card> cardsToSwap;
+        vector<Card> cardsToSwap;
         Card cardObj1 = m_Cards[card1];
         Card cardObj2 = m_Cards[card2];
         Card cardObj3 = m_Cards[card3];
@@ -189,7 +254,7 @@ int Hand::exchange(Deck &deck) {
 
     } else if ((m_Cards[card1].getType() != m_Cards[card2].getType()) && (m_Cards[card2].getType() != m_Cards[card3].getType()) && (m_Cards[card1].getType() != m_Cards[card3].getType())) {
 
-        std::vector<Card> cardsToSwap;
+        vector<Card> cardsToSwap;
         Card cardObj1 = m_Cards[card1];
         Card cardObj2 = m_Cards[card2];
         Card cardObj3 = m_Cards[card3];
@@ -219,12 +284,15 @@ int Hand::exchange(Deck &deck) {
 
         return deck.exchange(cardsToSwap);
     } else {
-        std::cout << "Those cards are not a set!" << std::endl;
+        cout << "Those cards are not a set!" << endl;
         return 0;
     }
 
 }
 
+/**
+ * Returns true if the there is a set that can be exchanged, else returns false. 
+ */
 bool Hand::exchangeable()
 {
 	if (this->getHandSize()<3)

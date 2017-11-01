@@ -1,10 +1,12 @@
 #pragma once
 #include<vector>
-
 using namespace std;
-
+/**
+ * The class that represents a die.
+ * \param m_Value The value on the die. 
+ * \param m_DiceCounter Counts the number of times the dice has been rolled. 
+ */
 class Die {
-
 public:
 	//ctor declaration
 	Die();
@@ -23,6 +25,12 @@ private:
 	int m_DiceCounter;
 };
 
+/**
+ * A class to hold the dice. 
+ * \param m_NumberOfDice The number of dice in the cup.
+ * \param m_TrackPercent The number of times a number has been returned.
+ * \param m_Container Stores all the numbers that have been rolled.
+ */
 class DiceCup : public Die {
 
 	//declaration of dice
@@ -36,7 +44,6 @@ public:
 	void setNumberOfDice(int numberOfDice);
 
 	//function delcaration
-	/*std::vector<int> rollDice();*/
 	void keepTrack(int x);//**
 	void showPercentage();
 	void displayCup();
@@ -50,8 +57,7 @@ private:
 	//instances variables
 	int m_NumberOfDice;
 	int m_TrackPercent[6];
-	
-	std::vector<int> m_Container;
+	vector<int> m_Container;
 
 	void descendingSort();
 };

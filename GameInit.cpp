@@ -2,7 +2,9 @@
 #include "GameInit.h"
 using namespace std;
 
-//Just creates the empty objects
+/**
+ * Constructor creates all the objects. The map names are set in here. They probably shouldn't be.
+ */
 GameInit::GameInit(){
     m_Map = new Map();
     m_Deck = new Deck();
@@ -17,7 +19,9 @@ GameInit::GameInit(){
     m_MapNames.shrink_to_fit();
 }
 
-//Destroy everything!
+/**
+ * Destroys everything. (Probably shouldn't do that.)
+ */
 GameInit::~GameInit(){
     m_MapNames.clear();
     m_Players.clear();
@@ -26,6 +30,9 @@ GameInit::~GameInit(){
     m_Deck->~Deck();
 }
 
+/**
+ * Prompts user for a map selection and makes sure it's valid.
+ */
 int GameInit::askUserForMapSelection(){
     int tempMap = -1;
     do {
@@ -39,7 +46,9 @@ int GameInit::askUserForMapSelection(){
     return tempMap;
 }
 
-
+/**
+ * Gets the user's selection for a bunch of things. 
+ */
 void GameInit::getUserPrefernces(){
     int tempPlayers = 0;
     bool haveMap = false;
@@ -69,6 +78,9 @@ void GameInit::getUserPrefernces(){
     m_Deck = new Deck(m_Map->getAllTerritoryNames(), m_Map->getTotalNumberOfTerritories());
 }
 
+/**
+ * Prints out the map and players (needs to be updated to return a string instead of printing it out.)
+ */
 void GameInit::toString(){
     cout << "Here's the map:" << endl;
     m_Map->toString();
