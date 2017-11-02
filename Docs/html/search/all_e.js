@@ -4,7 +4,7 @@ var searchData=
   ['seekpath',['seekPath',['../class_map.html#a2e9356937736b6131c716f6e6cc295d4',1,'Map']]],
   ['seekterritoryid',['seekTerritoryID',['../class_map.html#a81148665f650ccce0979e818b849020f',1,'Map']]],
   ['setdicecounter',['setDiceCounter',['../class_die.html#a7ca2af213d97ad97d85690113d042e61',1,'Die']]],
-  ['setmapvalidate',['setMapValidate',['../class_map.html#ac467c25ac97c56f9ae828a5e20abd83e',1,'Map']]],
+  ['setmapvalidate',['setMapValidate',['../class_map.html#a3c1f2ea8e9e771af7f97de1371cb21d4',1,'Map']]],
   ['setnumberofdice',['setNumberOfDice',['../class_dice_cup.html#af5425ca03860799253fae1b840b9474f',1,'DiceCup']]],
   ['setplayerid',['setPlayerID',['../class_player.html#abba5a325452b152d2c6198ab20ad6dae',1,'Player']]],
   ['setterritoryowner',['setTerritoryOwner',['../class_map.html#a4fd7287911e88d54843a7c494dddb117',1,'Map']]],

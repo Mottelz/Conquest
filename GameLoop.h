@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The header for the GameLoop.cpp. Includes declaration for GameLoop. 
+ **/
 #ifndef GAMELOOP_H
 #define GAMELOOP_H
 #include "Startup.h"

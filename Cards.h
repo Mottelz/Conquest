@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The header for the Cards.cpp. Includes declaration for Card, Deck, and Hand. 
+ **/
 #ifndef CARDS_H
 #define CARDS_H
 

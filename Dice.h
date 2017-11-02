@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The header for the Dice.cpp. Includes declaration for Die and DiceCup. 
+ **/
 #pragma once
 #include<vector>
 using namespace std;

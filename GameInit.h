@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The header for the GameInit.cpp. Includes declaration for GameInit. 
+ **/
 #pragma once
 #include <vector>
 #include <string>

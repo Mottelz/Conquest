@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The cpp for the GameInit.h. Includes definitions for GameInit. 
+ **/
 #include <iostream>
 #include "GameInit.h"
 using namespace std;

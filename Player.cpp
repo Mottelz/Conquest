@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The cpp for the Player.h. Includes definitions for Player. 
+ **/
 #include <iostream>
 #include <vector>
 #include <cstdlib>

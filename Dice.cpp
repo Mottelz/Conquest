@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The cpp for the Dice.h. Includes definitions for Die and DiceCup. 
+ **/
 #include <iostream>
 #include "Dice.h"
 using namespace std;

@@ -40,7 +40,7 @@ var class_map =
     [ "seekContinentID", "class_map.html#a7372f40da2cf4d52d4ae0846947d2667", null ],
     [ "seekPath", "class_map.html#a2e9356937736b6131c716f6e6cc295d4", null ],
     [ "seekTerritoryID", "class_map.html#a81148665f650ccce0979e818b849020f", null ],
-    [ "setMapValidate", "class_map.html#ac467c25ac97c56f9ae828a5e20abd83e", null ],
+    [ "setMapValidate", "class_map.html#a3c1f2ea8e9e771af7f97de1371cb21d4", null ],
     [ "setTerritoryOwner", "class_map.html#a4fd7287911e88d54843a7c494dddb117", null ],
     [ "terriOfPlayer", "class_map.html#ac1545169b2e1276b768a7d2b92787ffa", null ],
     [ "toString", "class_map.html#ac440236c5b1486df11d2fe87ec1a3c62", null ]

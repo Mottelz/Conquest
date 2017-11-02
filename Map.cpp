@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The cpp for the Map.h. Includes definitions for Map,  Territory, Continent, and MapLoader. 
+ * */
 #include "Map.h"
 #include <exception>
 #include <sstream>
@@ -7,6 +11,9 @@
 #include <fstream>
 using namespace std;
 
+/**
+ * Constrcutor sets everything to zero and NULL.
+ */
 Territory::Territory()
 {
 	this->m_OwnerID = 0;
@@ -14,6 +21,9 @@ Territory::Territory()
 	this->m_Owner = NULL;
 }
 
+/**
+ * Checks if any nerby territories are not owned by the owner of this country.
+ */
 bool Territory::enemyNeighbourExists()
 {
 	for (int i = 0; i < m_AdjacentTerritories.size(); i++)
@@ -24,6 +34,9 @@ bool Territory::enemyNeighbourExists()
 	return false;
 }
 
+/**
+ * Prints out the territories owned by someone else and prints out the ones not already conqured. 
+ */
 void Territory::enemyNeighboursDisplay()
 {
 	cout << "Enemy Adjacent Territories of " << this->m_TerritoryName << ": " << endl;
@@ -37,6 +50,9 @@ void Territory::enemyNeighboursDisplay()
 	cout << endl;
 }
 
+/**
+ * Checks if any neighbours are ruled by the same evil dictator. 
+ */
 bool Territory::friendNeighbourExists()
 {
 	for (int i = 0; i < m_AdjacentTerritories.size(); i++)
@@ -47,6 +63,9 @@ bool Territory::friendNeighbourExists()
 	return false;
 }
 
+/**
+ * Basic constructor sets everything to zero and NULL.
+ */
 Continent::Continent() 
 {
 	this->m_ContinentLinks = 0;
@@ -56,6 +75,9 @@ Continent::Continent()
 	this->m_Owner = NULL;
 }
 
+/**
+ * Checks if the owner of a territory owns the continent. NOT SURE NEEDS VERIFICATION!!!
+ */
 bool Continent::contiUpdate(Territory * terri)
 {
 	Player *tempP = terri->getOwnerPointer();
@@ -83,11 +105,17 @@ bool Continent::contiUpdate(Territory * terri)
 	}
 }
 
+/**
+ * Declares the empty map valid.
+ */
 Map::Map()
 {
 	this->m_ValidMap = true;
 }
 
+/**
+ * Names the map and declares the map to be valid.
+ */
 Map::Map(string name)
 {
 	this->m_MapName = name;
@@ -95,38 +123,63 @@ Map::Map(string name)
 
 }
 
+/**
+ * Returns map name.
+ */
 string Map::getMapName()
 {
 	return this->m_MapName;
 }
 
+/**
+ * Returns total number of territories.
+ */
 int Map::getTotalNumberOfTerritories()
 {
 	return m_Territories.size();
 }
 
+/**
+ * Returns number of continents on the map.
+ */
 int Map::getTotalNumberOfContinents()
 {
 	return this->m_Continents.size();
 }
 
+/**
+ * Assigns the country to a player.
+ * \param territory The name of the country being assigned. 
+ * \param player Pointer to the player that is conquring. 
+ */
 void Map::setTerritoryOwner(string territory, Player* player)
 {
 	int _id = seekTerritoryID(territory);
 	m_Territories[_id].m_Owner = player;
 	m_Territories[_id].m_OwnerID = player->getPlayerID();
 }
-
-void Map::setMapValidate(bool boln)
+/**
+ * Sets m_ValidMap.
+ * \param isValid the bool to be set.
+ */
+void Map::setMapValidate(bool isValid)
 {
-	this->m_ValidMap = boln;
+	this->m_ValidMap = isValid;
 }
 
+/**
+ * Returns true if map is valid false otherwise.
+ */
 bool Map::isValid()
 {
 	return this->m_ValidMap;
 }
 
+/**
+ * Checks if the given countries are next to each other.
+ * \param terriID_1 ID of one country.
+ * \param terriID_2 ID of other country.
+ */
 bool Map::isAdjacent(int terriID_1, int terriID_2)
 {
 	for(int i=0; i<m_Territories[terriID_1].m_AdjacentTerritories.size();i++)
@@ -137,7 +190,11 @@ bool Map::isAdjacent(int terriID_1, int terriID_2)
 	return false;
 }
 
-// Insert a new continent
+/**
+ * Insert a new continent. Throws exception if the continent already exists.
+ * \param name Name of continent.
+ * \param continentBonus Amount of armies given for owning continent.
+ */
 void Map::insertContinent(string name, int continentBonus) throw(string)
 {
 	if (seekContinentID(name) != -1)
@@ -154,7 +211,13 @@ void Map::insertContinent(string name, int continentBonus) throw(string)
 	
 }
 
-// Insert Territory, its position, continent name, increase the number of territories in that continent
+/**
+ * Insert Territory, its position, continent name, increase the number of territories in that continent.
+ * \param name Name of new country.
+ * \param position Postion of new country.
+ * \param continentName Name of new continent. 
+ * \param adjacentTerritoriesNames Names of the adjacent countries.
+ */
 void Map::insertTerritory(string name, float position[2], string continentName, vector<string> adjacentTerritoriesNames) throw(string)
 {
 	if (seekTerritoryID(name) != -1)
@@ -188,7 +251,10 @@ void Map::insertTerritory(string name, float position[2], string continentName, 
 		throw string("Invalid Map: Invalid continent.");
 	}
 }
-
+/**
+ * Returns continent's ID based on name.
+ * \param continentName the name of the continent.
+ */
 int Map::seekContinentID(string continentName) 
 {
 	for (int i = 0; i < m_Continents.size(); i++)
@@ -199,7 +265,10 @@ int Map::seekContinentID(string continentName)
 	return -1;
 }
 
-//seek territory vector id by territory name
+/**
+ * Returns country ID based on name.
+ * \param territoryName The name.
+ */
 int Map::seekTerritoryID(string territoryName)
 {
 	//int terriID;
@@ -215,43 +284,74 @@ int Map::seekTerritoryID(string territoryName)
 	return -1;
 }
 
+/**
+ * Returns country name.
+ * \param terriID ID of territory.
+ */
 string Map::getTerritoryName(int terriID)
 {
 	return m_Territories[terriID].m_TerritoryName;
 }
 
+/**
+ * Returns owner ID.
+ * \param terriID The country ID.
+ */
 int Map::getOwnerIDOfTheTerritory(int terriID)
 {
 	return this->m_Territories[terriID].getOwnerID();
 }
 
+/**
+ * Returns owner pointer.
+ * \param terriID The country ID.
+ */
 Player * Map::getOwnerOfTheTerritory(int terriID)
 {
 	return this->m_Territories[terriID].getOwnerPointer();
 }
 
+/**
+ * Returns owner ID.
+ * \param contiID The continent ID.
+ */
 int Map::getOwnerIDOfTheContinent(int contiID)
 {
 	return this->m_Continents[contiID].getOwnerID();
 }
 
+/**
+ * Returns owner pointer.
+ * \param contiID The continent ID.
+ */
 Player * Map::getOwnerOfTheContinent(int contiID)
 {
 	return this->m_Continents[contiID].getOwnerPointer();
 }
 
+/**
+ * Returns number of occupying troop.
+ * \param terriID The country ID.
+ */
 int Map::getArmyNumOfTheTerritory(int terriID)
 {
 	return this->m_Territories[terriID].getNumOfArmies();
 }
 
-// Link one adjacent territory to the current territory
+/**
+ * Link one adjacent territory to the current territory.
+ * \param territory The current country.
+ * \param adjacentTerritory The new country.
+ */
 void Map::linkAdjacentTerritory(string territory, string adjacentTerritory)
 {
 	m_Territories[seekTerritoryID(territory)].m_AdjacentTerritories.push_back(&m_Territories[seekTerritoryID(adjacentTerritory)]);
 }
 
-// Link a group of adjacent territories to the current territory
+/** Link a group of adjacent territories to the current territory
+ * \param territory The current country.
+ * \param adjacentTerritories List of the countries being added.
+ */
 void Map::linkAdjacentTerritories(string territory, vector<string> adjacentTerritories)
 {
 	int territoryID = seekTerritoryID(territory);
@@ -260,7 +360,9 @@ void Map::linkAdjacentTerritories(string territory, vector<string> adjacentTerri
 	}
 }
 
-// Link-adj function for iterator
+/** Link Adjacent function for iterator
+ * \param territoryID The ID of the main territory. 
+ */
 void Map::linkAdjacentTerritoryID(int territoryID) throw(string)
 {
 	const vector<string> tempAdjList = m_Territories[territoryID].m_AdjacentTerritoriesNames;
@@ -280,7 +382,9 @@ void Map::linkAdjacentTerritoryID(int territoryID) throw(string)
 	}
 }
 
-// Link all the adjacent territories for all territories
+/**
+ * Link all the adjacent territories for all territories.
+ */ 
 void Map::linkAllAdjacentTerritories() 
 {
 	for (int i = 0; i < m_Territories.size(); i++)
@@ -289,7 +393,9 @@ void Map::linkAllAdjacentTerritories()
 	}
 }
 
-// Link all territories together
+/** 
+ * Link all territories together
+ */
 void Map::linkAllTerritories() 
 {
 	for (int i = 0; i < m_Continents.size(); i++)
@@ -302,7 +408,11 @@ void Map::linkAllTerritories()
 }
 
 
-// Assign one army of the current player into current territory if available
+/**
+ * Assign one army of the current player into current territory if available
+ * \param _player pointer to player.
+ * \param territory name of the territory.
+ */
 bool Map::assignArmies(Player *_player, string territory)
 {
 	int _id = seekTerritoryID(territory);
@@ -321,6 +431,11 @@ bool Map::assignArmies(Player *_player, string territory)
 	
 }
 
+/**
+ * Remove all the troops from the country.
+ * \param _player pointer to player.
+ * \param territory name of the territory.
+ */
 bool Map::removeArmies(Player * _player, string territory)
 {
 	int _id = seekTerritoryID(territory);
@@ -341,6 +456,9 @@ bool Map::removeArmies(Player * _player, string territory)
 	return false;
 }
 
+/**
+ * Checks if all countries are assigned.
+ */
 bool Map::allTerriAssigned()
 {
 	for (int i = 0; i < m_Territories.size(); i++)
@@ -351,6 +469,10 @@ bool Map::allTerriAssigned()
 	return true;
 }
 
+/**
+ * Check is a country is assigned.
+ * \param terriID The ID of the country.
+ */
 bool Map::isAssigned(int terriID)
 {
 	if(this->m_Territories[terriID].getOwnerPointer() == NULL)
@@ -362,9 +484,10 @@ bool Map::isAssigned(int terriID)
 }
 
 
-
-
-// Returns the total bonus a player gets for owning one or more continents
+/** 
+ * Returns the total bonus a player gets for owning one or more continents.
+ * \param playerID ID of the player whose bonus we're checking.
+ */
 int Map::computeTotalBonus(int playerID)
 {
 	int totalBonus = 0;
@@ -388,23 +511,37 @@ int Map::computeTotalBonus(int playerID)
 	return totalBonus;
 }
 
+/**
+ * Returns pointer of a country based on name.
+ * \param territory Name of country.
+ */
 Territory* Map::getTerriAddress(string territory)
 {
 	int territoryID = seekTerritoryID(territory);
 	return &m_Territories[territoryID];
 }
-
+/**
+ * Returns pointer of a country based on ID.
+ * \param terriID ID of country.
+ */
 Territory * Map::getTerriAddress(int terriID)
 {
 	return &m_Territories[terriID];
 }
 
+/**
+ * Returns Contitnet pointer based on ID.
+ * \param contiID ID of desired continent. 
+ */
 Continent * Map::getContiAddress(int contiID)
 {
 	return &m_Continents[contiID];
 }
 
-
+/**
+ * Returns a vector of all the countries owned by this player.
+ * \param _player the player's ID.
+ */
 vector<Territory*> Map::terriOfPlayer(int _player)
 {
 	vector<Territory*> myTerri;
@@ -419,16 +556,31 @@ vector<Territory*> Map::terriOfPlayer(int _player)
 	return myTerri;
 }
 
+/**
+ * Checks for enemies. 
+ * \param terriID ID of country we're checking.
+ */
 bool Map::enemyNeighbourExists(int terriID)
 {
 	return m_Territories[terriID].enemyNeighbourExists();
 }
 
+/**
+ * Checks for friends. 
+ * \param terriID ID of country we're checking.
+ */
 bool Map::friendNeighbourExists(int terriID)
 {
 	return  m_Territories[terriID].friendNeighbourExists();
 }
 
+/**
+ * Checks if there is a path between two countries owned by a player.
+ * \param _player Pointer to the general.
+ * \param startTerri The name of the country we're starting from.
+ * \param endTerri The name of the country we're ending at.
+ * \param path The path you can use to traverse. 
+ */
 bool Map::seekPath(Player * _player, string startTerri, string endTerri, vector<string> &path)
 {
 	//vector<string> path;
@@ -462,7 +614,11 @@ bool Map::seekPath(Player * _player, string startTerri, string endTerri, vector<
 	return false;
 }
 
-
+/**
+ * Checks for repeats of string.
+ * \param list The complete list of all the stuff we're looking at.
+ * \param obj The new thing we're hoping isn't already there.
+ */
 bool Map::isRepeated(vector<string> &list, string obj)
 {
 	for (int i = 0; i < list.size(); i++)
@@ -473,6 +629,9 @@ bool Map::isRepeated(vector<string> &list, string obj)
 	return false;
 }
 
+/**
+ * Throws an error if the map isn't valid.
+ */
 bool Map::isBadMap() throw(string)
 {
 	if (m_ValidMap)
@@ -518,6 +677,9 @@ bool Map::isBadMap() throw(string)
 
 }
 
+/**
+ * Prints out all the continents. 
+ */
 void Map::displayContinents()
 {
 	cout << endl;
@@ -530,6 +692,9 @@ void Map::displayContinents()
 	cout << endl;
 }
 
+/**
+ * Prints out all the territories. 
+ */
 void Map::displayTerritories()
 {
 	cout << endl;
@@ -558,6 +723,9 @@ void Map::displayTerritories()
 	cout << endl;
 }
 
+/**
+ * Returns a vector with all the country's names.
+ */
 vector<string> Map::getAllTerritoryNames() {
 	vector<string> toReturn;
 	for (int i = 0; i < m_Territories.size(); i++) {
@@ -566,6 +734,9 @@ vector<string> Map::getAllTerritoryNames() {
 	return toReturn;
 }
 
+/**
+ * Prints out all the map related data.
+ */
 void Map::toString()
 {
 	cout << "=========================================" << endl;
@@ -580,20 +751,35 @@ void Map::toString()
 	cout << endl;
 }
 
+/**
+ * Prints neighbouring enemies of a country.
+ * \param terriID ID of place we're checking from.
+ */
 void Map::enemyTerriOf(int terriID)
 {
 	m_Territories[terriID].enemyNeighboursDisplay();
 }
 
-//destructor
-Map::~Map()
-{
-}
+/**
+ * Destructor, doesn't do anything special.
+ */
+Map::~Map(){}
 
+/**
+ * Basic construstor which creates nothing.
+ */ 
 MapLoader::MapLoader(){}
 
+/**
+ * Basic destructor which destroys nothing.
+ */ 
 MapLoader::~MapLoader(){}
 
+/**
+ * Loads a map into a map object. Uses a relative path.
+ * \param mapFile Relative path to mapfile.
+ * \param mapObject Map object.
+ */
 void MapLoader::readMapFile(string &mapFile,  Map &mapObject) throw(string)
 {
 	ifstream input(mapFile); // Open the file
@@ -601,7 +787,7 @@ void MapLoader::readMapFile(string &mapFile,  Map &mapObject) throw(string)
 	if (input.fail()) // Unable to open the file; may not exist or wrong file name or wrong directory
 	{
 		mapObject.setMapValidate(false);
-		throw std::string("ERROR: Unable to open the file. ");
+		throw string("ERROR: Unable to open the file. ");
 
 		return;
 	}

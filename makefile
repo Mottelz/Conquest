@@ -1,3 +1,7 @@
+#Docs
+dox : Doxyfile
+	doxygen
+
 #The main parts
 all : 1 4 5 6 2 3
 

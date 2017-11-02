@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The cpp for the GameLoop.h. Includes definitions for GameLoop. 
+ **/
 #include "GameLoop.h"
 
 /**

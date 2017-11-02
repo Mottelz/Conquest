@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The header for the Player.cpp. Includes declaration for Player. 
+ **/
 #pragma once
 #include <string>
 #include <vector>

@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The header for the Startup.cpp. Includes declaration for Startup. 
+ * */
 #ifndef STARTUP_H
 #define STARTUP_H
 

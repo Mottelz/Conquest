@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The cpp for the Cards.h. Includes definitions for Card, Deck, and Hand. 
+ **/
 #include <iostream>
 #include <random>
 #include <algorithm>

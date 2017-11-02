@@ -1,3 +1,7 @@
+/** 
+ * \file 
+ * The code for the Startup.h. Includes definitions for Startup. 
+ * */
 #include <vector>
 #include <iostream>
 #include <algorithm>
