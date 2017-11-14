@@ -14,13 +14,12 @@
 class GameLoop {
 public:
 	GameLoop();
-	GameLoop(Startup &startup, Map &map);
+	GameLoop(Startup &startup);
 	~GameLoop();
-	void loop();
+	void loop(Map* map, Deck& deck);
 
 private:
 	Startup m_Startup;
-	Map m_Map;
 };
 
 
