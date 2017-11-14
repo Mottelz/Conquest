@@ -66,6 +66,7 @@ public:
     Hand();
     ~Hand();
     int exchange(Deck &deck);
+	int exchangeAI(Deck &deck);
 	bool exchangeable();
     void addCard(Deck &deck);
     string toString();

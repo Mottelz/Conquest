@@ -19,7 +19,7 @@ class Startup {
 	friend class GameLoop;
 public:
 	Startup();
-	Startup(vector<Player> &players);
+	Startup(vector<Player*> &players);
 	~Startup();
 	void distributeTerritories(Map &map);
 	void placeArmies(Map &map);
