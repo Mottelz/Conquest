@@ -193,9 +193,10 @@ int Hand::getHandSize() {
 string Hand::toString() {
     string toReturn;
     for(unsigned int i = 0; i < m_Cards.size(); i++){
-        toReturn += "Card #"; 
-        toReturn += i;
+		toReturn += "Card #"; 
+        toReturn += to_string(i);
         toReturn += ": " + m_Cards[i].toString();
+		toReturn += "\n";
     }
     return toReturn;
 }
@@ -232,66 +233,154 @@ int Hand::exchange(Deck &deck) {
         vector<Card> cardsToSwap;
         Card cardObj1 = m_Cards[card1];
         Card cardObj2 = m_Cards[card2];
-        Card cardObj3 = m_Cards[card3];
+Card cardObj3 = m_Cards[card3];
 
-        cardsToSwap.push_back(cardObj1);
-        cardsToSwap.push_back(cardObj2);
-        cardsToSwap.push_back(cardObj3);
+cardsToSwap.push_back(cardObj1);
+cardsToSwap.push_back(cardObj2);
+cardsToSwap.push_back(cardObj3);
 
-        if (card2 > card1){
-			m_Cards.erase(m_Cards.begin()+(card2-1));
-            if (card3 > card2) {
-				m_Cards.erase(m_Cards.begin()+(card3-2));
-            } else {
-				m_Cards.erase(m_Cards.begin()+(card3-1));
-            }
-        } else {
-			m_Cards.erase(m_Cards.begin()+card2);
-            if (card3 > card2) {
-				m_Cards.erase(m_Cards.begin()+(card3-1));
-            } else {
-				m_Cards.erase(m_Cards.begin()+card3);
-            }
-        }
+if (card2 > card1) {
+	m_Cards.erase(m_Cards.begin() + (card2 - 1));
+	if (card3 > card2) {
+		m_Cards.erase(m_Cards.begin() + (card3 - 2));
+	}
+	else {
+		m_Cards.erase(m_Cards.begin() + (card3 - 1));
+	}
+}
+else {
+	m_Cards.erase(m_Cards.begin() + card2);
+	if (card3 > card2) {
+		m_Cards.erase(m_Cards.begin() + (card3 - 1));
+	}
+	else {
+		m_Cards.erase(m_Cards.begin() + card3);
+	}
+}
 
-        return deck.exchange(cardsToSwap);
+return deck.exchange(cardsToSwap);
 
-    } else if ((m_Cards[card1].getType() != m_Cards[card2].getType()) && (m_Cards[card2].getType() != m_Cards[card3].getType()) && (m_Cards[card1].getType() != m_Cards[card3].getType())) {
+	}
+ else if ((m_Cards[card1].getType() != m_Cards[card2].getType()) && (m_Cards[card2].getType() != m_Cards[card3].getType()) && (m_Cards[card1].getType() != m_Cards[card3].getType())) {
 
-        vector<Card> cardsToSwap;
-        Card cardObj1 = m_Cards[card1];
-        Card cardObj2 = m_Cards[card2];
-        Card cardObj3 = m_Cards[card3];
+	 vector<Card> cardsToSwap;
+	 Card cardObj1 = m_Cards[card1];
+	 Card cardObj2 = m_Cards[card2];
+	 Card cardObj3 = m_Cards[card3];
 
-        cardsToSwap.push_back(cardObj1);
-        cardsToSwap.push_back(cardObj2);
-        cardsToSwap.push_back(cardObj3);
+	 cardsToSwap.push_back(cardObj1);
+	 cardsToSwap.push_back(cardObj2);
+	 cardsToSwap.push_back(cardObj3);
 
-        //delete the cards the if statements are there to make sure that no matter what order the numbers are entered in the results
-		m_Cards.erase(m_Cards.begin()+card1);
+	 //delete the cards the if statements are there to make sure that no matter what order the numbers are entered in the results
+	 m_Cards.erase(m_Cards.begin() + card1);
 
-        if (card2 > card1){
-			m_Cards.erase(m_Cards.begin()+(card2-1));
-            if (card3 > card2) {
-				m_Cards.erase(m_Cards.begin()+(card3-2));
-            } else {
-				m_Cards.erase(m_Cards.begin()+(card3-1));
-            }
-        } else {
-			m_Cards.erase(m_Cards.begin()+card2);
-            if (card3 > card2) {
-				m_Cards.erase(m_Cards.begin()+(card3-1));
-            } else {
-				m_Cards.erase(m_Cards.begin()+card3);
-            }
-        }
+	 if (card2 > card1) {
+		 m_Cards.erase(m_Cards.begin() + (card2 - 1));
+		 if (card3 > card2) {
+			 m_Cards.erase(m_Cards.begin() + (card3 - 2));
+		 }
+		 else {
+			 m_Cards.erase(m_Cards.begin() + (card3 - 1));
+		 }
+	 }
+	 else {
+		 m_Cards.erase(m_Cards.begin() + card2);
+		 if (card3 > card2) {
+			 m_Cards.erase(m_Cards.begin() + (card3 - 1));
+		 }
+		 else {
+			 m_Cards.erase(m_Cards.begin() + card3);
+		 }
+	 }
 
-        return deck.exchange(cardsToSwap);
-    } else {
-        cout << "Those cards are not a set!" << endl;
-        return 0;
-    }
+	 return deck.exchange(cardsToSwap);
+ }
+ else {
+	 cout << "Those cards are not a set!" << endl;
+	 return 0;
+ }
 
+}
+
+/**
+* Automatically exchanges cards for AI.
+* \param deck The Deck that the cards will be put back in.
+* \see Deck.exchange
+*/
+int Hand::exchangeAI(Deck &deck) {
+
+	vector<Card> typeA;
+	vector<Card> typeC;
+	vector<Card> typeI;
+
+	for (int i = 0; i < this->getHandSize(); i++)
+	{
+		if (this->m_Cards[i].getType() == 'a')
+			typeA.push_back(m_Cards[i]);
+		if (this->m_Cards[i].getType() == 'c')
+			typeC.push_back(m_Cards[i]);
+		if (this->m_Cards[i].getType() == 'i')
+			typeI.push_back(m_Cards[i]);
+	}
+
+	vector<Card> cardsToSwap;
+
+	if (typeA.size() >= 3)
+	{
+		cardsToSwap.push_back(typeA[0]);
+		cardsToSwap.push_back(typeA[1]);
+		cardsToSwap.push_back(typeA[2]);
+
+		cout << "\n Exchanging: " << endl;
+		cout << cardsToSwap[0].toString() << endl;
+		cout << cardsToSwap[1].toString() << endl;
+		cout << cardsToSwap[2].toString() << endl;
+
+		return deck.exchange(cardsToSwap);
+	}
+	else if (typeC.size() >= 3)
+	{
+		cardsToSwap.push_back(typeC[0]);
+		cardsToSwap.push_back(typeC[1]);
+		cardsToSwap.push_back(typeC[2]);
+
+		cout << "\n Exchanging: " << endl;
+		cout << cardsToSwap[0].toString() << endl;
+		cout << cardsToSwap[1].toString() << endl;
+		cout << cardsToSwap[2].toString() << endl;
+
+		return deck.exchange(cardsToSwap);
+	}
+	else if (typeI.size() >= 3)
+	{
+		cardsToSwap.push_back(typeI[0]);
+		cardsToSwap.push_back(typeI[1]);
+		cardsToSwap.push_back(typeI[2]);
+
+		cout << "\n Exchanging: " << endl;
+		cout << cardsToSwap[0].toString() << endl;
+		cout << cardsToSwap[1].toString() << endl;
+		cout << cardsToSwap[2].toString() << endl;
+
+		return deck.exchange(cardsToSwap);
+	}
+	else // since we already verified that there are exchangeable cards, default condition is that player has at least one card of each type.
+	{
+		cardsToSwap.push_back(typeA[0]);
+		cardsToSwap.push_back(typeC[0]);
+		cardsToSwap.push_back(typeI[0]);
+
+		cout << "\n Exchanging: " << endl;
+		cout << cardsToSwap[0].toString() << endl;
+		cout << cardsToSwap[1].toString() << endl;
+		cout << cardsToSwap[2].toString() << endl;
+
+		return deck.exchange(cardsToSwap);
+	}
+
+
+	return deck.exchange(cardsToSwap);
 }
 
 /**

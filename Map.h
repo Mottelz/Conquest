@@ -10,6 +10,11 @@
 #include <string>
 #include <exception>
 #include "Player.h"
+#include "Subject.h"
+//#include "GameStatistics.h"
+//extern bool globalView;
+
+
 using namespace std;
 
 // Forward declaration
@@ -99,7 +104,7 @@ struct Continent {
  * \param m_MapName The name of the map.
  * \param m_ValidMap Starts false. Changes to true if loaded map is valid.
  */
-class Map {
+class Map : public Subject{
 	private:
 		vector<Territory> m_Territories;
 		vector<Continent> m_Continents;
@@ -150,6 +155,8 @@ class Map {
 		void displayTerritories();
 		void toString();
 		void enemyTerriOf(int terriID);
+		vector<string> getEnemyAdjacentTerritoryNames(int territoryID);
+		vector<string> getFriendlyAdjacentTerritoryNames(int territoryID);
 		~Map();
 
 };

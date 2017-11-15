@@ -8,14 +8,36 @@
 #include "Map.h"
 #include "Dice.h"
 #include "Cards.h"
+#include "StrategyPattern.h"
+#include "Subject.h"
 using namespace std;
 
-//forward declaration
+
+//forward declarations
 class Map;
 struct Territory;
 struct Continent;
-enum playerStatus{
-	myTerritories, myTerritoryReinforce, myTerritoryFortify
+class Strategy;
+
+//enum PlayerPhase {
+//	REINFORCEMENT, ATTACK, FORTIFICATION, DEFENSE, DEFAULT
+//};
+enum PlayerPhase;
+
+enum PlayerStatus{
+	myDefault, myTerritories, mySpecificTerritory, myEnemyList, myPathList, myPhaseEnded
+};
+
+
+struct PlayerStatusInfo
+{
+	bool globalView;
+	bool phaseView;
+	PlayerPhase currentPhase;
+	PlayerStatus statusType;
+	int currentSelectedTerriID;
+	PlayerStatusInfo();
+	void statusInfoInitialize();
 };
 
 /**
@@ -26,30 +48,32 @@ enum playerStatus{
  * \param m_PlayerContinents The vector of player  continents.
  * \param m_Name The player's name.
  */
-class Player {
+class Player : public Subject {
 
 public:
-	Player();
-	Player(string name);
+	Player(Map * gameMap);
+	Player(string name, Map * gameMap);
 	int getPlayerID();
 	int getNumberOfTerritories();
 	int getHandSize();
 	string getName();
 	vector<string> getPlayerTerritoryNames();
+	
+	vector<Territory*> * getPlayerTerritoryList();
+
+	vector<Continent*> * getPlayerContinentList();
+
 	void setPlayerID(int ID);
 
 	
-	void reinforce(Map* map, Deck &deck);
 	int exchangeCards(Deck &deck);
+	int exchangeCardsAI(Deck &deck);
 	int assignedAvailableArmies(int exchangedArmies);
-	void attack(Map* map);
-	void fortify(Map* map);
 
-	//int rollDice(int numToRoll);
 	void drawCard(Deck &Deck);
-	
 	void displayHand();
-	vector<int> shakeMyDiceCup(int armiesOfATerri, bool atk/*, int numOfDice = 0*/);
+	bool exchangeableHand();
+	vector<int> shakeDiceCup(int numberOfDice);
 
 	void assignTerritory(string territoryName, Map& map);
 	string deallocateTerritory();
@@ -58,10 +82,21 @@ public:
 	bool checkOwnedCountry(string territory, Player p);
 	void toString();
 	int getPlayerContinentBonus(Map& map);
-	void statusDisplay(playerStatus myStatus);
+	//void statusDisplay(playerStatus myStatus);
 	void myTerriUpdate(Map* map);
 	void myContiUpdate(Map* map);
 	bool isMyTerritory(Territory * terri);
+
+	void setStrategy(Strategy* strategy);
+	void play(Player* player, Map* map, Deck& deck);
+
+	vector<vector<string>>  myPathListOfTerriID(int terriID);
+
+	int valid_assigned_armies;
+	PlayerStatusInfo m_StatusInfo; //m_StatusID[0]: phaseType; m_StatusID[1]: notify counting; m_StatusID[2]: error input id
+//	int selectedTerritoryID;
+	vector<int> myRolledResult, enemyRolledResult;
+
 
 private:
 	DiceCup m_DiceCup;
@@ -69,9 +104,8 @@ private:
 	vector<Territory*> m_PlayerTerritories;
 	vector<Continent*> m_PlayerContinents;
 	string m_Name;
+	Strategy* m_Strategy;
 	int m_PlayerID;
 	int conti_ctrl_value;
-	void placeArmiesDuringReinforcement(int assign_to, int place_num, Map* map);
-	void engageInBattle(int from, int to, Map * map);
-	void moveArmiesDuringFortification(int move_from, int move_to, int move_num, Map* map);
+	Map * m_Map;
 };

@@ -5,11 +5,13 @@
 #include "Map.h"
 #include <exception>
 #include <sstream>
-#include <string>
-#include <vector>
-#include <iostream>
+//#include <string>
+//#include <vector>
+//#include <iostream>
 #include <fstream>
-using namespace std;
+//using namespace std;
+
+
 
 /**
  * Constrcutor sets everything to zero and NULL.
@@ -758,6 +760,34 @@ void Map::toString()
 void Map::enemyTerriOf(int terriID)
 {
 	m_Territories[terriID].enemyNeighboursDisplay();
+}
+
+/**
+* Return neighbouring enemies of a country (as a vector of strings).
+*/
+vector<string> Map::getEnemyAdjacentTerritoryNames(int territoryID)
+{
+	vector<string> toReturn;
+	Territory* territory = getTerriAddress(territoryID);
+	for (int i = 0; i < territory->m_AdjacentTerritories.size(); i++) {
+		if (territory->m_Owner != territory->m_AdjacentTerritories[i]->m_Owner)
+			toReturn.push_back(territory->m_AdjacentTerritories[i]->m_TerritoryName);
+	}
+	return toReturn;
+}
+
+/**
+* Return neighbouring friends of a country (as a vector of strings).
+*/
+vector<string> Map::getFriendlyAdjacentTerritoryNames(int territoryID)
+{
+	vector<string> toReturn;
+	Territory* territory = getTerriAddress(territoryID);
+	for (int i = 0; i < territory->m_AdjacentTerritories.size(); i++) {
+		if (territory->m_Owner == territory->m_AdjacentTerritories[i]->m_Owner)
+			toReturn.push_back(territory->m_AdjacentTerritories[i]->m_TerritoryName);
+	}
+	return toReturn;
 }
 
 /**

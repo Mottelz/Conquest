@@ -18,10 +18,9 @@ GameLoop::GameLoop()
  * \param startup The Startup object.
  * \param map The Map.
  */
-GameLoop::GameLoop(Startup &startup, Map &map)
+GameLoop::GameLoop(Startup &startup)
 {
 	m_Startup = startup;
-	m_Map = map;
 }
 
 /**
@@ -32,7 +31,7 @@ GameLoop::~GameLoop() {}
 /**
  * The main game loop. This goes through the entire game.
  */
-void GameLoop::loop()
+void GameLoop::loop(Map* map, Deck& deck)
 {
 	int index;
 	int count = m_Startup.m_NumberOfPlayers;
@@ -50,19 +49,13 @@ void GameLoop::loop()
 		cout << "It's " << m_Startup.m_Players[index]->getName() << "'s turn to play!" << endl;
 		cout << "===================================\n" << endl;
 
-		m_Startup.m_Players[index]->reinforce();
-		m_Startup.m_Players[index]->attack();
-		m_Startup.m_Players[index]->fortify();
-
-		// We explicitely give all territories to player 1, so skip this step if it's player 1's turn
-		if (index != 0)
-			giveTerritory(*m_Startup.m_Players[index]);
+		m_Startup.m_Players[index]->play(m_Startup.m_Players[index], map, deck);
 		
-		if (m_Startup.m_Players[index]->getNumberOfTerritories() == m_Map.getTotalNumberOfTerritories())
+		if (m_Startup.m_Players[index]->getNumberOfTerritories() == map->getTotalNumberOfTerritories())
 		{
 			winnerFound = true;
 			cout << "\n************************************" << endl;
-			cout << m_Startup.m_Players[index]->getName() << " controls all " << m_Map.getTotalNumberOfTerritories()
+			cout << m_Startup.m_Players[index]->getName() << " controls all " << map->getTotalNumberOfTerritories()
 				<< " territories." << endl;
 			cout << "GAME OVER." << endl;
 			cout << "************************************\n" << endl;

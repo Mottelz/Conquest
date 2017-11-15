@@ -6,6 +6,7 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <ctime>
 #include "Startup.h"
 using namespace std;
 
@@ -22,7 +23,7 @@ Startup::Startup()
  * Constructor with Players.
  * \param players A vector of players to be used. 
  */
-Startup::Startup(vector<Player> &players)
+Startup::Startup(vector<Player*> &players)
 {
 	// Shuffles the content of the Player vector so that the order of play is determined randomly
 	auto rng = (default_random_engine ());
@@ -33,7 +34,7 @@ Startup::Startup(vector<Player> &players)
 	// Copies the reference to the players in the Player pointer vector
 	for (int i = 0; i < m_NumberOfPlayers; i++)
 	{
-		m_Players.push_back(&players[i]);	
+		m_Players.push_back(players[i]);	
 		m_Players[i]->setPlayerID(i + 1);
 	}
 
@@ -65,6 +66,7 @@ void Startup::distributeTerritories(Map &map)
 		
 		// Assign the territory in round-robin fashion. Starts at index 0then we increment the count.
 		m_Players[count % m_NumberOfPlayers]->assignTerritory(randomTerritory, map); 
+		map.assignArmies(m_Players[count % m_NumberOfPlayers], randomTerritory);
 
 		// Puts the randomly selected territory in the last position, then delete it from container
 		swap(territories[randomIndex], territories[territories.size() - 1]);
@@ -103,13 +105,14 @@ void Startup::placeArmies(Map &map)
 	}
 	
 	// The total number of armies to place is the initial number of armies multiplied by the number of players 
-	int armiesToPlace = armiesAtStart*m_NumberOfPlayers;
+	int armiesToPlace = (armiesAtStart - 1)*m_NumberOfPlayers;
 	
 	int count = m_NumberOfPlayers;
 	int playerNumberOfTerritories;
 	int index;
 	int randomTerritory;
 
+	srand(time(0));
 	vector<string> playerTerritories;
 
 	while (armiesToPlace > 0)
