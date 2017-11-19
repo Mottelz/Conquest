@@ -1,8 +1,5 @@
 #include "StrategyPattern.h"
-//#include <string>
-//#include <vector>
-//#include <algorithm>
-//using namespace std;
+#include <ctime>
 
 /**
 * Returns the number of armies (as an int) that a player gets after exchanging cards.
@@ -68,6 +65,124 @@ void Strategy::moveArmiesDuringFortification(int move_from, int move_to, int mov
 
 	}
 }
+
+/**
+* Method that triggers an automatic dice battle for AI.
+* \param from ID of territory we're attacking from.
+* \param to ID of territory being attacked.
+* \param player Pointer to the player
+* \param map The map where the battle is taking place.
+*/
+void Strategy::engageInBattle(int from, int to, Player* player, Map* map)
+{
+	vector<int> myRolledList, enemyRolledList;
+	Player * enemy = map->getOwnerOfTheTerritory(to);
+
+
+	cout << "The Attaker, Player " << player->getPlayerID() << ": " << player->getName() << " is about to shake the dice cup. " << endl;
+	myRolledList = shakeDiceCup(map->getArmyNumOfTheTerritory(from), ATTACK, player);
+
+	cout << "The Defender, Player " << enemy->getPlayerID() << ": "
+		<< enemy->getName() << " is about to shake the dice cup. " << endl;
+	enemyRolledList = shakeDiceCup(map->getArmyNumOfTheTerritory(to), DEFENSE, player);
+
+	for (int i = 0; i < myRolledList.size(); i++) {
+		if (i == 0)
+		{
+			cout << "The Attaker, Player " << player->getPlayerID() << ": " << player->getName() << " rolled: ";
+			cout << myRolledList[i];
+		}
+		else
+		{
+			cout << " | " << myRolledList[i];
+		}
+	}
+	cout << endl;
+
+	for (int i = 0; i < enemyRolledList.size(); i++) {
+		if (i == 0)
+		{
+			cout << "The Defender, Player " << enemy->getPlayerID() << ": "
+				<< enemy->getName() << " rolled: ";
+			cout << enemyRolledList[i];
+		}
+		else
+		{
+			cout << " | " << enemyRolledList[i];
+		}
+	}
+	cout << endl;
+
+
+	int armiesInBattle = myRolledList.size() < enemyRolledList.size() ? myRolledList.size() : enemyRolledList.size();
+	cout << "Rolled Dice Pairs: " << armiesInBattle << endl;
+
+	for (int i = 0; i < armiesInBattle; i++)
+	{
+		cout << myRolledList[i] << " VS " << enemyRolledList[i] << " : ";
+		if (myRolledList[i] > enemyRolledList[i])
+		{
+			cout << myRolledList[i] << " > " << enemyRolledList[i] << " --> ";
+			cout << "Player " << enemy->getPlayerID() << ", "
+				<< enemy->getName() << ", lost one army. " << endl;
+			map->removeArmies(enemy, map->getTerritoryName(to));
+
+		}
+		else
+		{
+			cout << myRolledList[i] << " <= " << enemyRolledList[i] << " --> ";
+			cout << "Player " << player->getPlayerID() << ", "
+				<< map->getOwnerOfTheTerritory(from)->getName() << ", lost one army. " << endl;
+			map->removeArmies(player, map->getTerritoryName(from));
+		}
+	}
+}
+
+
+/**
+* Automatically rolls the largest possible number of dice for the aggressive AI.
+* \param armiesOfATerri Number of armies of the territory passed
+* \param phase The phase during which this method is called
+* \param player A pointer to the player
+*/
+vector<int> Strategy::shakeDiceCup(int armiesOfATerri, PlayerPhase phase, Player* player)
+{
+	int numOfDice;
+	if (phase == ATTACK)
+	{
+		numOfDice = armiesOfATerri - 1;
+
+		if (numOfDice > 3)
+		{
+			numOfDice = 3;
+			return (player->shakeDiceCup(numOfDice));
+		}
+		else if (numOfDice == 2 || numOfDice == 3)// logic error missing case numOfDice == 3
+		{
+			return (player->shakeDiceCup(numOfDice));
+		}
+		else // if numOfDice == 1
+		{
+			cout << player->getName() << " is only allowed to roll 1 dice for the current battle. " << endl;
+			return (player->shakeDiceCup(numOfDice));
+		}
+	}
+	else // if player is defending
+	{
+		numOfDice = armiesOfATerri;
+
+		if (numOfDice > 2)
+		{
+			numOfDice = 2;
+			return (player->shakeDiceCup(numOfDice));
+		}
+		else // if numOfDice = 1
+		{
+			return (player->shakeDiceCup(numOfDice));
+		}
+	}
+}
+
 
 /**
 * The method for the reinforcement phase during the human player's turn.
@@ -1038,121 +1153,6 @@ int AggressiveAI::getWeakestEnemyTerritory(int attack_from, Map* map)
 	return targetEnemyID;
 }
 
-/**
-* Method that triggers an automatic dice battle for AI.
-* \param from ID of territory we're attacking from.
-* \param to ID of territory being attacked.
-* \param player Pointer to the player
-* \param map The map where the battle is taking place.
-*/
-void AggressiveAI::engageInBattle(int from, int to, Player* player, Map* map)
-{
-	vector<int> myRolledList, enemyRolledList;
-	Player * enemy = map->getOwnerOfTheTerritory(to);
-
-
-	cout << "The Attaker, Player " << player->getPlayerID() << ": " << player->getName() << " is about to shake the dice cup. " << endl;
-	myRolledList = shakeDiceCup(map->getArmyNumOfTheTerritory(from), ATTACK, player);
-
-	cout << "The Defender, Player " << enemy->getPlayerID() << ": "
-		<< enemy->getName() << " is about to shake the dice cup. " << endl;
-	enemyRolledList = shakeDiceCup(map->getArmyNumOfTheTerritory(to), DEFENSE, player);
-
-	for (int i = 0; i < myRolledList.size(); i++) {
-		if (i == 0)
-		{
-			cout << "The Attaker, Player " << player->getPlayerID() << ": " << player->getName() << " rolled: ";
-			cout << myRolledList[i];
-		}
-		else
-		{
-			cout << " | " << myRolledList[i];
-		}
-	}
-	cout << endl;
-
-	for (int i = 0; i < enemyRolledList.size(); i++) {
-		if (i == 0)
-		{
-			cout << "The Defender, Player " << enemy->getPlayerID() << ": "
-				<< enemy->getName() << " rolled: ";
-			cout << enemyRolledList[i];
-		}
-		else
-		{
-			cout << " | " << enemyRolledList[i];
-		}
-	}
-	cout << endl;
-
-
-	int armiesInBattle = myRolledList.size() < enemyRolledList.size() ? myRolledList.size() : enemyRolledList.size();
-	cout << "Rolled Dice Pairs: " << armiesInBattle << endl;
-
-	for (int i = 0; i < armiesInBattle; i++)
-	{
-		cout << myRolledList[i] << " VS " << enemyRolledList[i] << " : ";
-		if (myRolledList[i] > enemyRolledList[i])
-		{
-			cout << myRolledList[i] << " > " << enemyRolledList[i] << " --> ";
-			cout << "Player " << enemy->getPlayerID() << ", "
-				<< enemy->getName() << ", lost one army. " << endl;
-			map->removeArmies(enemy, map->getTerritoryName(to));
-
-		}
-		else
-		{
-			cout << myRolledList[i] << " <= " << enemyRolledList[i] << " --> ";
-			cout << "Player " << player->getPlayerID() << ", "
-				<< map->getOwnerOfTheTerritory(from)->getName() << ", lost one army. " << endl;
-			map->removeArmies(player, map->getTerritoryName(from));
-		}
-	}
-}
-
-/**
-* Automatically rolls the largest possible number of dice for the aggressive AI.
-* \param armiesOfATerri Number of armies of the territory passed
-* \param phase The phase during which this method is called
-* \param player A pointer to the player
-*/
-vector<int> AggressiveAI::shakeDiceCup(int armiesOfATerri, PlayerPhase phase, Player* player)
-{
-	int numOfDice;
-	if (phase == ATTACK)
-	{
-		numOfDice = armiesOfATerri - 1;
-
-		if (numOfDice > 3)
-		{
-			numOfDice = 3;
-			return (player->shakeDiceCup(numOfDice));
-		}
-		else if (numOfDice == 2 || numOfDice == 3)// logic error missing case numOfDice == 3
-		{
-			return (player->shakeDiceCup(numOfDice));
-		}
-		else // if numOfDice == 1
-		{
-			cout << player->getName() << " is only allowed to roll 1 dice for the current battle. " << endl;
-			return (player->shakeDiceCup(numOfDice));
-		}
-	}
-	else // if player is defending
-	{
-		numOfDice = armiesOfATerri;
-
-		if (numOfDice > 2)
-		{
-			numOfDice = 2;
-			return (player->shakeDiceCup(numOfDice));
-		}
-		else // if numOfDice = 1
-		{
-			return (player->shakeDiceCup(numOfDice));
-		}
-	}
-}
 
 /**
 * The method for the fortification phase during the aggressive player's turn.
@@ -1187,15 +1187,6 @@ bool AggressiveAI::fortify(Player* player, Map* map)
 			moveArmiesDuringFortification(move_from, move_to, move_num, player, map);
 			cout << endl;
 			cout << player->getName() << " Moved " << move_num << " armies from " << map->getTerritoryName(move_from) << " to " << map->getTerritoryName(move_to) << endl;
-			////Fortify, notify  PLAYER STATUS
-			//player->m_StatusInfo.statusType = myTerritories;
-			//player->notify();
-			////Fortify, notify, end of phase
-			//player->m_StatusInfo.statusType = myPhaseEnded;
-			//player->m_StatusInfo.globalView = true;
-			//player->notify();
-			//player->m_StatusInfo.globalView = false;
-			return fortify(player, map);
 		}
 	}
 	else
@@ -1398,14 +1389,6 @@ bool BenevolentAI::attack(Player* player, Map* map)
 	return false;
 }
 
-/**
-* This method is useless since BenevolentAI never attacks
-*/
-void BenevolentAI::engageInBattle(int from, int to, Player* player, Map* map)
-{
-	// Method that is usually used with the Attack phase. No implementation for now.
-	cout << player->getName() << " does not wish to battle. " << endl;
-}
 
 /**
 * The method for the fortification phase during the benevolent player's turn.
@@ -1512,6 +1495,267 @@ void BenevolentAI::play(Player* player, Map* map, Deck& deck)
 	attack(player, map);
 
 	fortify(player, map);	
+
+	cout << "\n***************************************" << endl;
+	cout << "End of  " << player->getName() << "'s turn! " << endl;
+	cout << "***************************************\n" << endl;
+}
+
+void RandomAI::reinforce(Player* player, Map* map, Deck& deck)
+{
+	//Reinforce, notify  PLAYER STATUS
+	player->m_StatusInfo.phaseView = true;
+	player->m_StatusInfo.currentPhase = REINFORCEMENT;
+	player->m_StatusInfo.statusType = myTerritories;
+	player->m_StatusInfo.globalView = true;
+	player->notify();
+	player->m_StatusInfo.globalView = false;
+
+	int exchangedArmies = determineExchangedArmies(player, map, deck);
+
+	int valid_assigned_armies = player->assignedAvailableArmies(exchangedArmies);
+
+	cout << player->getName() << " (random AI) has " << valid_assigned_armies << " troop(s) left to deploy." << endl;
+	cout << player->getName() << " wants to assign their armies to : ";
+
+	int assign_terri_ID = getRandomPlayerTerritory(player, map);
+
+	cout << map->getTerritoryName(assign_terri_ID) << endl;
+
+	// Aggressive AI will place all its available armies on its strongest country
+	cout << player->getName() << " is going to place " << valid_assigned_armies << " armies on " << map->getTerritoryName(assign_terri_ID) << endl;
+	placeArmiesDuringReinforcement(assign_terri_ID, valid_assigned_armies, player, map);
+
+	cout << endl;
+	//Reinforce all terri notify 
+	player->m_StatusInfo.statusType = myTerritories;
+	player->notify();
+	//Reinforce, notify counting -1, end of this phase
+	player->m_StatusInfo.statusType = myPhaseEnded;
+	player->notify();
+}
+
+/**
+* Returns a random territory that belongs to the player.
+* \param player A pointer to the current player
+* \param map A pointer to the map
+*/
+int RandomAI::getRandomPlayerTerritory(Player* player, Map* map)
+{
+	srand(time(0));
+	vector<string> playerTerritories = player->getPlayerTerritoryNames();
+	int randomTerritory = rand() % playerTerritories.size();
+	
+	return map->seekTerritoryID(playerTerritories[randomTerritory]);
+}
+
+/**
+* Returns a random adjacent enemy territory.
+* \param player A pointer to the current player
+* \param map A pointer to the map
+*/
+int RandomAI::getRandomEnemyTerritory(Player* player, Map* map, int attack_from)
+{
+	srand(time(0));
+	vector<string> neighbourTerritories = map->getEnemyAdjacentTerritoryNames(attack_from);
+	int randomTerritory = rand() % neighbourTerritories.size();
+
+	return map->seekTerritoryID(neighbourTerritories[randomTerritory]);
+}
+
+
+/**
+* The method for the attack phase during the random player's turn.
+* \param player A pointer to the current player
+* \param map A pointer to the map
+*/
+bool RandomAI::attack(Player* player, Map* map)
+{
+	//Attack, notify  PLAYER STATUS
+	player->m_StatusInfo.phaseView = true;
+	player->m_StatusInfo.currentPhase = ATTACK;
+	player->m_StatusInfo.statusType = myTerritories;
+	player->m_StatusInfo.globalView = true;
+	player->notify();
+	player->m_StatusInfo.globalView = false;
+
+	cout << "\n***************************************" << endl;
+	cout << player->getName() << " wants to attack! " << endl;
+	cout << "***************************************\n" << endl;
+
+
+	int attack_from = getRandomPlayerTerritory(player, map);
+	if (attack_from == -1) // Not enough armies to attack
+	{
+		cout << player->getName() << " has too few armies! " << endl;
+		//Attack, notify, end of phase
+		player->m_StatusInfo.statusType = myPhaseEnded;
+		player->notify();
+		return false;
+	}
+
+	cout << player->getName() << " is going to attack from: " << map->getTerritoryName(attack_from) << endl;
+
+	///Attack, notify current selected terri
+	player->m_StatusInfo.currentSelectedTerriID = attack_from;
+	player->m_StatusInfo.statusType = mySpecificTerritory;
+	player->notify();
+
+	//Attack, notify enemylist
+	player->m_StatusInfo.currentSelectedTerriID = attack_from;
+	player->m_StatusInfo.statusType = myEnemyList;
+	player->notify();
+
+	int attack_to = getRandomEnemyTerritory(player, map, attack_from);
+	if (attack_to == -1) // No territory to attack
+	{
+		cout << player->getName() << " cannot find adjacent enemies! " << endl;
+
+		//Attack, notify, end of phase
+		player->m_StatusInfo.statusType = myPhaseEnded;
+		player->notify();
+		return false;
+	}
+
+	cout << player->getName() << " is going to attack to: " << map->getTerritoryName(attack_to) << endl;
+
+	bool territoryCaptured = false;
+	while (!territoryCaptured)
+	{
+		cout << "--------------------------------" << endl;
+
+		if (map->getArmyNumOfTheTerritory(attack_from) > 1)
+		{
+			if (map->getArmyNumOfTheTerritory(attack_to) > 0)
+			{
+				engageInBattle(attack_from, attack_to, player, map);
+				//Attack, notify, selected terri -> attack from
+				player->m_StatusInfo.currentSelectedTerriID = attack_from;
+				player->m_StatusInfo.statusType = mySpecificTerritory;
+				player->notify();
+				//Attack, notify, selected terri -> attack to
+				player->m_StatusInfo.currentSelectedTerriID = attack_to;
+				player->notify();
+
+			}
+			else
+			{
+				cout << player->getName() << " won the battle! " << endl;
+				int numberOfArmies = map->getArmyNumOfTheTerritory(attack_from);
+				for (int i = 0; i < numberOfArmies - 1; i++)
+				{
+					map->removeArmies(player, map->getTerritoryName(attack_from));
+					map->assignArmies(player, map->getTerritoryName(attack_to));
+				}
+				cout << player->getName() << " moved " << numberOfArmies - 1 << " armies to " << map->getTerritoryName(attack_to) << endl;
+				territoryCaptured = true;
+				//Attack, notify player status
+				player->m_StatusInfo.statusType = myTerritories;
+				player->m_StatusInfo.globalView = true;
+				player->notify();
+				player->m_StatusInfo.globalView = false;
+			}
+		}
+		else
+		{
+			cout << player->getName() << " failed the battle. " << endl;
+			//Attack, notify player status
+			player->m_StatusInfo.statusType = myTerritories;
+			player->m_StatusInfo.globalView = true;
+			player->notify();
+			player->m_StatusInfo.globalView = false;
+			break;
+		}
+	}
+	return attack(player, map);
+}
+
+/**
+* The method for the fortification phase during the random player's turn.
+* \param player A pointer to the current player
+* \param map A pointer to the map
+*/
+bool RandomAI::fortify(Player* player, Map* map)
+{
+	srand(time(0));
+	
+	//Fortify, notify  PLAYER STATUS
+	player->m_StatusInfo.phaseView = true;
+	player->m_StatusInfo.currentPhase = FORTIFICATION;
+	player->m_StatusInfo.statusType = myTerritories;
+	player->m_StatusInfo.globalView = true;
+	player->notify();
+	player->m_StatusInfo.globalView = false;
+
+	int move_from = getRandomPlayerTerritory(player, map);
+
+	while (map->getArmyNumOfTheTerritory(move_from) < 2)
+	{
+		move_from = getRandomPlayerTerritory(player, map);
+	}
+
+	int move_to = getRandomEnemyTerritory(player, map, move_from);
+	int move_num = 0;
+	vector<string> fortifyPath;
+
+	if (move_to > -1 && move_from > -1 && map->getArmyNumOfTheTerritory(move_from) > 1)
+	{
+		if (map->seekPath(player, map->getTerritoryName(move_from), map->getTerritoryName(move_to), fortifyPath))
+		{
+
+			cout << "\n***************************************" << endl;
+			cout << player->getName() << " wants to fortify! " << endl;
+			cout << "***************************************\n" << endl;
+
+			move_num = rand() % map->getArmyNumOfTheTerritory(move_from); // moves all armies except one
+			moveArmiesDuringFortification(move_from, move_to, move_num, player, map);
+			cout << endl;
+			cout << player->getName() << " Moved " << move_num << " armies from " << map->getTerritoryName(move_from) << " to " << map->getTerritoryName(move_to) << endl;
+		}
+	}
+	else
+	{
+		cout << endl;
+		cout << player->getName() << " cannot fortify at the moment (too few countries). " << endl;
+		//Fortify, notify, end of phase
+		player->m_StatusInfo.statusType = myPhaseEnded;
+		player->notify();
+		return false;
+	}
+
+	//Fortify, notify, end of phase
+	player->m_StatusInfo.statusType = myPhaseEnded;
+	player->notify();
+
+	return false;
+}
+
+/**
+* Returns a random adjacent friend territory to move armies to.
+* \param player A pointer to the current player
+* \param map A pointer to the map
+*/
+int RandomAI::getRandomEnemyTerritory(Player* player, Map* map, int move_from)
+{
+	srand(time(0));
+	vector<string> neighbourTerritories = map->getFriendlyAdjacentTerritoryNames(move_from);
+	int randomTerritory = rand() % neighbourTerritories.size();
+
+	return map->seekTerritoryID(neighbourTerritories[randomTerritory]);
+}
+
+/**
+* Calls the methods for the different phases of the random player's turn.
+* \param player A pointer to the current player
+* \param map A pointer to the map
+*/
+void RandomAI::play(Player* player, Map* map, Deck& deck)
+{
+	reinforce(player, map, deck);
+
+	attack(player, map);
+
+	fortify(player, map);
 
 	cout << "\n***************************************" << endl;
 	cout << "End of  " << player->getName() << "'s turn! " << endl;

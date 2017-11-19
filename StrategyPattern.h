@@ -30,9 +30,10 @@ protected:
 	int determineExchangedArmies(Player* player, Map* map, Deck& deck);
 	void placeArmiesDuringReinforcement(int assign_to, int place_num, Player* player, Map* map);
 	void moveArmiesDuringFortification(int move_from, int move_to, int move_num, Player* player, Map* map);
+	void engageInBattle(int from, int to, Player* player, Map* map);
+	vector<int> shakeDiceCup(int armiesOfATerri, PlayerPhase phase, Player* player);
 
 private:
-	virtual void engageInBattle(int from, int to, Player* player, Map* map) = 0;
 	virtual int territoryToMoveArmyFrom(Player* player, Map* map, int move_to) = 0;
 
 };
@@ -65,10 +66,8 @@ public:
 	void play(Player* player, Map* map, Deck& deck);
 
 private:
-	void engageInBattle(int from, int to, Player* player, Map* map);
 	int getStrongestTerritory(Player* player, Map* map, PlayerPhase phase);
 	int getWeakestEnemyTerritory(int attack_from, Map* map);
-	vector<int> shakeDiceCup(int armiesOfATerri, PlayerPhase phase, Player* player);
 	int territoryToMoveArmyFrom(Player* player, Map* map, int move_to);
 };
 
@@ -85,8 +84,25 @@ public:
 private:
 	int getWeakestTerritory(Player* player, Map* map, PlayerPhase phase);
 	bool hasValidNeighbour(int territoryID, Map* map);
-	void engageInBattle(int from, int to, Player* player, Map* map);
 	int territoryToMoveArmyFrom(Player* player, Map* map, int move_to);
 };
+
+/**
+* The RandomAI class. Inherits from Strategy and implements methods for random computer players.
+*/
+class RandomAI : public Strategy {
+public:
+	void reinforce(Player* player, Map* map, Deck& deck);
+	bool attack(Player* player, Map* map);
+	bool fortify(Player* player, Map* map);
+	void play(Player* player, Map* map, Deck& deck);
+
+private:
+	int getRandomPlayerTerritory(Player* player, Map* map);
+	int getRandomEnemyTerritory(Player* player, Map* map, int attack_from);
+	int getRandomFriendTerritory
+
+};
+
 
 #endif //STRATEGYPATTERN_H
