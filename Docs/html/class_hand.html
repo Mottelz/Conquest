@@ -104,6 +104,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a76b470840c83221bb3b0b000d12d9b0f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hand.html#a76b470840c83221bb3b0b000d12d9b0f">exchange</a> (<a class="el" href="class_deck.html">Deck</a> &amp;deck)</td></tr>
 <tr class="memdesc:a76b470840c83221bb3b0b000d12d9b0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks for valid set and exchanges it with the fed into the <a class="el" href="class_deck.html" title="The Deck class. ">Deck</a>.  <a href="#a76b470840c83221bb3b0b000d12d9b0f">More...</a><br /></td></tr>
 <tr class="separator:a76b470840c83221bb3b0b000d12d9b0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b98910d86f4c95641b6fa2021c93537"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hand.html#a6b98910d86f4c95641b6fa2021c93537">exchangeAI</a> (<a class="el" href="class_deck.html">Deck</a> &amp;deck)</td></tr>
+<tr class="memdesc:a6b98910d86f4c95641b6fa2021c93537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically exchanges cards for AI.  <a href="#a6b98910d86f4c95641b6fa2021c93537">More...</a><br /></td></tr>
+<tr class="separator:a6b98910d86f4c95641b6fa2021c93537"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6440e30103b3986e70db87404b29930a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hand.html#a6440e30103b3986e70db87404b29930a">exchangeable</a> ()</td></tr>
 <tr class="memdesc:a6440e30103b3986e70db87404b29930a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the there is a set that can be exchanged, else returns false.  <a href="#a6440e30103b3986e70db87404b29930a">More...</a><br /></td></tr>
 <tr class="separator:a6440e30103b3986e70db87404b29930a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -227,7 +230,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_deck.html#a92de87904bbc57a006ccba1c66610dca" title="Puts the cards back in the deck and returns the number of armies to add as a bonus. ">Deck.exchange</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_cards_8cpp_source.html#l00208">208</a> of file <a class="el" href="_cards_8cpp_source.html">Cards.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_cards_8cpp_source.html#l00209">209</a> of file <a class="el" href="_cards_8cpp_source.html">Cards.cpp</a>.</p>
 
 </div>
 </div>
@@ -248,7 +251,36 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns true if the there is a set that can be exchanged, else returns false. </p>
 
-<p class="definition">Definition at line <a class="el" href="_cards_8cpp_source.html#l00300">300</a> of file <a class="el" href="_cards_8cpp_source.html">Cards.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_cards_8cpp_source.html#l00389">389</a> of file <a class="el" href="_cards_8cpp_source.html">Cards.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6b98910d86f4c95641b6fa2021c93537"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b98910d86f4c95641b6fa2021c93537">&#9670;&nbsp;</a></span>exchangeAI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Hand::exchangeAI </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_deck.html">Deck</a> &amp;&#160;</td>
+          <td class="paramname"><em>deck</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Automatically exchanges cards for AI. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deck</td><td>The <a class="el" href="class_deck.html" title="The Deck class. ">Deck</a> that the cards will be put back in. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_deck.html#a92de87904bbc57a006ccba1c66610dca" title="Puts the cards back in the deck and returns the number of armies to add as a bonus. ">Deck.exchange</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_cards_8cpp_source.html#l00311">311</a> of file <a class="el" href="_cards_8cpp_source.html">Cards.cpp</a>.</p>
 
 </div>
 </div>

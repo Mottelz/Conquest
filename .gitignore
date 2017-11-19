@@ -295,3 +295,6 @@ __pycache__/
 3
 4
 5
+
+cmake-build-debug
+CMakeLists.txt

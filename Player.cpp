@@ -84,9 +84,9 @@ void Player::play(Player* player, Map* map, Deck& deck)
 * \type vector<vector<string>>
 * \param int terriID
 */
-vector<vector<string>>  Player::myPathListOfTerriID(int terriID)
+vector<vector<string> >  Player::myPathListOfTerriID(int terriID)
 {
-	vector<vector<string>> myPathList ;
+	vector<vector<string> > myPathList ;
 	for (int i = 0; i < this->getNumberOfTerritories(); i++)
 	{
 		if (this->m_PlayerTerritories[i]->getTerriID() != terriID)

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['numberofdice',['numberOfDice',['../_player_8cpp.html#a01cd124596e3cd2bff4b4750c77bfce2',1,'Player.cpp']]]
+  ['enemyrolledresult',['enemyRolledResult',['../class_player.html#a23491dc31b9d3bc210f6299b586528f5',1,'Player']]]
 ];

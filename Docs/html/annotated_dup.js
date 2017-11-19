@@ -1,16 +1,27 @@
 var annotated_dup =
 [
+    [ "AggressiveAI", "class_aggressive_a_i.html", "class_aggressive_a_i" ],
+    [ "BenevolentAI", "class_benevolent_a_i.html", "class_benevolent_a_i" ],
     [ "Card", "class_card.html", "class_card" ],
+    [ "CheaterAI", "class_cheater_a_i.html", "class_cheater_a_i" ],
     [ "Continent", "struct_continent.html", "struct_continent" ],
     [ "Deck", "class_deck.html", "class_deck" ],
     [ "DiceCup", "class_dice_cup.html", "class_dice_cup" ],
     [ "Die", "class_die.html", "class_die" ],
     [ "GameInit", "class_game_init.html", "class_game_init" ],
     [ "GameLoop", "class_game_loop.html", "class_game_loop" ],
+    [ "gameStatistics", "classgame_statistics.html", "classgame_statistics" ],
     [ "Hand", "class_hand.html", "class_hand" ],
+    [ "HumanPlayer", "class_human_player.html", "class_human_player" ],
     [ "Map", "class_map.html", "class_map" ],
     [ "MapLoader", "class_map_loader.html", "class_map_loader" ],
+    [ "Observer", "class_observer.html", "class_observer" ],
+    [ "PhaseObserver", "class_phase_observer.html", "class_phase_observer" ],
     [ "Player", "class_player.html", "class_player" ],
+    [ "PlayerStatusInfo", "struct_player_status_info.html", "struct_player_status_info" ],
+    [ "RandomAI", "class_random_a_i.html", "class_random_a_i" ],
     [ "Startup", "class_startup.html", "class_startup" ],
+    [ "Strategy", "class_strategy.html", "class_strategy" ],
+    [ "Subject", "class_subject.html", "class_subject" ],
     [ "Territory", "struct_territory.html", "struct_territory" ]
 ];

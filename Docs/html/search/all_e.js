@@ -1,20 +1,14 @@
 var searchData=
 [
-  ['seekcontinentid',['seekContinentID',['../class_map.html#a7372f40da2cf4d52d4ae0846947d2667',1,'Map']]],
-  ['seekpath',['seekPath',['../class_map.html#a2e9356937736b6131c716f6e6cc295d4',1,'Map']]],
-  ['seekterritoryid',['seekTerritoryID',['../class_map.html#a81148665f650ccce0979e818b849020f',1,'Map']]],
-  ['setdicecounter',['setDiceCounter',['../class_die.html#a7ca2af213d97ad97d85690113d042e61',1,'Die']]],
-  ['setmapvalidate',['setMapValidate',['../class_map.html#a3c1f2ea8e9e771af7f97de1371cb21d4',1,'Map']]],
-  ['setnumberofdice',['setNumberOfDice',['../class_dice_cup.html#af5425ca03860799253fae1b840b9474f',1,'DiceCup']]],
-  ['setplayerid',['setPlayerID',['../class_player.html#abba5a325452b152d2c6198ab20ad6dae',1,'Player']]],
-  ['setterritoryowner',['setTerritoryOwner',['../class_map.html#a4fd7287911e88d54843a7c494dddb117',1,'Map']]],
-  ['setvalue',['setValue',['../class_die.html#a520ef7a71fdeef5239575d7f094cb638',1,'Die']]],
-  ['shakedicecup',['shakeDiceCup',['../class_dice_cup.html#adb6de2ef750b124fe17c30ae91058862',1,'DiceCup']]],
-  ['shakemydicecup',['shakeMyDiceCup',['../class_player.html#aece9b20e0ff29437558e71efdf3ca936',1,'Player']]],
-  ['showpercentage',['showPercentage',['../class_dice_cup.html#a40ec922352bba0fd094f4279562baade',1,'DiceCup']]],
-  ['startup',['Startup',['../class_startup.html',1,'Startup'],['../class_startup.html#a9202080b447e4cd9c9e1c546d373db91',1,'Startup::Startup()'],['../class_startup.html#a481ecd44233328f9f6bcf8623c31a5b5',1,'Startup::Startup(vector&lt; Player &gt; &amp;players)']]],
-  ['startup_2ecpp',['Startup.cpp',['../_startup_8cpp.html',1,'']]],
-  ['startup_2eh',['Startup.h',['../_startup_8h.html',1,'']]],
-  ['statusdisplay',['statusDisplay',['../class_player.html#aa1abf660cc43f6e86bc1b40271a97f8f',1,'Player']]],
-  ['storedicevalue',['storeDiceValue',['../class_dice_cup.html#abaadf4e56f83630bc63b31d778a30374',1,'DiceCup']]]
+  ['phaseobserver',['PhaseObserver',['../class_phase_observer.html',1,'PhaseObserver'],['../class_phase_observer.html#a488ef67c40b96545fcd1f9c8a39dce1f',1,'PhaseObserver::PhaseObserver()'],['../class_phase_observer.html#a087894628e15407bffbe07b9a71fa671',1,'PhaseObserver::PhaseObserver(Player *m_PS, Map *map)']]],
+  ['phaseview',['phaseView',['../struct_player_status_info.html#ae3b525886585b2c041b7f1ffbfc51e8b',1,'PlayerStatusInfo']]],
+  ['placearmies',['placeArmies',['../class_startup.html#a5bb474612f9ded8054ea86ffeb622a35',1,'Startup']]],
+  ['placearmiesduringreinforcement',['placeArmiesDuringReinforcement',['../class_strategy.html#adb963f44e8ec7a30d0fe212e2cdab652',1,'Strategy']]],
+  ['play',['play',['../class_player.html#a8bfb04af346efce3ed31bca3a49dc5bc',1,'Player::play()'],['../class_strategy.html#a67b1fc697ebcb1e2cf0fd520cdb5e60d',1,'Strategy::play()'],['../class_human_player.html#a45d787bacd096d55948bb1435b13adcd',1,'HumanPlayer::play()'],['../class_aggressive_a_i.html#ab3993aacee81d8a6962ec4a9a54d17d4',1,'AggressiveAI::play()'],['../class_benevolent_a_i.html#aae7fb543467c62a251e577e988b61aad',1,'BenevolentAI::play()'],['../class_random_a_i.html#acc9e577b081e8686b783c721587ac18b',1,'RandomAI::play()'],['../class_cheater_a_i.html#a410d0618daa9a01408da85f053012622',1,'CheaterAI::play()']]],
+  ['player',['Player',['../class_player.html',1,'Player'],['../class_player.html#a224f915ed47c5ef88fcb4089268c5a1b',1,'Player::Player(Map *gameMap)'],['../class_player.html#afd591c1959f8b32dab1ba87e78550d03',1,'Player::Player(string name, Map *gameMap)']]],
+  ['player_2ecpp',['Player.cpp',['../_player_8cpp.html',1,'']]],
+  ['player_2eh',['Player.h',['../_player_8h.html',1,'']]],
+  ['playerphase',['PlayerPhase',['../_strategy_pattern_8h.html#a355d1e9b8066b41fe09ab4413e346847',1,'StrategyPattern.h']]],
+  ['playerstatus',['PlayerStatus',['../_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71c',1,'Player.h']]],
+  ['playerstatusinfo',['PlayerStatusInfo',['../struct_player_status_info.html',1,'PlayerStatusInfo'],['../struct_player_status_info.html#a5a78b22da349b3db81bb0ad93f4279e2',1,'PlayerStatusInfo::PlayerStatusInfo()']]]
 ];

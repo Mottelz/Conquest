@@ -1761,3 +1761,109 @@ void RandomAI::play(Player* player, Map* map, Deck& deck)
 	cout << "End of  " << player->getName() << "'s turn! " << endl;
 	cout << "***************************************\n" << endl;
 }
+
+
+/**
+ * Doubles the number of armies on all territories.
+ * \param player A pointer to the current player
+ * \param map A pointer to the map 
+ * \param deck A pointer to the deck of cards.
+ */
+void CheaterAI::reinforce(Player* player, Map* map, Deck& deck) {
+	
+	//Reinforce, notify  PLAYER STATUS
+	player->m_StatusInfo.phaseView = true;
+	player->m_StatusInfo.currentPhase = REINFORCEMENT;
+	player->m_StatusInfo.statusType = myTerritories;
+	player->m_StatusInfo.globalView= true;
+	player->notify();
+	player->m_StatusInfo.globalView = false;
+
+	vector<string> playersTerritories = player->getPlayerTerritoryNames();
+
+	for(int i=0; i<playersTerritories.size(); i++){
+		doubleArmies(map, player, playersTerritories[i]);
+	}
+};
+
+/**
+ * Automatically conquers all neighbouring territories.
+ * Always returns true.
+ * \param player A pointer to the current player
+ * \param map A pointer to the map 
+ * \param deck A pointer to the deck of cards.
+ * \return true because why not?
+ */
+bool CheaterAI::attack(Player* player, Map* map) {
+    vector<string> territoriesWithEnemies = getTerritoriesWithEnemies(player, map);
+    for (int i = 0; i < territoriesWithEnemies.size(); ++i) {
+        //get the enemies.
+        vector<string> enemies = map->getEnemyAdjacentTerritoryNames(map->seekTerritoryID(territoriesWithEnemies[i]));
+        //if we haven't already stolen that land steal it now!!!
+        if(enemies.size()>0) {
+            for (int j = 0; j < enemies.size(); ++j) {
+                map->setTerritoryOwner(enemies[i], player);
+            }
+        }
+    }
+    return true;
+};
+
+/**
+ * Doubles number of armies of any territory with neighbouring enemies. Return type is forced because of loops for other AIs.
+ * \param player the player.
+ * \param map the map.
+ * \param deck the deck.
+ * \return talways true.
+ */
+
+bool CheaterAI::fortify(Player *player, Map *map) {
+	vector<string> territoriesWithEnemies = getTerritoriesWithEnemies(player, map);
+    for (int i = 0; i < territoriesWithEnemies.size(); ++i) {
+        doubleArmies(map, player, territoriesWithEnemies[i]);
+    }
+    return true;
+}
+
+
+
+/**
+ * Doubles the number of armies in the given territory.
+ * \param map the map
+ * \param player the player
+ * \param territoryName the territory where we want to double the armies.
+ */
+void CheaterAI::doubleArmies (Map *map, Player *player, string territoryName){
+		int territoryID = map->seekTerritoryID(territoryName);
+		int newArmySize = (map->getArmyNumOfTheTerritory(territoryID)*2);
+		placeArmiesDuringReinforcement(territoryID, newArmySize, player, map);
+};
+
+/**
+ * Returns all of the player's territories that have neighbouring enemies.
+ * @param player the player.
+ * @param map the map.
+ * @return a vector of strings with the names of player territories that have neighbouring enemies.
+ */
+vector<string> CheaterAI::getTerritoriesWithEnemies (Player *player, Map *map){
+	vector<string> myTerritories = player->getPlayerTerritoryNames();
+	vector<string> toReturn = {};
+	for(int i=0; i<myTerritories.size(); i++){
+		vector<string> enemies = map->getEnemyAdjacentTerritoryNames(map->seekTerritoryID(myTerritories[i]));
+		if(enemies.size() > 0){
+			toReturn.push_back(myTerritories[i]);
+		}
+	}
+	return toReturn;
+}
+
+void CheaterAI::play(Player *player, Map *map, Deck &deck) {
+    reinforce(player, map, deck);
+    attack(player, map);
+    fortify(player, map);
+
+    cout << "\n***************************************" << endl;
+    cout << "End of  " << player->getName() << "'s turn! " << endl;
+    cout << "***************************************\n" << endl;
+}
+

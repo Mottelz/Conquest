@@ -14,6 +14,8 @@ var class_map =
     [ "getAllTerritoryNames", "class_map.html#a5f11d99378b4a288f32163fd714cbae9", null ],
     [ "getArmyNumOfTheTerritory", "class_map.html#a5669197c0589a76a1f0cb80db345ed90", null ],
     [ "getContiAddress", "class_map.html#a3998859e4cdd06d05327eed87c0442b3", null ],
+    [ "getEnemyAdjacentTerritoryNames", "class_map.html#a7836f2224ba31aa11b39d3e4f202b554", null ],
+    [ "getFriendlyAdjacentTerritoryNames", "class_map.html#ab97fd8a98f111ba9c7eb2d0fc9f597f8", null ],
     [ "getMapName", "class_map.html#a82eb7f7bb64c92be0afaeb6e76cee1f2", null ],
     [ "getOwnerIDOfTheContinent", "class_map.html#a5ce16b69ff7b882d9f540298bd92ea61", null ],
     [ "getOwnerIDOfTheTerritory", "class_map.html#a76f34857f3a953ee444df0d8bc1e9aca", null ],

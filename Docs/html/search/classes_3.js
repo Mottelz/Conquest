@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['hand',['Hand',['../class_hand.html',1,'']]]
+  ['deck',['Deck',['../class_deck.html',1,'']]],
+  ['dicecup',['DiceCup',['../class_dice_cup.html',1,'']]],
+  ['die',['Die',['../class_die.html',1,'']]]
 ];
