@@ -1545,7 +1545,11 @@ int RandomAI::getRandomPlayerTerritory(Player* player, Map* map)
 	srand(time(0));
 	vector<string> playerTerritories = player->getPlayerTerritoryNames();
 	int randomTerritory = rand() % playerTerritories.size();
-	
+	int randomID = map->seekTerritoryID(playerTerritories[randomTerritory]);
+
+	if (map->enemyNeighbourExists(randomID) == false || map->getArmyNumOfTheTerritory(randomID) == 1)
+		return -1;
+
 	return map->seekTerritoryID(playerTerritories[randomTerritory]);
 }
 
@@ -1559,8 +1563,9 @@ int RandomAI::getRandomEnemyTerritory(Player* player, Map* map, int attack_from)
 	srand(time(0));
 	vector<string> neighbourTerritories = map->getEnemyAdjacentTerritoryNames(attack_from);
 	int randomTerritory = rand() % neighbourTerritories.size();
+	int randomID = map->seekTerritoryID(neighbourTerritories[randomTerritory]);
 
-	return map->seekTerritoryID(neighbourTerritories[randomTerritory]);
+	return randomID;
 }
 
 
@@ -1694,7 +1699,7 @@ bool RandomAI::fortify(Player* player, Map* map)
 		move_from = getRandomPlayerTerritory(player, map);
 	}
 
-	int move_to = getRandomEnemyTerritory(player, map, move_from);
+	int move_to = getRandomFriendTerritory(player, map, move_from);
 	int move_num = 0;
 	vector<string> fortifyPath;
 
@@ -1735,7 +1740,7 @@ bool RandomAI::fortify(Player* player, Map* map)
 * \param player A pointer to the current player
 * \param map A pointer to the map
 */
-int RandomAI::getRandomEnemyTerritory(Player* player, Map* map, int move_from)
+int RandomAI::getRandomFriendTerritory(Player* player, Map* map, int move_from)
 {
 	srand(time(0));
 	vector<string> neighbourTerritories = map->getFriendlyAdjacentTerritoryNames(move_from);
