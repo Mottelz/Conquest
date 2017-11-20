@@ -100,6 +100,8 @@ public:
 private:
 	int getRandomPlayerTerritory(Player* player, Map* map);
 	int getRandomEnemyTerritory(Player* player, Map* map, int attack_from);
+	int getRandomFriendTerritory(Player* player, Map* map, int move_from);
+
 };
 
 /**

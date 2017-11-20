@@ -14,7 +14,7 @@ GameInit::GameInit(){
     m_Deck = new Deck();
     m_MapLoader = new MapLoader();
     m_MapNames = vector<string>();
-    m_Players = vector<Player>();
+    m_Players = vector<Player*>();
     m_MapNames.push_back("Canada.map");
     m_MapNames.push_back("Earth.map");
     m_MapNames.push_back("Invalid.map");
@@ -63,7 +63,7 @@ void GameInit::getUserPrefernces(){
     } while (tempPlayers < 2 || tempPlayers > 6);
     
     for(int i = 0; i < tempPlayers; i++) {
-        m_Players.push_back(Player());
+        m_Players.push_back(new Player(m_Map));
     }
     
     do {
@@ -91,6 +91,6 @@ void GameInit::toString(){
     m_Deck->toString();
 
     for (int i = 0; i < m_Players.size(); ++i) {
-        m_Players[i].toString();
+        m_Players[i]->toString();
     }
 }

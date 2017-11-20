@@ -1735,7 +1735,7 @@ bool RandomAI::fortify(Player* player, Map* map)
 * \param player A pointer to the current player
 * \param map A pointer to the map
 */
-int RandomAI::getRandomEnemyTerritory(Player* player, Map* map, int move_from)
+int RandomAI::getRandomFriendTerritory(Player* player, Map* map, int move_from)
 {
 	srand(time(0));
 	vector<string> neighbourTerritories = map->getFriendlyAdjacentTerritoryNames(move_from);
@@ -1795,7 +1795,15 @@ void CheaterAI::reinforce(Player* player, Map* map, Deck& deck) {
  * \return true because why not?
  */
 bool CheaterAI::attack(Player* player, Map* map) {
-    vector<string> territoriesWithEnemies = getTerritoriesWithEnemies(player, map);
+	//Attack, notify  PLAYER STATUS
+	player->m_StatusInfo.phaseView = true;
+	player->m_StatusInfo.currentPhase = ATTACK;
+	player->m_StatusInfo.statusType = myTerritories;
+	player->m_StatusInfo.globalView = true;
+	player->notify();
+	player->m_StatusInfo.globalView = false;
+
+	vector<string> territoriesWithEnemies = getTerritoriesWithEnemies(player, map);
     for (int i = 0; i < territoriesWithEnemies.size(); ++i) {
         //get the enemies.
         vector<string> enemies = map->getEnemyAdjacentTerritoryNames(map->seekTerritoryID(territoriesWithEnemies[i]));
@@ -1803,9 +1811,16 @@ bool CheaterAI::attack(Player* player, Map* map) {
         if(enemies.size()>0) {
             for (int j = 0; j < enemies.size(); ++j) {
                 map->setTerritoryOwner(enemies[i], player);
+
             }
+			player->m_StatusInfo.statusType = myTerritories;
+			player->m_StatusInfo.globalView = true;
+			player->notify();
+			player->m_StatusInfo.globalView = false;
+
         }
     }
+
     return true;
 };
 
@@ -1818,6 +1833,14 @@ bool CheaterAI::attack(Player* player, Map* map) {
  */
 
 bool CheaterAI::fortify(Player *player, Map *map) {
+	//Fortify, notify  PLAYER STATUS
+	player->m_StatusInfo.phaseView = true;
+	player->m_StatusInfo.currentPhase = FORTIFICATION;
+	player->m_StatusInfo.statusType = myTerritories;
+	player->m_StatusInfo.globalView = true;
+	player->notify();
+	player->m_StatusInfo.globalView = false;
+
 	vector<string> territoriesWithEnemies = getTerritoriesWithEnemies(player, map);
     for (int i = 0; i < territoriesWithEnemies.size(); ++i) {
         doubleArmies(map, player, territoriesWithEnemies[i]);
