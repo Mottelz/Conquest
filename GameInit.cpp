@@ -63,7 +63,7 @@ void GameInit::getUserPrefernces(){
     } while (tempPlayers < 2 || tempPlayers > 6);
     
     for(int i = 0; i < tempPlayers; i++) {
-        m_Players.push_back(Player());
+        m_Players.push_back(Player(m_Map));
     }
     
     do {

@@ -33,6 +33,8 @@ struct PlayerStatusInfo
 {
 	bool globalView;
 	bool phaseView;
+	bool cardsView;
+	bool contiView;
 	PlayerPhase currentPhase;
 	PlayerStatus statusType;
 	int currentSelectedTerriID;
@@ -72,6 +74,7 @@ public:
 
 	void drawCard(Deck &Deck);
 	void displayHand();
+	vector<Card>* getCards();
 	bool exchangeableHand();
 	vector<int> shakeDiceCup(int numberOfDice);
 

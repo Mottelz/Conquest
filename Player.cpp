@@ -18,6 +18,8 @@ PlayerStatusInfo::PlayerStatusInfo()
 	this->statusType = myDefault;
 	this->globalView = false;
 	this->phaseView = false;
+	cardsView = false;
+	contiView = false;
 	this->currentSelectedTerriID = -1;
 }
 
@@ -30,6 +32,8 @@ void PlayerStatusInfo::statusInfoInitialize()
 	this->statusType = myDefault;
 	globalView = false;
 	this->phaseView = false;
+	cardsView = false;
+	contiView = false;
 	this->currentSelectedTerriID = -1;
 }
 
@@ -230,6 +234,15 @@ void Player::displayHand()
 }
 
 /**
+* Return pointer of cards from m_Hand
+* \see Hand.getCards
+*/
+vector<Card>* Player::getCards()
+{
+	return m_Hand.getCards();
+}
+
+/**
  * Determines number of Dice allowed and rolls them.
  * \param armiesOfATerri The number of armies the player has in the relvant territory.
  * \param atk True if player is attacking, false otherwise.
@@ -359,6 +372,13 @@ void Player::myContiUpdate(Map * map)
 			m_PlayerContinents.push_back(map->getContiAddress(i));
 		}
 	}
+	//this->m_StatusInfo.phaseView = false;
+	//this->m_StatusInfo.currentPhase = REINFORCEMENT;
+	this->m_StatusInfo.contiView = true;
+	this->notify();
+	this->m_StatusInfo.cardsView = false;
+	//this->m_StatusInfo.phaseView = true;
+
 }
 /**
  * Checks if the player owns a territory.
