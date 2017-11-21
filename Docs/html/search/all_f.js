@@ -1,6 +1,11 @@
 var searchData=
 [
-  ['terriofplayer',['terriOfPlayer',['../class_map.html#ac1545169b2e1276b768a7d2b92787ffa',1,'Map']]],
-  ['territory',['Territory',['../struct_territory.html',1,'Territory'],['../struct_territory.html#a390f91907d3c68689e588a71784eb852',1,'Territory::Territory()']]],
-  ['tostring',['toString',['../class_card.html#a40725f94d140308b3ec535ad00fd033d',1,'Card::toString()'],['../class_deck.html#aa056440534c8a40d95af8fe2c0c4ce76',1,'Deck::toString()'],['../class_hand.html#a219979a2906462a19f5ce723e6a65150',1,'Hand::toString()'],['../class_game_init.html#ad44d2ee553e4aea33d63a6af787a0238',1,'GameInit::toString()'],['../class_map.html#ac440236c5b1486df11d2fe87ec1a3c62',1,'Map::toString()'],['../class_player.html#a03926a6f3cff94c236ddf4fa985c3237',1,'Player::toString()']]]
+  ['randomai',['RandomAI',['../class_random_a_i.html',1,'']]],
+  ['readmapfile',['readMapFile',['../class_map_loader.html#a0da57c42509a15c8162e5ad32c6addb3',1,'MapLoader']]],
+  ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['reinforce',['reinforce',['../class_strategy.html#a530230e3b94f9d0d837350080e630ec6',1,'Strategy::reinforce()'],['../class_human_player.html#a4c57faa73f5b4d680fb2e16ffb534a1d',1,'HumanPlayer::reinforce()'],['../class_aggressive_a_i.html#af97647afdff1485a943878478bc6621f',1,'AggressiveAI::reinforce()'],['../class_benevolent_a_i.html#afd60e755b8dec0c368c9ece421ff7fb6',1,'BenevolentAI::reinforce()'],['../class_random_a_i.html#ab5acd02d3f2a284b7f46940710f588eb',1,'RandomAI::reinforce()'],['../class_cheater_a_i.html#ab43e610dca3f49a1ec595e70fde06f72',1,'CheaterAI::reinforce()']]],
+  ['reinforcement',['REINFORCEMENT',['../_strategy_pattern_8h.html#a355d1e9b8066b41fe09ab4413e346847a1aacf072a2ec09f9834bffb46d81fccf',1,'StrategyPattern.h']]],
+  ['removearmies',['removeArmies',['../class_map.html#a6192e216d1a01fb670c8f9ef2ec69734',1,'Map']]],
+  ['resetcontainer',['resetContainer',['../class_dice_cup.html#a7b2f708448b02776d218889cf50f3504',1,'DiceCup']]],
+  ['rolldice',['rollDice',['../class_die.html#a0af59b76607d8bc55ab1c54be4f58155',1,'Die']]]
 ];

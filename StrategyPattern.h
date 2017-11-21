@@ -104,5 +104,19 @@ private:
 
 };
 
+/**
+ * AI class that cheats. Inherits from Strategy.
+ */ 
+class CheaterAI : public Strategy {
+	public :
+		void reinforce(Player* player, Map* map, Deck& deck);
+		bool attack(Player* player, Map* map);
+		bool fortify(Player* player, Map* map);
+		void play(Player* player, Map* map, Deck& deck);
+    private:
+        void doubleArmies (Map *map, Player *player, string territoryName);
+        vector<string> getTerritoriesWithEnemies(Player *player, Map *map);
+};
+
 
 #endif //STRATEGYPATTERN_H

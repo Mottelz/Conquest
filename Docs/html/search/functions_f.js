@@ -1,6 +1,19 @@
 var searchData=
 [
-  ['terriofplayer',['terriOfPlayer',['../class_map.html#ac1545169b2e1276b768a7d2b92787ffa',1,'Map']]],
-  ['territory',['Territory',['../struct_territory.html#a390f91907d3c68689e588a71784eb852',1,'Territory']]],
-  ['tostring',['toString',['../class_card.html#a40725f94d140308b3ec535ad00fd033d',1,'Card::toString()'],['../class_deck.html#aa056440534c8a40d95af8fe2c0c4ce76',1,'Deck::toString()'],['../class_hand.html#a219979a2906462a19f5ce723e6a65150',1,'Hand::toString()'],['../class_game_init.html#ad44d2ee553e4aea33d63a6af787a0238',1,'GameInit::toString()'],['../class_map.html#ac440236c5b1486df11d2fe87ec1a3c62',1,'Map::toString()'],['../class_player.html#a03926a6f3cff94c236ddf4fa985c3237',1,'Player::toString()']]]
+  ['seekcontinentid',['seekContinentID',['../class_map.html#a7372f40da2cf4d52d4ae0846947d2667',1,'Map']]],
+  ['seekpath',['seekPath',['../class_map.html#a2e9356937736b6131c716f6e6cc295d4',1,'Map']]],
+  ['seekterritoryid',['seekTerritoryID',['../class_map.html#a81148665f650ccce0979e818b849020f',1,'Map']]],
+  ['setdicecounter',['setDiceCounter',['../class_die.html#a7ca2af213d97ad97d85690113d042e61',1,'Die']]],
+  ['setmapvalidate',['setMapValidate',['../class_map.html#a3c1f2ea8e9e771af7f97de1371cb21d4',1,'Map']]],
+  ['setnumberofdice',['setNumberOfDice',['../class_dice_cup.html#af5425ca03860799253fae1b840b9474f',1,'DiceCup']]],
+  ['setplayerid',['setPlayerID',['../class_player.html#abba5a325452b152d2c6198ab20ad6dae',1,'Player']]],
+  ['setstrategy',['setStrategy',['../class_player.html#a68e4bc97a147bdf825d8152a9d9bf670',1,'Player']]],
+  ['setterritoryowner',['setTerritoryOwner',['../class_map.html#a4fd7287911e88d54843a7c494dddb117',1,'Map']]],
+  ['setvalue',['setValue',['../class_die.html#a520ef7a71fdeef5239575d7f094cb638',1,'Die']]],
+  ['shakedicecup',['shakeDiceCup',['../class_dice_cup.html#adb6de2ef750b124fe17c30ae91058862',1,'DiceCup::shakeDiceCup()'],['../class_player.html#ac2955eeed259eb25f2764519019ac4a7',1,'Player::shakeDiceCup()'],['../class_strategy.html#a3c9507ff9583e09465005d203317ba31',1,'Strategy::shakeDiceCup()']]],
+  ['showpercentage',['showPercentage',['../class_dice_cup.html#a40ec922352bba0fd094f4279562baade',1,'DiceCup']]],
+  ['startup',['Startup',['../class_startup.html#a9202080b447e4cd9c9e1c546d373db91',1,'Startup::Startup()'],['../class_startup.html#ac95bbc55bb7483531c4c84d32c2548ec',1,'Startup::Startup(vector&lt; Player *&gt; &amp;players)']]],
+  ['statusinfoinitialize',['statusInfoInitialize',['../struct_player_status_info.html#a6b70ebf165be4c3b9e79303fcc3e0337',1,'PlayerStatusInfo']]],
+  ['storedicevalue',['storeDiceValue',['../class_dice_cup.html#abaadf4e56f83630bc63b31d778a30374',1,'DiceCup']]],
+  ['subject',['Subject',['../class_subject.html#ab468044832c824c6d6c2f46272655207',1,'Subject']]]
 ];

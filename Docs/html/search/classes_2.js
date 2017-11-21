@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['gameinit',['GameInit',['../class_game_init.html',1,'']]],
-  ['gameloop',['GameLoop',['../class_game_loop.html',1,'']]]
+  ['card',['Card',['../class_card.html',1,'']]],
+  ['cheaterai',['CheaterAI',['../class_cheater_a_i.html',1,'']]],
+  ['continent',['Continent',['../struct_continent.html',1,'']]]
 ];

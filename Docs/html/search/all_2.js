@@ -1,17 +1,15 @@
 var searchData=
 [
-  ['deallocateterritory',['deallocateTerritory',['../class_player.html#ac252e8245c2828d9d6af7199e951dd54',1,'Player']]],
-  ['deck',['Deck',['../class_deck.html',1,'Deck'],['../class_deck.html#a57ae1cb4ac6fd61c249cefb2db85eb99',1,'Deck::Deck()'],['../class_deck.html#a5071c6ba95ac494b6ac39b46cf70f185',1,'Deck::Deck(vector&lt; string &gt; countries, int countriesLeng)']]],
-  ['dice_2ecpp',['Dice.cpp',['../_dice_8cpp.html',1,'']]],
-  ['dice_2eh',['Dice.h',['../_dice_8h.html',1,'']]],
-  ['dicecup',['DiceCup',['../class_dice_cup.html',1,'DiceCup'],['../class_dice_cup.html#adbfa1fc383ed389ebc6df5a1a5840a4c',1,'DiceCup::DiceCup()'],['../class_dice_cup.html#a31eac3fc76300c5ee548e9604a48f088',1,'DiceCup::DiceCup(int numberOfDice)']]],
-  ['die',['Die',['../class_die.html',1,'Die'],['../class_die.html#abe2b343f1e522600125c01d8e992af98',1,'Die::Die()'],['../class_die.html#a6c00858da6f63d12f9ffe855e0f68b54',1,'Die::Die(int value)']]],
-  ['displaycontinents',['displayContinents',['../class_map.html#a13ee30013e1ca95b78a54534da6b8652',1,'Map']]],
-  ['displaycup',['displayCup',['../class_dice_cup.html#a9d2bed451ed1ee6e7d928c9f6d9e681e',1,'DiceCup']]],
-  ['displayhand',['displayHand',['../class_player.html#ae71e9e956602ebf86afbcc560194dad0',1,'Player']]],
-  ['displayplayerterritories',['displayPlayerTerritories',['../class_player.html#a010725f35f82fc255eec4967bc3b5b70',1,'Player']]],
-  ['displayterritories',['displayTerritories',['../class_map.html#a3da70c5b7b6674cc15246e243b59f384',1,'Map']]],
-  ['distributeterritories',['distributeTerritories',['../class_startup.html#a59bb4ec18415503fccdd8ad6fcf0fa7e',1,'Startup']]],
-  ['draw',['draw',['../class_deck.html#a8d69ec710bfdce7f2ae667d027588554',1,'Deck']]],
-  ['drawcard',['drawCard',['../class_player.html#a928e7570562168dd5622f425c3208342',1,'Player']]]
+  ['card',['Card',['../class_card.html',1,'Card'],['../class_card.html#a783f5854cbe8c183ee3d4414c01472c0',1,'Card::Card()'],['../class_card.html#a524bb2a74ea612f63d95d9a74c3fcc74',1,'Card::Card(char type, string)']]],
+  ['cards_2ecpp',['Cards.cpp',['../_cards_8cpp.html',1,'']]],
+  ['cards_2eh',['Cards.h',['../_cards_8h.html',1,'']]],
+  ['cheaterai',['CheaterAI',['../class_cheater_a_i.html',1,'']]],
+  ['checkownedcountry',['checkOwnedCountry',['../class_player.html#ad76483fc68374a60523313c76eb1c7eb',1,'Player']]],
+  ['combineddriver_2ecpp',['combinedDriver.cpp',['../combined_driver_8cpp.html',1,'']]],
+  ['computetotalbonus',['computeTotalBonus',['../class_map.html#a298df883f71e4a7164a626df80078566',1,'Map']]],
+  ['continent',['Continent',['../struct_continent.html',1,'Continent'],['../struct_continent.html#ae2bd322d891547d02ecfd28c29be3fec',1,'Continent::Continent()']]],
+  ['contiupdate',['contiUpdate',['../struct_continent.html#a02fef66abea07f17a4ad9e700082fae1',1,'Continent']]],
+  ['currentphase',['currentPhase',['../struct_player_status_info.html#a2b756fc35248e2561e2cd58191c909a8',1,'PlayerStatusInfo']]],
+  ['currentselectedterriid',['currentSelectedTerriID',['../struct_player_status_info.html#a2a088d2cd6001dc3088d5786f0bf359f',1,'PlayerStatusInfo']]],
+  ['conquest_3a_20a_20risk_20rip_20off_20written_20for_20college_20credit',['Conquest: A Risk Rip Off Written for College Credit',['../md__r_e_a_d_m_e.html',1,'']]]
 ];

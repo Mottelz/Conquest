@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['_7edeck',['~Deck',['../class_deck.html#a7d1331cc558c302fdf44e5ae8aae1a95',1,'Deck']]],
-  ['_7egameinit',['~GameInit',['../class_game_init.html#a1b50f5c75a233b3548f2a4b3d0e27eec',1,'GameInit']]],
-  ['_7egameloop',['~GameLoop',['../class_game_loop.html#ae6c558d0d751a068dbafe2cae465ec1f',1,'GameLoop']]],
-  ['_7ehand',['~Hand',['../class_hand.html#a7ff29a6f23f98c5e57f44d23a76912be',1,'Hand']]],
-  ['_7emap',['~Map',['../class_map.html#aa403fbe09394ccf39747588f5168e3b2',1,'Map']]],
-  ['_7emaploader',['~MapLoader',['../class_map_loader.html#a6055310649b9a926301d7fb2b83cb1b1',1,'MapLoader']]],
-  ['_7estartup',['~Startup',['../class_startup.html#a2070f70b87df61bfb3b655db9ec29ff4',1,'Startup']]]
+  ['terriofplayer',['terriOfPlayer',['../class_map.html#ac1545169b2e1276b768a7d2b92787ffa',1,'Map']]],
+  ['territory',['Territory',['../struct_territory.html#a390f91907d3c68689e588a71784eb852',1,'Territory']]],
+  ['tostring',['toString',['../class_card.html#a40725f94d140308b3ec535ad00fd033d',1,'Card::toString()'],['../class_deck.html#aa056440534c8a40d95af8fe2c0c4ce76',1,'Deck::toString()'],['../class_hand.html#a219979a2906462a19f5ce723e6a65150',1,'Hand::toString()'],['../class_game_init.html#ad44d2ee553e4aea33d63a6af787a0238',1,'GameInit::toString()'],['../class_map.html#ac440236c5b1486df11d2fe87ec1a3c62',1,'Map::toString()'],['../class_player.html#a03926a6f3cff94c236ddf4fa985c3237',1,'Player::toString()']]]
 ];

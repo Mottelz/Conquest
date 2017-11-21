@@ -95,22 +95,32 @@ $(document).ready(function(){initNavTree('_player_8h.html','');});
 <code>#include &quot;<a class="el" href="_map_8h_source.html">Map.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_dice_8h_source.html">Dice.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_cards_8h_source.html">Cards.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_strategy_pattern_8h_source.html">StrategyPattern.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_subject_8h_source.html">Subject.h</a>&quot;</code><br />
 </div>
 <p><a href="_player_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_player_status_info.html">PlayerStatusInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_player.html">Player</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="class_player.html" title="The Player class. ">Player</a> class.  <a href="class_player.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a5e0e9f1ab4da4826f629184890fbffa5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_player_8h.html#a5e0e9f1ab4da4826f629184890fbffa5">playerStatus</a> { <a class="el" href="_player_8h.html#a5e0e9f1ab4da4826f629184890fbffa5afcdb94dc857e087be1da997829d7c762">myTerritories</a>, 
-<a class="el" href="_player_8h.html#a5e0e9f1ab4da4826f629184890fbffa5a7e7334649483cf400b882562accc024a">myTerritoryReinforce</a>, 
-<a class="el" href="_player_8h.html#a5e0e9f1ab4da4826f629184890fbffa5ac0a17310f2703658ff24ab38b5051fd1">myTerritoryFortify</a>
+<tr class="memitem:af53b6d0617046f6acfe6f2bf96e5d71c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71c">PlayerStatus</a> { <br />
+&#160;&#160;<a class="el" href="_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71ca5cd6e54d0d8829e683f11af274651c9f">myDefault</a>, 
+<a class="el" href="_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71cafcdb94dc857e087be1da997829d7c762">myTerritories</a>, 
+<a class="el" href="_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71ca48ba1574deb8a49a2b1c3d9328301361">mySpecificTerritory</a>, 
+<a class="el" href="_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71cae955879e1a4505b7fa6e941c7ff3b614">myEnemyList</a>, 
+<br />
+&#160;&#160;<a class="el" href="_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71caa368b58499cbec937361ecb88b806bdd">myPathList</a>, 
+<a class="el" href="_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71ca4ff47a8706a6b3ea67b2f78eabba61bf">myPhaseEnded</a>
+<br />
  }</td></tr>
-<tr class="separator:a5e0e9f1ab4da4826f629184890fbffa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:af53b6d0617046f6acfe6f2bf96e5d71c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The header for the <a class="el" href="_player_8cpp.html" title="The cpp for the Player.h. ">Player.cpp</a>. </p>
@@ -118,24 +128,27 @@ Enumerations</h2></td></tr>
 
 <p class="definition">Definition in file <a class="el" href="_player_8h_source.html">Player.h</a>.</p>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a5e0e9f1ab4da4826f629184890fbffa5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e0e9f1ab4da4826f629184890fbffa5">&#9670;&nbsp;</a></span>playerStatus</h2>
+<a id="af53b6d0617046f6acfe6f2bf96e5d71c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af53b6d0617046f6acfe6f2bf96e5d71c">&#9670;&nbsp;</a></span>PlayerStatus</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="_player_8h.html#a5e0e9f1ab4da4826f629184890fbffa5">playerStatus</a></td>
+          <td class="memname">enum <a class="el" href="_player_8h.html#af53b6d0617046f6acfe6f2bf96e5d71c">PlayerStatus</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a5e0e9f1ab4da4826f629184890fbffa5afcdb94dc857e087be1da997829d7c762"></a>myTerritories&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a5e0e9f1ab4da4826f629184890fbffa5a7e7334649483cf400b882562accc024a"></a>myTerritoryReinforce&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a5e0e9f1ab4da4826f629184890fbffa5ac0a17310f2703658ff24ab38b5051fd1"></a>myTerritoryFortify&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af53b6d0617046f6acfe6f2bf96e5d71ca5cd6e54d0d8829e683f11af274651c9f"></a>myDefault&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af53b6d0617046f6acfe6f2bf96e5d71cafcdb94dc857e087be1da997829d7c762"></a>myTerritories&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af53b6d0617046f6acfe6f2bf96e5d71ca48ba1574deb8a49a2b1c3d9328301361"></a>mySpecificTerritory&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af53b6d0617046f6acfe6f2bf96e5d71cae955879e1a4505b7fa6e941c7ff3b614"></a>myEnemyList&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af53b6d0617046f6acfe6f2bf96e5d71caa368b58499cbec937361ecb88b806bdd"></a>myPathList&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af53b6d0617046f6acfe6f2bf96e5d71ca4ff47a8706a6b3ea67b2f78eabba61bf"></a>myPhaseEnded&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_player_8h_source.html#l00017">17</a> of file <a class="el" href="_player_8h_source.html">Player.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_player_8h_source.html#l00027">27</a> of file <a class="el" href="_player_8h_source.html">Player.h</a>.</p>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['territory',['Territory',['../struct_territory.html',1,'']]]
+  ['observer',['Observer',['../class_observer.html',1,'']]]
 ];

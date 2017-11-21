@@ -93,7 +93,7 @@ public:
 	void setStrategy(Strategy* strategy);
 	void play(Player* player, Map* map, Deck& deck);
 
-	vector<vector<string>>  myPathListOfTerriID(int terriID);
+	vector<vector<string> >  myPathListOfTerriID(int terriID);
 
 	int valid_assigned_armies;
 	PlayerStatusInfo m_StatusInfo; //m_StatusID[0]: phaseType; m_StatusID[1]: notify counting; m_StatusID[2]: error input id

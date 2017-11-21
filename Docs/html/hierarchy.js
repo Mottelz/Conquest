@@ -9,9 +9,23 @@ var hierarchy =
     [ "GameInit", "class_game_init.html", null ],
     [ "GameLoop", "class_game_loop.html", null ],
     [ "Hand", "class_hand.html", null ],
-    [ "Map", "class_map.html", null ],
     [ "MapLoader", "class_map_loader.html", null ],
-    [ "Player", "class_player.html", null ],
+    [ "Observer", "class_observer.html", [
+      [ "gameStatistics", "classgame_statistics.html", null ],
+      [ "PhaseObserver", "class_phase_observer.html", null ]
+    ] ],
+    [ "PlayerStatusInfo", "struct_player_status_info.html", null ],
     [ "Startup", "class_startup.html", null ],
+    [ "Strategy", "class_strategy.html", [
+      [ "AggressiveAI", "class_aggressive_a_i.html", null ],
+      [ "BenevolentAI", "class_benevolent_a_i.html", null ],
+      [ "CheaterAI", "class_cheater_a_i.html", null ],
+      [ "HumanPlayer", "class_human_player.html", null ],
+      [ "RandomAI", "class_random_a_i.html", null ]
+    ] ],
+    [ "Subject", "class_subject.html", [
+      [ "Map", "class_map.html", null ],
+      [ "Player", "class_player.html", null ]
+    ] ],
     [ "Territory", "struct_territory.html", null ]
 ];

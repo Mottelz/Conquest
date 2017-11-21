@@ -5,6 +5,7 @@ var class_hand =
     [ "addCard", "class_hand.html#af90711d4e4ecc061813d06acc3e7c7fe", null ],
     [ "exchange", "class_hand.html#a76b470840c83221bb3b0b000d12d9b0f", null ],
     [ "exchangeable", "class_hand.html#a6440e30103b3986e70db87404b29930a", null ],
+    [ "exchangeAI", "class_hand.html#a6b98910d86f4c95641b6fa2021c93537", null ],
     [ "getHandSize", "class_hand.html#abbb3404b04f294a08b1e6dd15f027595", null ],
     [ "toString", "class_hand.html#a219979a2906462a19f5ce723e6a65150", null ]
 ];

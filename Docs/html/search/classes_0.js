@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['card',['Card',['../class_card.html',1,'']]],
-  ['continent',['Continent',['../struct_continent.html',1,'']]]
+  ['aggressiveai',['AggressiveAI',['../class_aggressive_a_i.html',1,'']]]
 ];
