@@ -188,6 +188,14 @@ int Hand::getHandSize() {
 }
 
 /**
+* Return pointer of cards from Hand
+*/
+vector<Card>* Hand::getCards()
+{
+	return &m_Cards;
+}
+
+/**
  * Returns a string a which shows all the cards in the hand. 
  */
 string Hand::toString() {

@@ -71,6 +71,7 @@ public:
     void addCard(Deck &deck);
     string toString();
     int getHandSize();
+	vector<Card> * getCards();
 };
 
 #endif 

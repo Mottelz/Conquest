@@ -15,6 +15,8 @@ int Strategy::determineExchangedArmies(Player* player, Map* map, Deck& deck)
 
 	cout << player->getName() << " currently has " << my_card << " cards in their hand. " << endl;
 	player->displayHand();
+
+
 	if (player->exchangeableHand() == true)
 	{
 		if (my_card > 5)
@@ -23,6 +25,8 @@ int Strategy::determineExchangedArmies(Player* player, Map* map, Deck& deck)
 			cout << player->getName() << " has more than 5 cards and must exchange. " << endl;
 
 			exchangedArmies = player->exchangeCardsAI(deck); // Uses the method to exchange cards for AI
+
+
 		}
 	}
 	else
@@ -30,6 +34,14 @@ int Strategy::determineExchangedArmies(Player* player, Map* map, Deck& deck)
 		cout << endl;
 		cout << player->getName() << " cannot exchange cards at this time. " << endl;
 	}
+
+
+	player->m_StatusInfo.phaseView = false;
+	player->m_StatusInfo.currentPhase = REINFORCEMENT;
+	player->m_StatusInfo.cardsView = true;
+	player->notify();
+	player->m_StatusInfo.cardsView = false;
+	player->m_StatusInfo.phaseView = true;
 
 	return exchangedArmies;
 }
@@ -196,7 +208,11 @@ void HumanPlayer::reinforce(Player* player, Map* map, Deck& deck)
 	player->m_StatusInfo.currentPhase = REINFORCEMENT;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.cardsView = true;
+
 	player->notify();
+	player->m_StatusInfo.cardsView = false;
+
 	player->m_StatusInfo.globalView = false;
 
 	int assign_terri_ID = -1, assign_num = 0;
@@ -284,6 +300,13 @@ int HumanPlayer::determineExchangedArmies(Player* player, Map* map, Deck& deck)
 			while (exchangedArmies == 0)
 				exchangedArmies = player->exchangeCards(deck);
 			//hand update
+			player->m_StatusInfo.phaseView = false;
+			player->m_StatusInfo.currentPhase = REINFORCEMENT;
+			player->m_StatusInfo.cardsView = true;
+			player->notify();
+			player->m_StatusInfo.cardsView = false;
+			player->m_StatusInfo.phaseView = true;
+
 		}
 		else
 		{
@@ -296,7 +319,16 @@ int HumanPlayer::determineExchangedArmies(Player* player, Map* map, Deck& deck)
 					exchangedArmies = player->exchangeCards(deck);
 					//hand update
 					if (exchangedArmies != 0)
+					{
+						player->m_StatusInfo.phaseView = false;
+						player->m_StatusInfo.currentPhase = REINFORCEMENT;
+						player->m_StatusInfo.cardsView = true;
+						player->notify();
+						player->m_StatusInfo.cardsView = false;
+						player->m_StatusInfo.phaseView = true;
+
 						break;
+					}
 				}
 				else if (exchange == "N" || exchange == "n")
 				{
@@ -549,6 +581,7 @@ bool HumanPlayer::attack(Player* player, Map* map)
 					player->notify();
 					player->m_StatusInfo.globalView = false;
 					break;
+					//continue;
 				}
 
 			}
@@ -560,7 +593,8 @@ bool HumanPlayer::attack(Player* player, Map* map)
 				//player->m_StatusInfo[1] = 0;
 				//player->notify();
 
-				return false;
+				break;
+				//return false;
 			}
 		}
 		cout << endl;
@@ -1735,7 +1769,7 @@ bool RandomAI::fortify(Player* player, Map* map)
 * \param player A pointer to the current player
 * \param map A pointer to the map
 */
-int RandomAI::getRandomEnemyTerritory(Player* player, Map* map, int move_from)
+int RandomAI::getRandomFriendTerritory(Player* player, Map* map, int move_from)
 {
 	srand(time(0));
 	vector<string> neighbourTerritories = map->getFriendlyAdjacentTerritoryNames(move_from);

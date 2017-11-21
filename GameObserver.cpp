@@ -486,14 +486,7 @@ void PhaseObserver::display(PlayerPhase myPhase, PlayerStatus myStatus)
 
 
 
-////concrete Observer
-//#include <iostream>
-//#include <vector>
-//
-//using namespace std;
 
-//declare the static vector variable
-//vector<Player*> gameStatistics::listPlayers;
 
 gameStatistics::gameStatistics() {
 }
@@ -502,68 +495,376 @@ gameStatistics::gameStatistics(vector<Player*> *playerList, Map* map) {
 	//m_PlayerSubject = p;
 	m_MapSubject = map;
 	m_MapSubject->attach(this);
-	m_PlayerList = playerList;
-	for (unsigned int i = 0; i < m_PlayerList->size(); i++)
+	m_PlayerList = *playerList;
+	for (unsigned int i = 0; i < m_PlayerList.size(); i++)
 	{
-		m_PlayerList->at(i)->attach(this);
+		m_PlayerList.at(i)->attach(this);
 	}
+	m_TurnNumber = -1;
+	m_CurrentPlayer = NULL;
 }
 
 gameStatistics::~gameStatistics() {
 	m_MapSubject->detach(this);
-	for (unsigned int i = 0; i < m_PlayerList->size(); i++)
+	for (unsigned int i = 0; i < m_PlayerList.size(); i++)
 	{
-		m_PlayerList->at(i)->detach(this);
+		m_PlayerList.at(i)->detach(this);
 	}
 }
 void gameStatistics::update() {
-	if (isGlobalView())
-		display();
+
+	display();
+		
+
 }
 
-void gameStatistics::display() {
+//void gameStatistics::display() {
+//	if (!isCurrentPlayer())
+//	{
+//		cout << m_display << endl;
+//
+//	}
+//}
 
-	cout << "=================Game Statistics==================" << endl;
-
-	displayPlayerControl();
-
-	cout << "==================================================" << endl;
-}
-
-void gameStatistics::displayPlayerControl() {
-
-	int m_TotalTerritory = m_MapSubject->getTotalNumberOfTerritories();
-
-
-	//to properly print out after 2 decimal
-	cout.setf(ios::fixed);
-	cout.setf(ios::showpoint);
-	cout.precision(2);
-	cout << "Total territory in game: " << m_MapSubject->getTotalNumberOfTerritories() << endl;
-	for (int i = 0; i < m_PlayerList->size(); i++) {
-
-		//calculate the percentage of players owned country
-		double percentage = ((double)m_PlayerList->at(i)->getNumberOfTerritories() / m_TotalTerritory) * 100;
-
-		//print the percentage of owned country
-		cout << m_PlayerList->at(i)->getName() << ": (" << percentage << "%) \t";
-
-		//output percentage in form of stars
-		for (int j = 0; j < m_PlayerList->at(i)->getNumberOfTerritories(); j++) {
-			if (j % 5 == 0)
-				cout << " ";
-			cout << "*";
-		}
-		cout << endl;
-	}
-}
+//void gameStatistics::displayPlayerControl() {
+//
+//	int m_TotalTerritory = m_MapSubject->getTotalNumberOfTerritories();
+//
+//
+//	//to properly print out after 2 decimal
+//	cout.setf(ios::fixed);
+//	cout.setf(ios::showpoint);
+//	cout.precision(2);
+//	cout << "Total territory in game: " << m_MapSubject->getTotalNumberOfTerritories() << endl;
+//	for (int i = 0; i < m_PlayerList->size(); i++) {
+//
+//		//calculate the percentage of players owned country
+//		double percentage = ((double)m_PlayerList->at(i)->getNumberOfTerritories() / m_TotalTerritory) * 100;
+//
+//		//print the percentage of owned country
+//		cout << m_PlayerList->at(i)->getName() << ": (" << percentage << "%) \t";
+//
+//		//output percentage in form of stars
+//		for (int j = 0; j < m_PlayerList->at(i)->getNumberOfTerritories(); j++) {
+//			if (j % 5 == 0)
+//				cout << " ";
+//			cout << "*";
+//		}
+//		cout << endl;
+//	}
+//}
 
 bool gameStatistics::isGlobalView()
 {
-	for (unsigned int i = 0; i < m_PlayerList->size(); i++)
+	for (unsigned int i = 0; i < gameStatistics::m_PlayerList.size(); i++)
 	{
-		if (m_PlayerList->at(i)->m_StatusInfo.globalView)
+		if (m_PlayerList.at(i)->m_StatusInfo.globalView)
 			return true;
 	}
 	return false;
+}
+
+bool gameStatistics::isCardsView()
+{
+	if (m_CurrentPlayer->m_StatusInfo.cardsView == true)
+		return true;
+	else
+	{
+		return false;
+	}
+}
+
+bool gameStatistics::isContiView()
+{
+	if (m_CurrentPlayer->m_StatusInfo.contiView == true)
+		return true;
+	else
+	{
+		return false;
+	}
+}
+
+/**
+* A getter for the pointer of m_MapSubject
+*/
+Map * gameStatistics::getMap()
+{
+	return this->m_MapSubject;
+}
+
+/**
+* A getter for the pointer of m_CurrentPlayer
+*/
+Player * gameStatistics::getCurrentPlayer()
+{
+	return this->m_CurrentPlayer;
+}
+
+/**
+* A getter for the pointer of m_PlayerList
+*/
+vector<Player*>  gameStatistics::getPlayerList()
+{
+	
+	return gameStatistics::m_PlayerList;
+}
+
+void gameStatistics::display()
+{
+	//m_display = "";
+	//m_display += 
+	if (!isCurrentPlayer())
+	{
+		cout << "=================Game Statistics==================\n";
+		cout << "Game round ---- Turn " << std::to_string(m_TurnNumber / (getPlayerList().size()) + 1) << endl;
+		cout << "==================================================\n";
+	}
+	//return m_display;
+	//cout << getPlayerList().size() << ", " << getCurrentPlayer()->getName() << "\n";
+}
+
+bool gameStatistics::isCurrentPlayer()
+{
+	Player * currentPlayer = NULL;
+
+	for (unsigned int i = 0; i < m_PlayerList.size(); i++)
+	{
+		if (m_PlayerList.at(i)->m_StatusInfo.currentPhase != DEFAULT && m_PlayerList.at(i)->m_StatusInfo.currentPhase != DEFENSE)
+			currentPlayer = m_PlayerList.at(i);
+	}
+	if (m_CurrentPlayer != currentPlayer)
+	{
+		m_TurnNumber++;
+		m_CurrentPlayer = currentPlayer;
+		return false;
+	}
+	return true;
+}
+
+
+
+
+/**
+*The Following are the functions of GameStatisticsDecorator
+*/
+
+/**
+* Default constructor
+*/
+ObserverDecorator::ObserverDecorator()
+{
+};
+
+/**
+* A constructor takes a pointer of gameStatistics
+* \param gameStatistics *
+*/
+ObserverDecorator::ObserverDecorator(AbstractGameStatistics * decoratedStatistics, vector<Player*> *playerList, Map * map)
+{
+	this->m_DecoratedStatistics = decoratedStatistics;
+	m_MapSubject = map;
+	m_PlayerList = *playerList;
+	//setCurrentPlayer();
+		//decoratedStatistics->getCurrentPlayer()->attach(this);
+		m_MapSubject->attach(this);
+
+	for (unsigned int i = 0; i <m_DecoratedStatistics->getPlayerList().size(); i++)
+	{
+		m_PlayerList.at(i)->attach(this);
+	}
+
+}
+
+/**
+* Default destructor
+*/
+ObserverDecorator::~ObserverDecorator()
+{
+	m_DecoratedStatistics->getMap()->detach(this);
+	for (unsigned int i = 0; i <getPlayerList().size(); i++)
+	{
+		getPlayerList().at(i)->detach(this);
+	}
+	delete m_DecoratedStatistics;
+}
+
+bool ObserverDecorator::isGlobalView()
+{
+	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
+	{
+		if (m_PlayerList.at(i)->m_StatusInfo.globalView)
+			return true;
+	}
+	return false;
+}
+
+bool ObserverDecorator::isCardsView()
+{
+	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
+	{
+		if (m_PlayerList.at(i)->m_StatusInfo.cardsView)
+			return true;
+	}
+	return false;
+}
+
+bool ObserverDecorator::isContiView()
+{
+	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
+	{
+		if (m_PlayerList.at(i)->m_StatusInfo.contiView)
+			return true;
+	}
+	return false;
+}
+
+
+Map * ObserverDecorator::getMap()
+{
+	return (m_DecoratedStatistics->getMap());
+}
+
+Player * ObserverDecorator::getCurrentPlayer()
+{
+	return m_DecoratedStatistics->getCurrentPlayer();
+}
+
+vector<Player*> ObserverDecorator::getPlayerList()
+{
+	return m_DecoratedStatistics->getPlayerList();
+}
+
+
+void PlayerDominationObserverDecorator::update()
+{
+	display();
+	
+	//PlayerDominationObserverDecorator::display();
+
+	//this->PlayerDominationObserverDecorator::display();
+	//return;
+}
+
+void PlayerDominationObserverDecorator::display()
+{
+	if (ObserverDecorator::isGlobalView())
+	{
+		cout << "Call from PlayerDominationObserverDecorator" << endl;
+
+		int m_TotalTerritory = ObserverDecorator::getMap()->getTotalNumberOfTerritories();
+
+
+		//to properly print out after 2 decimal
+		cout.setf(ios::fixed);
+		cout.setf(ios::showpoint);
+		cout.precision(2);
+		cout << "Total territory in game: " << ObserverDecorator::getMap()->getTotalNumberOfTerritories() << endl;
+		for (unsigned int i = 0; i <ObserverDecorator::getPlayerList().size(); i++) {
+
+			//calculate the percentage of players owned country
+			double percentage = ((double)ObserverDecorator::getPlayerList().at(i)->getNumberOfTerritories() / m_TotalTerritory) * 100;
+
+			//print the percentage of owned country
+			cout << ObserverDecorator::getPlayerList().at(i)->getName() << ": (" << percentage << "%) \t";
+
+			//output percentage in form of stars
+			for (int j = 0; j <ObserverDecorator::getPlayerList().at(i)->getNumberOfTerritories(); j++) {
+				if (j % 5 == 0)
+					cout << " ";
+				cout << "*";
+			}
+			cout << endl;
+		}
+		cout << "==================================================" << endl;
+		getCurrentPlayer()->m_StatusInfo.globalView = false;
+
+	}
+
+}
+
+bool PlayerDominationObserverDecorator::isGlobalView()
+{
+	return ObserverDecorator::isGlobalView();
+}
+
+
+
+void PlayerHandsObserverDecorator::update()
+{
+	display();
+
+}
+
+void PlayerHandsObserverDecorator::display()
+{
+	if (ObserverDecorator::isCardsView())
+	{
+		cout << "Call from PlayerHandsObserverDecorator" << endl;
+		for (unsigned int i = 0; i < ObserverDecorator::getPlayerList().size(); i++)
+		{
+			vector<Card>* temp_cards = ObserverDecorator::getPlayerList().at(i)->getCards();
+			
+			cout << "Player " << i << ", " << ObserverDecorator::getPlayerList().at(i)->getName() << ", has " <<temp_cards->size() << " card(s) in hand. " << endl;
+
+			for (unsigned int j = 0; j < temp_cards->size(); j++)
+			{
+				cout << "Card # " << j << " | " << temp_cards->at(j).toString() << endl;
+			}
+			cout << "--------------------------------" << endl;
+		}
+		getCurrentPlayer()->m_StatusInfo.cardsView = false;
+
+	}
+}
+
+bool PlayerHandsObserverDecorator::isCardsView()
+{
+	return ObserverDecorator::isCardsView();
+}
+
+
+void ContinentControlObserverDecorator::update()
+{
+	//m_DecoratedStatistics->display();
+	ContinentControlObserverDecorator::display();
+}
+
+void ContinentControlObserverDecorator::display()
+{
+	if (ContinentControlObserverDecorator::isContinentView())
+	{
+		//string my_str = ObserverDecorator::getDisplayString();
+		
+		cout << "Call from ContinentControlObserverDecorator\n";
+
+		for (unsigned int i = 0; i < ObserverDecorator::getPlayerList().size(); i++)
+		{
+			vector<Continent*>* temp_conti = ObserverDecorator::getPlayerList().at(i)->getPlayerContinentList();
+
+			cout << "Player " << i << ObserverDecorator::getPlayerList().at(i)->getName() << ", owns " << temp_conti->size() << " continent(s). " << endl;
+
+			for (unsigned int j = 0; j < temp_conti->size(); j++)
+			{
+				if (j != 0)
+					cout << ", ";
+				cout << temp_conti->at(j)->getContiName();
+			}
+			cout << endl;
+			cout << "--------------------------------" << endl;
+		}
+		getCurrentPlayer()->m_StatusInfo.contiView = false;
+	}
+}
+
+bool ContinentControlObserverDecorator::isContinentView()
+{
+	return ObserverDecorator::isContiView();
+}
+
+AbstractGameStatistics::AbstractGameStatistics()
+{
+}
+
+AbstractGameStatistics::~AbstractGameStatistics()
+{
 }
