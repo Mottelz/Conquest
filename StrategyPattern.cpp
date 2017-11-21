@@ -1694,7 +1694,7 @@ bool RandomAI::fortify(Player* player, Map* map)
 		move_from = getRandomPlayerTerritory(player, map);
 	}
 
-	int move_to = getRandomEnemyTerritory(player, map, move_from);
+	int move_to = getRandomFriendTerritory(player, map, move_from);
 	int move_num = 0;
 	vector<string> fortifyPath;
 
