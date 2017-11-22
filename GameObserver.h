@@ -13,7 +13,9 @@
 //{};
 
 
-
+/**
+* The PhaseObserver class, inherited from Observer.
+*/
 class PhaseObserver : public Observer
 {
 public:
@@ -31,6 +33,9 @@ private:
 //include all class using notify
 
 
+/**
+* The AbstractGameStatistics class, inherited from Observer.
+*/
 class AbstractGameStatistics : public Observer {
 public:
 	AbstractGameStatistics();
@@ -45,6 +50,9 @@ public:
 
 };
 
+/**
+* The gameStatistics class, inherited from AbstractGameStatistics.
+*/
 class gameStatistics : public AbstractGameStatistics {
 
 public:
@@ -82,6 +90,9 @@ private:
 
 
 
+/**
+* The ObserverDecorator class, inherited from AbstractGameStatistics.
+*/
 class ObserverDecorator : public AbstractGameStatistics {
 public:
 	ObserverDecorator();
@@ -111,6 +122,9 @@ protected:
 };
 
 
+/**
+* The PlayerDominationObserverDecorator class, inherited from ObserverDecorator.
+*/
 class PlayerDominationObserverDecorator : public ObserverDecorator
 {
 public:
@@ -135,6 +149,9 @@ public:
 
 };
 
+/**
+* The PlayerHandsObserverDecorator class, inherited from ObserverDecorator.
+*/
 class PlayerHandsObserverDecorator : public ObserverDecorator
 {
 public:
@@ -151,7 +168,10 @@ public:
 
 };
 
-class ContinentControlObserverDecorator : public ObserverDecorator 
+/**
+* The ContinentControlObserverDecorator class, inherited from ObserverDecorator.
+*/
+class ContinentControlObserverDecorator : public ObserverDecorator
 {
 public:
 	ContinentControlObserverDecorator(AbstractGameStatistics * decoratedStatistics, vector<Player*> *playerList, Map * map) : ObserverDecorator(decoratedStatistics, playerList, map) {};

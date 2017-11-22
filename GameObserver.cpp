@@ -17,12 +17,23 @@ PhaseObserver::PhaseObserver(Player* m_PS, Map* map)
 }
 
 
+/**
+* Destructor of PhaseObserver
+*/
 PhaseObserver::~PhaseObserver()
 {
 	m_PlayerSubject->detach(this);
+	delete m_PlayerSubject;
+	delete m_Map;
+	m_PlayerSubject = nullptr;
+	m_Map = nullptr;
+
 }
 
 
+/**
+* update method of PhaseObserver, call display(...) if phaseView == true 
+*/
 void PhaseObserver::update()
 {
 	if (m_PlayerSubject->m_StatusInfo.phaseView == true)
@@ -488,9 +499,15 @@ void PhaseObserver::display(PlayerPhase myPhase, PlayerStatus myStatus)
 
 
 
+/**
+* default Constructor of gameStatistics
+*/
 gameStatistics::gameStatistics() {
 }
 
+/**
+* Constructor of gameStatistics
+*/
 gameStatistics::gameStatistics(vector<Player*> *playerList, Map* map) {
 	//m_PlayerSubject = p;
 	m_MapSubject = map;
@@ -504,6 +521,9 @@ gameStatistics::gameStatistics(vector<Player*> *playerList, Map* map) {
 	m_CurrentPlayer = NULL;
 }
 
+/**
+* Destructor of gameStatistics
+*/
 gameStatistics::~gameStatistics() {
 	m_MapSubject->detach(this);
 	for (unsigned int i = 0; i < m_PlayerList.size(); i++)
@@ -511,6 +531,10 @@ gameStatistics::~gameStatistics() {
 		m_PlayerList.at(i)->detach(this);
 	}
 }
+
+/**
+* update method of gameStatistics, call display()
+*/
 void gameStatistics::update() {
 
 	display();
@@ -554,6 +578,9 @@ void gameStatistics::update() {
 //	}
 //}
 
+/**
+* bool function of gameStatistics, return true if globalView is true
+*/
 bool gameStatistics::isGlobalView()
 {
 	for (unsigned int i = 0; i < gameStatistics::m_PlayerList.size(); i++)
@@ -564,6 +591,9 @@ bool gameStatistics::isGlobalView()
 	return false;
 }
 
+/**
+* bool function of gameStatistics, return true if cardsView is true
+*/
 bool gameStatistics::isCardsView()
 {
 	if (m_CurrentPlayer->m_StatusInfo.cardsView == true)
@@ -574,6 +604,9 @@ bool gameStatistics::isCardsView()
 	}
 }
 
+/**
+* bool function of gameStatistics, return true if contiView is true
+*/
 bool gameStatistics::isContiView()
 {
 	if (m_CurrentPlayer->m_StatusInfo.contiView == true)
@@ -609,6 +642,9 @@ vector<Player*>  gameStatistics::getPlayerList()
 	return gameStatistics::m_PlayerList;
 }
 
+/**
+* void function of gameStatistics, print turn number of game statistics at every turn
+*/
 void gameStatistics::display()
 {
 	//m_display = "";
@@ -623,6 +659,9 @@ void gameStatistics::display()
 	//cout << getPlayerList().size() << ", " << getCurrentPlayer()->getName() << "\n";
 }
 
+/**
+* bool function of gameStatistics, increament turnNumber & return true if a different player starts to play; otherwise, false
+*/
 bool gameStatistics::isCurrentPlayer()
 {
 	Player * currentPlayer = NULL;
@@ -645,7 +684,7 @@ bool gameStatistics::isCurrentPlayer()
 
 
 /**
-*The Following are the functions of GameStatisticsDecorator
+*The Following are the functions of GameStatistics Decorator
 */
 
 /**
@@ -657,7 +696,9 @@ ObserverDecorator::ObserverDecorator()
 
 /**
 * A constructor takes a pointer of gameStatistics
-* \param gameStatistics *
+* \param AbstractGameStatistics * 
+* \param vector<Player*> *
+* \param Map *
 */
 ObserverDecorator::ObserverDecorator(AbstractGameStatistics * decoratedStatistics, vector<Player*> *playerList, Map * map)
 {
@@ -688,6 +729,9 @@ ObserverDecorator::~ObserverDecorator()
 	delete m_DecoratedStatistics;
 }
 
+/**
+* bool function of ObserverDecorator, return true if globalView is true
+*/
 bool ObserverDecorator::isGlobalView()
 {
 	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
@@ -698,6 +742,9 @@ bool ObserverDecorator::isGlobalView()
 	return false;
 }
 
+/**
+* bool function of ObserverDecorator, return true if cardsView is true
+*/
 bool ObserverDecorator::isCardsView()
 {
 	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
@@ -708,6 +755,9 @@ bool ObserverDecorator::isCardsView()
 	return false;
 }
 
+/**
+* bool function of ObserverDecorator, return true if contiView is true
+*/
 bool ObserverDecorator::isContiView()
 {
 	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
@@ -719,22 +769,34 @@ bool ObserverDecorator::isContiView()
 }
 
 
+/**
+* function of ObserverDecorator, return pointer of Map
+*/
 Map * ObserverDecorator::getMap()
 {
 	return (m_DecoratedStatistics->getMap());
 }
 
+/**
+* function of ObserverDecorator, return pointer of Player
+*/
 Player * ObserverDecorator::getCurrentPlayer()
 {
 	return m_DecoratedStatistics->getCurrentPlayer();
 }
 
+/**
+* function of ObserverDecorator, return pointer of vector<Player*>
+*/
 vector<Player*> ObserverDecorator::getPlayerList()
 {
 	return m_DecoratedStatistics->getPlayerList();
 }
 
 
+/**
+* function of ObserverDecorator, call display()
+*/
 void PlayerDominationObserverDecorator::update()
 {
 	display();
@@ -745,6 +807,9 @@ void PlayerDominationObserverDecorator::update()
 	//return;
 }
 
+/**
+* function of ObserverDecorator, display all players' territory percentages
+*/
 void PlayerDominationObserverDecorator::display()
 {
 	if (ObserverDecorator::isGlobalView())
@@ -782,6 +847,9 @@ void PlayerDominationObserverDecorator::display()
 
 }
 
+/**
+* bool function of ObserverDecorator, call isGlobalView() from parent
+*/
 bool PlayerDominationObserverDecorator::isGlobalView()
 {
 	return ObserverDecorator::isGlobalView();
@@ -789,12 +857,18 @@ bool PlayerDominationObserverDecorator::isGlobalView()
 
 
 
+/**
+* function of PlayerHandsObserverDecorator, call display()
+*/
 void PlayerHandsObserverDecorator::update()
 {
 	display();
 
 }
 
+/**
+* function of PlayerHandsObserverDecorator, display all players' cards
+*/
 void PlayerHandsObserverDecorator::display()
 {
 	if (ObserverDecorator::isCardsView())
@@ -817,18 +891,27 @@ void PlayerHandsObserverDecorator::display()
 	}
 }
 
+/**
+* bool function of PlayerHandsObserverDecorator, call isCardsView() from parent
+*/
 bool PlayerHandsObserverDecorator::isCardsView()
 {
 	return ObserverDecorator::isCardsView();
 }
 
 
+/**
+* function of ContinentControlObserverDecorator, call display()
+*/
 void ContinentControlObserverDecorator::update()
 {
 	//m_DecoratedStatistics->display();
 	ContinentControlObserverDecorator::display();
 }
 
+/**
+* function of ContinentControlObserverDecorator, display all players' continents
+*/
 void ContinentControlObserverDecorator::display()
 {
 	if (ContinentControlObserverDecorator::isContinentView())
@@ -856,6 +939,9 @@ void ContinentControlObserverDecorator::display()
 	}
 }
 
+/**
+* bool function of ContinentControlObserverDecorator, call isContinentView() from parent
+*/
 bool ContinentControlObserverDecorator::isContinentView()
 {
 	return ObserverDecorator::isContiView();

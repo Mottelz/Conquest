@@ -31,6 +31,14 @@ int Strategy::determineExchangedArmies(Player* player, Map* map, Deck& deck)
 		cout << player->getName() << " cannot exchange cards at this time. " << endl;
 	}
 
+	player->m_StatusInfo.phaseView = false;
+	player->m_StatusInfo.currentPhase = REINFORCEMENT;
+	player->m_StatusInfo.cardsView = true;
+	player->notify();
+	player->m_StatusInfo.cardsView = false;
+	player->m_StatusInfo.phaseView = true;
+
+
 	return exchangedArmies;
 }
 
@@ -196,7 +204,11 @@ void HumanPlayer::reinforce(Player* player, Map* map, Deck& deck)
 	player->m_StatusInfo.currentPhase = REINFORCEMENT;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.cardsView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
+	player->m_StatusInfo.cardsView = false;
 	player->m_StatusInfo.globalView = false;
 
 	int assign_terri_ID = -1, assign_num = 0;
@@ -284,6 +296,12 @@ int HumanPlayer::determineExchangedArmies(Player* player, Map* map, Deck& deck)
 			while (exchangedArmies == 0)
 				exchangedArmies = player->exchangeCards(deck);
 			//hand update
+			player->m_StatusInfo.phaseView = false;
+			player->m_StatusInfo.currentPhase = REINFORCEMENT;
+			player->m_StatusInfo.cardsView = true;
+			player->notify();
+			player->m_StatusInfo.cardsView = false;
+			player->m_StatusInfo.phaseView = true;
 		}
 		else
 		{
@@ -296,7 +314,16 @@ int HumanPlayer::determineExchangedArmies(Player* player, Map* map, Deck& deck)
 					exchangedArmies = player->exchangeCards(deck);
 					//hand update
 					if (exchangedArmies != 0)
+					{
+						player->m_StatusInfo.phaseView = false;
+						player->m_StatusInfo.currentPhase = REINFORCEMENT;
+						player->m_StatusInfo.cardsView = true;
+						player->notify();
+						player->m_StatusInfo.cardsView = false;
+						player->m_StatusInfo.phaseView = true;
+
 						break;
+					}
 				}
 				else if (exchange == "N" || exchange == "n")
 				{
@@ -330,7 +357,9 @@ bool HumanPlayer::attack(Player* player, Map* map)
 	player->m_StatusInfo.currentPhase = ATTACK;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
 	player->m_StatusInfo.globalView = false;
 
 	bool attack_state;
@@ -375,9 +404,7 @@ bool HumanPlayer::attack(Player* player, Map* map)
 			{
 				//Notify: end of this phase
 				player->m_StatusInfo.statusType = myPhaseEnded;
-				player->m_StatusInfo.globalView = true;
 				player->notify();
-				player->m_StatusInfo.globalView = false;
 				return false;
 			}
 			else
@@ -424,9 +451,7 @@ bool HumanPlayer::attack(Player* player, Map* map)
 			{
 				//Attack, notify counting -1, phase ending
 				player->m_StatusInfo.statusType = myPhaseEnded;
-				player->m_StatusInfo.globalView = true;
 				player->notify();
-				player->m_StatusInfo.globalView = false;
 				return false;
 			}
 			else
@@ -544,10 +569,10 @@ bool HumanPlayer::attack(Player* player, Map* map)
 
 					cout << "Territory captured. " << endl;
 					//Attack, notify player status
-					player->m_StatusInfo.statusType = myTerritories;
-					player->m_StatusInfo.globalView = true;
-					player->notify();
-					player->m_StatusInfo.globalView = false;
+					//player->m_StatusInfo.statusType = myTerritories;
+					//player->m_StatusInfo.globalView = true;
+					//player->notify();
+					//player->m_StatusInfo.globalView = false;
 					break;
 				}
 
@@ -560,14 +585,16 @@ bool HumanPlayer::attack(Player* player, Map* map)
 				//player->m_StatusInfo[1] = 0;
 				//player->notify();
 
-				return false;
+				break;
 			}
 		}
 		cout << endl;
 		//Attack, notify player status
 		player->m_StatusInfo.statusType = myTerritories;
 		player->m_StatusInfo.globalView = true;
+		player->m_StatusInfo.contiView = true;
 		player->notify();
+		player->m_StatusInfo.contiView = false;
 		player->m_StatusInfo.globalView = false;
 
 		return true;
@@ -576,9 +603,7 @@ bool HumanPlayer::attack(Player* player, Map* map)
 	{
 		//Attack, notify counting -1, phase ending
 		player->m_StatusInfo.statusType = myPhaseEnded;
-		player->m_StatusInfo.globalView = true;
 		player->notify();
-		player->m_StatusInfo.globalView = false;
 		return false;
 	}
 	return false;
@@ -928,8 +953,12 @@ void AggressiveAI::reinforce(Player* player, Map* map, Deck& deck)
 	player->m_StatusInfo.phaseView = true;
 	player->m_StatusInfo.currentPhase = REINFORCEMENT;
 	player->m_StatusInfo.statusType = myTerritories;
-	player->m_StatusInfo.globalView= true;
+	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.cardsView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
+	player->m_StatusInfo.cardsView = false;
 	player->m_StatusInfo.globalView = false;
 
 	int exchangedArmies = determineExchangedArmies(player, map, deck);
@@ -946,6 +975,14 @@ void AggressiveAI::reinforce(Player* player, Map* map, Deck& deck)
 	// Aggressive AI will place all its available armies on its strongest country
 	cout << player->getName() << " is going to place " << valid_assigned_armies << " armies on " << map->getTerritoryName(assign_terri_ID) << endl;
 	placeArmiesDuringReinforcement(assign_terri_ID, valid_assigned_armies, player, map);
+
+	player->m_StatusInfo.phaseView = false;
+	player->m_StatusInfo.currentPhase = REINFORCEMENT;
+	player->m_StatusInfo.cardsView = true;
+	player->notify();
+	player->m_StatusInfo.cardsView = false;
+	player->m_StatusInfo.phaseView = true;
+
 
 	cout << endl;
 	//Reinforce all terri notify 
@@ -1029,7 +1066,9 @@ bool AggressiveAI::attack(Player* player, Map* map)
 	player->m_StatusInfo.currentPhase = ATTACK;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
 	player->m_StatusInfo.globalView = false;
 
 	cout << "\n***************************************" << endl;
@@ -1043,7 +1082,11 @@ bool AggressiveAI::attack(Player* player, Map* map)
 		cout << player->getName() << " has too few armies! " << endl;
 		//Attack, notify, end of phase
 		player->m_StatusInfo.statusType = myPhaseEnded;
+		player->m_StatusInfo.globalView = true;
+		player->m_StatusInfo.contiView = true;
 		player->notify();
+		player->m_StatusInfo.contiView = false;
+		player->m_StatusInfo.globalView = false;
 		return false;
 	}
 
@@ -1105,7 +1148,9 @@ bool AggressiveAI::attack(Player* player, Map* map)
 				//Attack, notify player status
 				player->m_StatusInfo.statusType = myTerritories;
 				player->m_StatusInfo.globalView = true;
+				player->m_StatusInfo.contiView = true;
 				player->notify();
+				player->m_StatusInfo.contiView = false;
 				player->m_StatusInfo.globalView = false;
 			}
 		}
@@ -1115,12 +1160,14 @@ bool AggressiveAI::attack(Player* player, Map* map)
 			//Attack, notify player status
 			player->m_StatusInfo.statusType = myTerritories;
 			player->m_StatusInfo.globalView = true;
+			player->m_StatusInfo.contiView = true;
 			player->notify();
+			player->m_StatusInfo.contiView = false;
 			player->m_StatusInfo.globalView = false;
 			break;
 		}
 	}
-	return attack(player, map);
+	return true;
 }
 
 /**
@@ -1245,9 +1292,9 @@ void AggressiveAI::play(Player* player, Map* map, Deck& deck)
 {
 	reinforce(player, map, deck);
 	
-	attack(player, map);
+	while(attack(player, map));
 
-	fortify(player, map);
+	while(fortify(player, map));
 
 	cout << "\n***************************************" << endl;
 	cout << "End of  " << player->getName() << "'s turn! " << endl;
@@ -1335,7 +1382,11 @@ void BenevolentAI::reinforce(Player* player, Map* map, Deck& deck)
 	player->m_StatusInfo.currentPhase = REINFORCEMENT;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.cardsView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
+	player->m_StatusInfo.cardsView = false;
 	player->m_StatusInfo.globalView = false;
 
 	int exchangedArmies = determineExchangedArmies(player, map, deck);
@@ -1352,6 +1403,14 @@ void BenevolentAI::reinforce(Player* player, Map* map, Deck& deck)
 	// Benevolent AI will place all its available armies on its weakest country
 	cout << player->getName() << " is going to place " << valid_assigned_armies << " armies on " << map->getTerritoryName(assign_terri_ID) << endl;
 	placeArmiesDuringReinforcement(assign_terri_ID, valid_assigned_armies, player, map);
+
+	player->m_StatusInfo.phaseView = false;
+	player->m_StatusInfo.currentPhase = REINFORCEMENT;
+	player->m_StatusInfo.cardsView = true;
+	player->notify();
+	player->m_StatusInfo.cardsView = false;
+	player->m_StatusInfo.phaseView = true;
+
 
 	cout << endl;
 	//Reinforce, notify  PLAYER STATUS
@@ -1375,8 +1434,15 @@ bool BenevolentAI::attack(Player* player, Map* map)
 	player->m_StatusInfo.currentPhase = ATTACK;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
 	player->m_StatusInfo.globalView = false;
+
+	//***************
+	//maybe add some logic??
+	//***************
+
 
 	cout << "\n***************************************" << endl;
 	cout << player->getName() << " does not wish to attack. " << endl;
@@ -1440,9 +1506,9 @@ bool BenevolentAI::fortify(Player* player, Map* map)
 	//Fortify, notify  PLAYER STATUS
 	player->m_StatusInfo.statusType = myTerritories;
 	player->notify();
-	//Fortify, notify, end of phase
-	player->m_StatusInfo.statusType = myPhaseEnded;
-	player->notify();
+	////Fortify, notify, end of phase
+	//player->m_StatusInfo.statusType = myPhaseEnded;
+	//player->notify();
 
 	return true;
 }
@@ -1492,9 +1558,9 @@ void BenevolentAI::play(Player* player, Map* map, Deck& deck)
 {
 	reinforce(player, map, deck);
 	
-	attack(player, map);
+	while(attack(player, map));
 
-	fortify(player, map);	
+	while (fortify(player, map));
 
 	cout << "\n***************************************" << endl;
 	cout << "End of  " << player->getName() << "'s turn! " << endl;
@@ -1508,7 +1574,11 @@ void RandomAI::reinforce(Player* player, Map* map, Deck& deck)
 	player->m_StatusInfo.currentPhase = REINFORCEMENT;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.cardsView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
+	player->m_StatusInfo.cardsView = false;
 	player->m_StatusInfo.globalView = false;
 
 	int exchangedArmies = determineExchangedArmies(player, map, deck);
@@ -1525,6 +1595,14 @@ void RandomAI::reinforce(Player* player, Map* map, Deck& deck)
 	// Aggressive AI will place all its available armies on its strongest country
 	cout << player->getName() << " is going to place " << valid_assigned_armies << " armies on " << map->getTerritoryName(assign_terri_ID) << endl;
 	placeArmiesDuringReinforcement(assign_terri_ID, valid_assigned_armies, player, map);
+
+	player->m_StatusInfo.phaseView = false;
+	player->m_StatusInfo.currentPhase = REINFORCEMENT;
+	player->m_StatusInfo.cardsView = true;
+	player->notify();
+	player->m_StatusInfo.cardsView = false;
+	player->m_StatusInfo.phaseView = true;
+
 
 	cout << endl;
 	//Reinforce all terri notify 
@@ -1576,7 +1654,9 @@ bool RandomAI::attack(Player* player, Map* map)
 	player->m_StatusInfo.currentPhase = ATTACK;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
 	player->m_StatusInfo.globalView = false;
 
 	cout << "\n***************************************" << endl;
@@ -1652,7 +1732,9 @@ bool RandomAI::attack(Player* player, Map* map)
 				//Attack, notify player status
 				player->m_StatusInfo.statusType = myTerritories;
 				player->m_StatusInfo.globalView = true;
+				player->m_StatusInfo.contiView = true;
 				player->notify();
+				player->m_StatusInfo.contiView = false;
 				player->m_StatusInfo.globalView = false;
 			}
 		}
@@ -1662,12 +1744,14 @@ bool RandomAI::attack(Player* player, Map* map)
 			//Attack, notify player status
 			player->m_StatusInfo.statusType = myTerritories;
 			player->m_StatusInfo.globalView = true;
+			player->m_StatusInfo.contiView = true;
 			player->notify();
+			player->m_StatusInfo.contiView = false;
 			player->m_StatusInfo.globalView = false;
 			break;
 		}
 	}
-	return attack(player, map);
+	return true;
 }
 
 /**
@@ -1753,9 +1837,9 @@ void RandomAI::play(Player* player, Map* map, Deck& deck)
 {
 	reinforce(player, map, deck);
 
-	attack(player, map);
+	while(attack(player, map));
 
-	fortify(player, map);
+	while(fortify(player, map));
 
 	cout << "\n***************************************" << endl;
 	cout << "End of  " << player->getName() << "'s turn! " << endl;
@@ -1775,8 +1859,12 @@ void CheaterAI::reinforce(Player* player, Map* map, Deck& deck) {
 	player->m_StatusInfo.phaseView = true;
 	player->m_StatusInfo.currentPhase = REINFORCEMENT;
 	player->m_StatusInfo.statusType = myTerritories;
-	player->m_StatusInfo.globalView= true;
+	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.cardsView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
+	player->m_StatusInfo.cardsView = false;
 	player->m_StatusInfo.globalView = false;
 
 	vector<string> playersTerritories = player->getPlayerTerritoryNames();
@@ -1784,6 +1872,10 @@ void CheaterAI::reinforce(Player* player, Map* map, Deck& deck) {
 	for(int i=0; i<playersTerritories.size(); i++){
 		doubleArmies(map, player, playersTerritories[i]);
 	}
+	//Fortify, notify, end of phase
+	player->m_StatusInfo.statusType = myPhaseEnded;
+	player->notify();
+
 };
 
 /**
@@ -1800,7 +1892,9 @@ bool CheaterAI::attack(Player* player, Map* map) {
 	player->m_StatusInfo.currentPhase = ATTACK;
 	player->m_StatusInfo.statusType = myTerritories;
 	player->m_StatusInfo.globalView = true;
+	player->m_StatusInfo.contiView = true;
 	player->notify();
+	player->m_StatusInfo.contiView = false;
 	player->m_StatusInfo.globalView = false;
 
 	vector<string> territoriesWithEnemies = getTerritoriesWithEnemies(player, map);
@@ -1815,13 +1909,19 @@ bool CheaterAI::attack(Player* player, Map* map) {
             }
 			player->m_StatusInfo.statusType = myTerritories;
 			player->m_StatusInfo.globalView = true;
+			player->m_StatusInfo.contiView = true;
 			player->notify();
+			player->m_StatusInfo.contiView = false;
 			player->m_StatusInfo.globalView = false;
 
         }
     }
 
-    return true;
+	//Fortify, notify, end of phase
+	player->m_StatusInfo.statusType = myPhaseEnded;
+	player->notify();
+
+    return false;
 };
 
 /**
@@ -1845,7 +1945,12 @@ bool CheaterAI::fortify(Player *player, Map *map) {
     for (int i = 0; i < territoriesWithEnemies.size(); ++i) {
         doubleArmies(map, player, territoriesWithEnemies[i]);
     }
-    return true;
+	
+	//Fortify, notify, end of phase
+	player->m_StatusInfo.statusType = myPhaseEnded;
+	player->notify();
+
+	return false;
 }
 
 
@@ -1882,8 +1987,8 @@ vector<string> CheaterAI::getTerritoriesWithEnemies (Player *player, Map *map){
 
 void CheaterAI::play(Player *player, Map *map, Deck &deck) {
     reinforce(player, map, deck);
-    attack(player, map);
-    fortify(player, map);
+    while(attack(player, map));
+    while(fortify(player, map));
 
     cout << "\n***************************************" << endl;
     cout << "End of  " << player->getName() << "'s turn! " << endl;
