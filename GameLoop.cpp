@@ -29,10 +29,11 @@ GameLoop::GameLoop(Startup &startup)
 GameLoop::~GameLoop() {}
 
 /**
- * The main game loop. This goes through the entire game.
+ * The main game loop. This goes through the entire game. Without turn limit.
+ * \param map Pointer to game map.
+ * \param deck Pointer to game deck.
  */
-void GameLoop::loop(Map* map, Deck& deck)
-{
+void GameLoop::loop(Map* map, Deck& deck) {
 	int index;
 	int count = m_Startup.m_NumberOfPlayers;
 	int numberOfPlayers = m_Startup.m_NumberOfPlayers;
@@ -41,7 +42,8 @@ void GameLoop::loop(Map* map, Deck& deck)
 	while (!winnerFound)
 	{
 		index = count % numberOfPlayers;  // For the round-robin rotation
-		
+		count++;
+
 		if (m_Startup.m_Players[index]->getNumberOfTerritories() == 0)
 			continue;  // When a player has no more countries, he's out of the game
 
@@ -61,7 +63,49 @@ void GameLoop::loop(Map* map, Deck& deck)
 			cout << "************************************\n" << endl;
 		}
 
+	}
+}
+
+/**
+ * The main game loop. This goes through the entire game. With turn limit.
+ * \param map Pointer to game map.
+ * \param deck Pointer to game deck.
+ * \param round The number of rounds in the game.
+ */
+string GameLoop::loop(Map* map, Deck& deck, int rounds) {
+	int index;
+	int count = m_Startup.m_NumberOfPlayers;
+	int numberOfPlayers = m_Startup.m_NumberOfPlayers;
+	bool winnerFound = false;
+
+	while (!winnerFound && (((count / numberOfPlayers)-rounds) > 0))
+	{
+		index = count % numberOfPlayers;  // For the round-robin rotation
 		count++;
+
+		if (m_Startup.m_Players[index]->getNumberOfTerritories() == 0)
+			continue;  // When a player has no more countries, he's out of the game
+
+		cout << "\n===================================" << endl;
+		cout << "It's " << m_Startup.m_Players[index]->getName() << "'s turn to play!" << endl;
+		cout << "===================================\n" << endl;
+
+		m_Startup.m_Players[index]->play(m_Startup.m_Players[index], map, deck);
+
+		if (m_Startup.m_Players[index]->getNumberOfTerritories() == map->getTotalNumberOfTerritories())
+		{
+			winnerFound = true;
+			cout << "\n************************************" << endl;
+			cout << m_Startup.m_Players[index]->getName() << " controls all " << map->getTotalNumberOfTerritories()
+				 << " territories." << endl;
+			cout << "GAME OVER." << endl;
+			cout << "************************************\n" << endl;
+		}
+	}
+	if(!winnerFound){
+		return "Draw";
+	} else {
+		return m_Startup.m_Players[index]->getName();
 	}
 }
 

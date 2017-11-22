@@ -1,0 +1,111 @@
+[Map]
+image=Metro Montreal.bmp
+wrap=no
+scroll=horizontal
+author=Maxime Gousse
+
+[Continents]
+Ligne Orange nord=2
+Ligne orange centre=2
+Ligne orange centre-ville=2
+Ligne orange sud ouest=1
+Ligne Orange nord ouest=1
+
+Ligne verte est=3
+Ligne verte centre-ville=2
+Ligne verte ouest=1
+
+Ligne bleue est=1
+Ligne bleue ouest=2
+
+Ligne jaune=1
+
+Berri-UQAM Jx=1
+Jean-Talon Jx=1
+Lionel-Groulx Jx=1
+Snowdon Jx=1
+
+[Territories]
+Montmorency, 64, 88, Ligne orange nord, De la Condorde
+De la Condorde, 120, 88, Ligne orange nord, Montmorency, Cartier
+Cartier, 184, 99, Ligne orange nord, De la Condorde, Henri-Bourassa
+Henri-Bourassa, 220, 147, Ligne orange nord, Cartier, Sauvé
+Sauvé, 237, 168, Ligne orange nord, Henri-Bourassa, Crémazie
+Crémazie, 252, 188, Ligne orange nord, Sauvé, Jarry
+Jarry, 267, 209, Ligne orange nord, Crémazie, Jean-Talon
+
+Jean-Talon, 285, 233, Jean-Talon Jx, Jarry, Beaubien, Fabre, De Castelnau
+
+Beaubien, 301, 253, Ligne orange centre, Jean-Talon, Rosemont
+Rosemont, 317, 274, Ligne orange centre, Beaubien, Laurier
+Laurier, 332, 294, Ligne orange centre, Rosemont, Mont-Royal
+Mont-Royal, 347, 314, Ligne orange centre, Laurier, Sherbrooke
+Sherbrooke, 359, 335, Ligne orange centre, Mont-Royal, Berri-UQAM
+
+Berri-UQAM, 386, 367, Berri-UQAM Jx, Sherbrooke, Beaudry, Jean-Drapeau, Champ-de-Mars, Saint-Laurent
+
+Champ-de-Mars, 396, 408, Ligne orange centre-ville, Berri-UQAM, Place-d'Armes
+Place-d'Armes, 370, 427, Ligne orange centre-ville, Champ-de-Mars, Square-Victoria
+Square-Victoria, 345, 445, Ligne orange centre-ville, Place-d'Armes, Bonaventure
+Bonaventure, 319, 464, Ligne orange centre-ville, Square-Victoria, Lucien-L'Allier
+Lucien-L'Allier, 294, 484, Ligne orange centre-ville, Bonaventure, Georges-Vanier
+Georges-Vanier, 270, 502, Ligne orange centre-ville, Lucien-L'Allier, Lionel-Groulx
+
+Lionel-Groulx, 249, 519, Lionel-Groulx Jx, Georges-Vanier, Atwater, Charlevoix, Place-Saint-Henri
+
+Place-Saint-Henri, 214, 505, Ligne orange sud ouest, Lionel-Groulx, Vendome
+Vendome, 195, 480, Ligne orange sud ouest, Place-Saint-Henri, Villa-Maria
+Villa-Maria, 175, 454, Ligne orange sud ouest, Vendome, Snowdon
+
+Snowdon, 156, 428, Snowdon Jx, Villa-Maria, Côte-des-Neiges, Cote-Sainte-Catherine
+
+Cote-Sainte-Catherine, 142, 410, Ligne orange nord ouest, Snowdon, Plamondon
+Plamondon, 129, 394, Ligne orange nord ouest, Cote-Sainte-Catherine, Namur
+Namur, 115, 375, Ligne orange nord ouest, Plamondon, De la Savane
+De la Savane, 102, 358, Ligne orange nord ouest, Namur, Du Collège
+Du Collège, 89, 341, Ligne orange nord ouest, De la Savane, Côte-Vertu
+Côte-Vertu, 75, 323, Ligne orange nord ouest, Du Collège
+
+Saint-Michel, 352, 183, Ligne bleue est, D'Iberville
+D'Iberville, 330, 198, Ligne bleue est, Saint-Michel, Fabre
+Fabre, 310, 214, Ligne bleue est, D'Iberville, Jean-Talon
+
+De Castelnau, 261, 250, Ligne bleue ouest, Jean-Talon, Parc
+Parc, 238, 267, Ligne bleue ouest, De Castelnau, Acadie
+Acadie, 234, 294, Ligne bleue ouest, Parc, Outremont
+Outremont, 260, 327, Ligne bleue ouest, Acadie, Édouard-Montpetit
+Édouard-Montpetit, 249, 358, Ligne bleue ouest, Outremont, Université-de-Montréal
+Université-de-Montréal, 219, 380, Ligne bleue ouest, Édouard-Montpetit, Côte-des-Neiges
+Côte-des-Neiges, 189, 402, Ligne bleue ouest, Université-de-Montréal, Snowdon
+
+
+Honoré-Beaugrand, 548, 161, Ligne verte est, Radisson
+Radisson, 529, 177, Ligne verte est, Honoré-Beaugrand, Langelier
+Langelier, 512, 191, Ligne verte est, Radisson, Cadillac
+Cadillac, 494, 204, Ligne verte est, Langelier, Assomption
+Assomption, 487, 227, Ligne verte est, Cadillac, Viau
+Viau, 490, 250, Ligne verte est, Assomption, Pie-IX
+Pie-IX, 473, 263, Ligne verte est, Viau, Joliette
+Joliette, 455, 276, Ligne verte est, Pie-IX, Préfontaine
+Préfontaine, 438, 289, Ligne verte est, Joliette, Frontenac
+Frontenac, 429, 309, Ligne verte est, Préfontaine, Papineau
+Papineau, 433, 330, Ligne verte est, Frontenac, Beaudry
+Beaudry, 414, 345, Ligne verte est, Papineau, Berri-UQAM
+
+Saint-Laurent, 366, 382, Ligne verte centre-ville, Berri-UQAM, Place-des-Arts
+Place-des-Arts, 344, 399, Ligne verte centre-ville, Saint-Laurent, McGill
+McGill, 318, 418, Ligne verte centre-ville, Place-des-Arts, Peel
+Peel, 291, 438, Ligne verte centre-ville, McGill, Guy-Concordia
+Guy-Concordia, 269, 455, Ligne verte centre-ville, Peel, Atwater
+Atwater, 244, 474, Ligne verte centre-ville, Guy-Concordia, Lionel-Groulx
+
+Charlevoix, 266, 545, Ligne verte ouest, Lionel-Groulx, LaSalle
+LaSalle, 268, 574, Ligne verte ouest, Charlevoix, De l'Église
+De l'Église, 250, 589, Ligne verte ouest, LaSalle, Verdun
+Verdun, 228, 603, Ligne verte ouest, De l'Église, Jolicoeur
+Jolicoeur, 205, 593, Ligne verte ouest, Verdun, Monk
+Monk, 183, 608, Ligne verte ouest, Jolicoeur, Angrignon
+Angrignon, 161, 623, Ligne verte ouest, Monk
+
+Longueuil, 497, 372, Ligne jaune, Jean-Drapeau
+Jean-Drapeau, 452, 392, Ligne jaune, Longueuil, Berri-UQAM

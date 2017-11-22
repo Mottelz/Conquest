@@ -22,6 +22,7 @@ using namespace std;
 class GameInit {
 private:
     vector<string> m_MapNames;
+    vector<string> m_PlayerNames;
     vector<Player*> m_Players;
     MapLoader *m_MapLoader;
     Map *m_Map;

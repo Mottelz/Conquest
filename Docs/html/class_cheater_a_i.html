@@ -104,15 +104,17 @@ Inheritance diagram for CheaterAI:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab43e610dca3f49a1ec595e70fde06f72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cheater_a_i.html#ab43e610dca3f49a1ec595e70fde06f72">reinforce</a> (<a class="el" href="class_player.html">Player</a> *player, <a class="el" href="class_map.html">Map</a> *map, <a class="el" href="class_deck.html">Deck</a> &amp;deck)</td></tr>
-<tr class="memdesc:ab43e610dca3f49a1ec595e70fde06f72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Doubles the number of armies on all territories.  <a href="#ab43e610dca3f49a1ec595e70fde06f72">More...</a><br /></td></tr>
-<tr class="separator:ab43e610dca3f49a1ec595e70fde06f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa81051db82ed85748b28c0acf7d93488"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cheater_a_i.html#aa81051db82ed85748b28c0acf7d93488">reinforce</a> (<a class="el" href="class_player.html">Player</a> *player, <a class="el" href="class_map.html">Map</a> *map, <a class="el" href="class_deck.html">Deck</a> &amp;deck)</td></tr>
+<tr class="memdesc:aa81051db82ed85748b28c0acf7d93488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Doubles the number of armies on all territories.  <a href="#aa81051db82ed85748b28c0acf7d93488">More...</a><br /></td></tr>
+<tr class="separator:aa81051db82ed85748b28c0acf7d93488"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c2b214873a607bd1a42728ea02e5dd5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cheater_a_i.html#a6c2b214873a607bd1a42728ea02e5dd5">attack</a> (<a class="el" href="class_player.html">Player</a> *player, <a class="el" href="class_map.html">Map</a> *map)</td></tr>
 <tr class="memdesc:a6c2b214873a607bd1a42728ea02e5dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically conquers all neighbouring territories.  <a href="#a6c2b214873a607bd1a42728ea02e5dd5">More...</a><br /></td></tr>
 <tr class="separator:a6c2b214873a607bd1a42728ea02e5dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4be75b9fec63c831368f03232dd6af7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cheater_a_i.html#ae4be75b9fec63c831368f03232dd6af7">fortify</a> (<a class="el" href="class_player.html">Player</a> *player, <a class="el" href="class_map.html">Map</a> *map)</td></tr>
+<tr class="memdesc:ae4be75b9fec63c831368f03232dd6af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Doubles number of armies of any territory with neighbouring enemies.  <a href="#ae4be75b9fec63c831368f03232dd6af7">More...</a><br /></td></tr>
 <tr class="separator:ae4be75b9fec63c831368f03232dd6af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a410d0618daa9a01408da85f053012622"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cheater_a_i.html#a410d0618daa9a01408da85f053012622">play</a> (<a class="el" href="class_player.html">Player</a> *player, <a class="el" href="class_map.html">Map</a> *map, <a class="el" href="class_deck.html">Deck</a> &amp;deck)</td></tr>
+<tr class="memdesc:a410d0618daa9a01408da85f053012622"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the methods for the different phases of the cheater player's turn.  <a href="#a410d0618daa9a01408da85f053012622">More...</a><br /></td></tr>
 <tr class="separator:a410d0618daa9a01408da85f053012622"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
@@ -183,11 +185,11 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if successful attack. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true because why not? </dd></dl>
 
 <p>Implements <a class="el" href="class_strategy.html#a27fb1ce54c4e7181304eddc9bb11ce5a">Strategy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_strategy_pattern_8cpp_source.html#l01797">1797</a> of file <a class="el" href="_strategy_pattern_8cpp_source.html">StrategyPattern.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_strategy_pattern_8cpp_source.html#l01929">1929</a> of file <a class="el" href="_strategy_pattern_8cpp_source.html">StrategyPattern.cpp</a>.</p>
 
 </div>
 </div>
@@ -225,7 +227,20 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Doubles number of armies of any territory with neighbouring enemies. </p>
+<p>Return type is forced because of loops for other AIs. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">player</td><td>the player. </td></tr>
+    <tr><td class="paramname">map</td><td>the map. </td></tr>
+    <tr><td class="paramname">deck</td><td>the deck. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>talways true. </dd></dl>
+
 <p>Implements <a class="el" href="class_strategy.html#aabaa09fc9f4ffcd645167cbadebe9706">Strategy</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_strategy_pattern_8cpp_source.html#l01975">1975</a> of file <a class="el" href="_strategy_pattern_8cpp_source.html">StrategyPattern.cpp</a>.</p>
 
 </div>
 </div>
@@ -269,12 +284,23 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Calls the methods for the different phases of the cheater player's turn. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">player</td><td>A pointer to the current player </td></tr>
+    <tr><td class="paramname">map</td><td>A pointer to the map </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p>Implements <a class="el" href="class_strategy.html#a67b1fc697ebcb1e2cf0fd520cdb5e60d">Strategy</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_strategy_pattern_8cpp_source.html#l02040">2040</a> of file <a class="el" href="_strategy_pattern_8cpp_source.html">StrategyPattern.cpp</a>.</p>
 
 </div>
 </div>
-<a id="ab43e610dca3f49a1ec595e70fde06f72"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab43e610dca3f49a1ec595e70fde06f72">&#9670;&nbsp;</a></span>reinforce()</h2>
+<a id="aa81051db82ed85748b28c0acf7d93488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa81051db82ed85748b28c0acf7d93488">&#9670;&nbsp;</a></span>reinforce()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -283,7 +309,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool CheaterAI::reinforce </td>
+          <td class="memname">void CheaterAI::reinforce </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_player.html">Player</a> *&#160;</td>
           <td class="paramname"><em>player</em>, </td>
@@ -314,23 +340,18 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Doubles the number of armies on all territories. </p>
-<p>Doubles number of armies of any territory with neighbouring enemies.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">player</td><td>A pointer to the current player </td></tr>
     <tr><td class="paramname">map</td><td>A pointer to the map </td></tr>
-    <tr><td class="paramname">deck</td><td>A pointer to the deck of cards.</td></tr>
-    <tr><td class="paramname">player</td><td>the player. </td></tr>
-    <tr><td class="paramname">map</td><td>the map. </td></tr>
-    <tr><td class="paramname">deck</td><td>the deck. </td></tr>
+    <tr><td class="paramname">deck</td><td>A pointer to the deck of cards. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if it works. </dd></dl>
 
 <p>Implements <a class="el" href="class_strategy.html#a530230e3b94f9d0d837350080e630ec6">Strategy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_strategy_pattern_8cpp_source.html#l01772">1772</a> of file <a class="el" href="_strategy_pattern_8cpp_source.html">StrategyPattern.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_strategy_pattern_8cpp_source.html#l01896">1896</a> of file <a class="el" href="_strategy_pattern_8cpp_source.html">StrategyPattern.cpp</a>.</p>
 
 </div>
 </div>

@@ -19,6 +19,7 @@ var searchData=
   ['statustype',['statusType',['../struct_player_status_info.html#ab623ad454eac7f6436c53763a37c9ed1',1,'PlayerStatusInfo']]],
   ['storedicevalue',['storeDiceValue',['../class_dice_cup.html#abaadf4e56f83630bc63b31d778a30374',1,'DiceCup']]],
   ['strategy',['Strategy',['../class_strategy.html',1,'']]],
+  ['strategydriver_2ecpp',['StrategyDriver.cpp',['../_strategy_driver_8cpp.html',1,'']]],
   ['strategypattern_2ecpp',['StrategyPattern.cpp',['../_strategy_pattern_8cpp.html',1,'']]],
   ['strategypattern_2eh',['StrategyPattern.h',['../_strategy_pattern_8h.html',1,'']]],
   ['subject',['Subject',['../class_subject.html',1,'Subject'],['../class_subject.html#ab468044832c824c6d6c2f46272655207',1,'Subject::Subject()']]],

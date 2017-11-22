@@ -107,6 +107,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad0715e64c407d0ce8003a7f3713afaf4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_loop.html#ad0715e64c407d0ce8003a7f3713afaf4">loop</a> (<a class="el" href="class_map.html">Map</a> *map, <a class="el" href="class_deck.html">Deck</a> &amp;deck)</td></tr>
 <tr class="memdesc:ad0715e64c407d0ce8003a7f3713afaf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main game loop.  <a href="#ad0715e64c407d0ce8003a7f3713afaf4">More...</a><br /></td></tr>
 <tr class="separator:ad0715e64c407d0ce8003a7f3713afaf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa012a570a329e3cfd7046d3c2682fea2"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_loop.html#aa012a570a329e3cfd7046d3c2682fea2">loop</a> (<a class="el" href="class_map.html">Map</a> *map, <a class="el" href="class_deck.html">Deck</a> &amp;deck, int turns)</td></tr>
+<tr class="memdesc:aa012a570a329e3cfd7046d3c2682fea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main game loop.  <a href="#aa012a570a329e3cfd7046d3c2682fea2">More...</a><br /></td></tr>
+<tr class="separator:aa012a570a329e3cfd7046d3c2682fea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is the main game loop. </p>
@@ -195,7 +198,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad0715e64c407d0ce8003a7f3713afaf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0715e64c407d0ce8003a7f3713afaf4">&#9670;&nbsp;</a></span>loop()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0715e64c407d0ce8003a7f3713afaf4">&#9670;&nbsp;</a></span>loop() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,9 +224,61 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The main game loop. </p>
-<p>This goes through the entire game. </p>
+<p>This goes through the entire game. Without turn limit. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Pointer to game map. </td></tr>
+    <tr><td class="paramname">deck</td><td>Pointer to game deck. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_game_loop_8cpp_source.html#l00034">34</a> of file <a class="el" href="_game_loop_8cpp_source.html">GameLoop.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_game_loop_8cpp_source.html#l00036">36</a> of file <a class="el" href="_game_loop_8cpp_source.html">GameLoop.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa012a570a329e3cfd7046d3c2682fea2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa012a570a329e3cfd7046d3c2682fea2">&#9670;&nbsp;</a></span>loop() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string GameLoop::loop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_map.html">Map</a> *&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_deck.html">Deck</a> &amp;&#160;</td>
+          <td class="paramname"><em>deck</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rounds</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The main game loop. </p>
+<p>This goes through the entire game. With turn limit. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Pointer to game map. </td></tr>
+    <tr><td class="paramname">deck</td><td>Pointer to game deck. </td></tr>
+    <tr><td class="paramname">round</td><td>The number of rounds in the game. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_game_loop_8cpp_source.html#l00075">75</a> of file <a class="el" href="_game_loop_8cpp_source.html">GameLoop.cpp</a>.</p>
 
 </div>
 </div>

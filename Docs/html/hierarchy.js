@@ -11,7 +11,14 @@ var hierarchy =
     [ "Hand", "class_hand.html", null ],
     [ "MapLoader", "class_map_loader.html", null ],
     [ "Observer", "class_observer.html", [
-      [ "gameStatistics", "classgame_statistics.html", null ],
+      [ "AbstractGameStatistics", "class_abstract_game_statistics.html", [
+        [ "gameStatistics", "classgame_statistics.html", null ],
+        [ "ObserverDecorator", "class_observer_decorator.html", [
+          [ "ContinentControlObserverDecorator", "class_continent_control_observer_decorator.html", null ],
+          [ "PlayerDominationObserverDecorator", "class_player_domination_observer_decorator.html", null ],
+          [ "PlayerHandsObserverDecorator", "class_player_hands_observer_decorator.html", null ]
+        ] ]
+      ] ],
       [ "PhaseObserver", "class_phase_observer.html", null ]
     ] ],
     [ "PlayerStatusInfo", "struct_player_status_info.html", null ],
@@ -27,5 +34,6 @@ var hierarchy =
       [ "Map", "class_map.html", null ],
       [ "Player", "class_player.html", null ]
     ] ],
-    [ "Territory", "struct_territory.html", null ]
+    [ "Territory", "struct_territory.html", null ],
+    [ "TournamentInit", "class_tournament_init.html", null ]
 ];

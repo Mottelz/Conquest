@@ -1,10 +1,12 @@
 var annotated_dup =
 [
+    [ "AbstractGameStatistics", "class_abstract_game_statistics.html", "class_abstract_game_statistics" ],
     [ "AggressiveAI", "class_aggressive_a_i.html", "class_aggressive_a_i" ],
     [ "BenevolentAI", "class_benevolent_a_i.html", "class_benevolent_a_i" ],
     [ "Card", "class_card.html", "class_card" ],
     [ "CheaterAI", "class_cheater_a_i.html", "class_cheater_a_i" ],
     [ "Continent", "struct_continent.html", "struct_continent" ],
+    [ "ContinentControlObserverDecorator", "class_continent_control_observer_decorator.html", "class_continent_control_observer_decorator" ],
     [ "Deck", "class_deck.html", "class_deck" ],
     [ "DiceCup", "class_dice_cup.html", "class_dice_cup" ],
     [ "Die", "class_die.html", "class_die" ],
@@ -16,12 +18,16 @@ var annotated_dup =
     [ "Map", "class_map.html", "class_map" ],
     [ "MapLoader", "class_map_loader.html", "class_map_loader" ],
     [ "Observer", "class_observer.html", "class_observer" ],
+    [ "ObserverDecorator", "class_observer_decorator.html", "class_observer_decorator" ],
     [ "PhaseObserver", "class_phase_observer.html", "class_phase_observer" ],
     [ "Player", "class_player.html", "class_player" ],
+    [ "PlayerDominationObserverDecorator", "class_player_domination_observer_decorator.html", "class_player_domination_observer_decorator" ],
+    [ "PlayerHandsObserverDecorator", "class_player_hands_observer_decorator.html", "class_player_hands_observer_decorator" ],
     [ "PlayerStatusInfo", "struct_player_status_info.html", "struct_player_status_info" ],
     [ "RandomAI", "class_random_a_i.html", "class_random_a_i" ],
     [ "Startup", "class_startup.html", "class_startup" ],
     [ "Strategy", "class_strategy.html", "class_strategy" ],
     [ "Subject", "class_subject.html", "class_subject" ],
-    [ "Territory", "struct_territory.html", "struct_territory" ]
+    [ "Territory", "struct_territory.html", "struct_territory" ],
+    [ "TournamentInit", "class_tournament_init.html", "class_tournament_init" ]
 ];

@@ -12,6 +12,7 @@ var class_player =
     [ "exchangeableHand", "class_player.html#a7ce16f13254421555a1efb4db46ddbf5", null ],
     [ "exchangeCards", "class_player.html#a64c23f0fb2da10dcba1111d488f183cf", null ],
     [ "exchangeCardsAI", "class_player.html#a1b7985083da35f619812f00f4249aa18", null ],
+    [ "getCards", "class_player.html#a0f7978154af7913010f226c6fe3b585f", null ],
     [ "getHandSize", "class_player.html#a349e345c332c57d681982ce06a1ba7e9", null ],
     [ "getName", "class_player.html#af9a6045fa96f736664c4eab4caa5e8e5", null ],
     [ "getNumberOfTerritories", "class_player.html#a4b69ce7e7d5d58171f901be19e2c5ea4", null ],

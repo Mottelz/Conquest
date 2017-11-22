@@ -13,18 +13,13 @@ GameInit::GameInit(){
     m_Map = new Map();
     m_Deck = new Deck();
     m_MapLoader = new MapLoader();
-    m_MapNames = vector<string>();
+    m_MapNames = {"Canada.map", "Earth.map", "Discworld.map", "Metro.map", "World.map"};
+    m_PlayerNames = {"Marc Spector", "Steven Grant", "Jake Lockley", "Yitzak Topol", "Mr. Knight", "The Fist of Khonshu"};
     m_Players = vector<Player*>();
-    m_MapNames.push_back("Canada.map");
-    m_MapNames.push_back("Earth.map");
-    m_MapNames.push_back("Invalid.map");
-    m_MapNames.push_back("Invalid2.map");
-    m_MapNames.push_back("World.map");
-    m_MapNames.shrink_to_fit();
 }
 
 /**
- * Destroys everything. (Probably shouldn't do that.)
+ * Destroys everything.
  */
 GameInit::~GameInit(){
     m_MapNames.clear();
@@ -63,7 +58,7 @@ void GameInit::getUserPrefernces(){
     } while (tempPlayers < 2 || tempPlayers > 6);
     
     for(int i = 0; i < tempPlayers; i++) {
-        m_Players.push_back(new Player(m_Map));
+        m_Players.push_back(new Player(m_PlayerNames[i], m_Map));
     }
     
     do {

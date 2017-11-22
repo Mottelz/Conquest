@@ -17,6 +17,7 @@ public:
 	GameLoop(Startup &startup);
 	~GameLoop();
 	void loop(Map* map, Deck& deck);
+	string loop(Map* map, Deck& deck, int turns);
 
 private:
 	Startup m_Startup;

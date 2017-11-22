@@ -1,8 +1,10 @@
 var searchData=
 [
+  ['abstractgamestatistics',['AbstractGameStatistics',['../class_abstract_game_statistics.html#afe01ea60cc5cd259f936a12dbc6575a3',1,'AbstractGameStatistics']]],
   ['addcard',['addCard',['../class_hand.html#af90711d4e4ecc061813d06acc3e7c7fe',1,'Hand']]],
   ['allterriassigned',['allTerriAssigned',['../class_map.html#a565375cb4f2044ea484184580f520a6f',1,'Map']]],
-  ['askuserformapselection',['askUserForMapSelection',['../class_game_init.html#aed61e5cacb9c135d2d977b19fbae99f0',1,'GameInit']]],
+  ['askuserformapselection',['askUserForMapSelection',['../class_game_init.html#aed61e5cacb9c135d2d977b19fbae99f0',1,'GameInit::askUserForMapSelection()'],['../class_tournament_init.html#ae485c024c2c40f78b9ae353ef5f98878',1,'TournamentInit::askUserForMapSelection()']]],
+  ['askuserforplayertypes',['askUserForPlayerTypes',['../class_tournament_init.html#af2e7d50b19a8cff7ec304d7698b60830',1,'TournamentInit']]],
   ['assignarmies',['assignArmies',['../class_map.html#a88c6d85a8369d48872b5d40583abc5c2',1,'Map']]],
   ['assignedavailablearmies',['assignedAvailableArmies',['../class_player.html#acdae096cb812374c8b1d979c5fa68010',1,'Player']]],
   ['assignterritory',['assignTerritory',['../class_player.html#a854dab51aa376b5b4b14d38687ba8c32',1,'Player']]],

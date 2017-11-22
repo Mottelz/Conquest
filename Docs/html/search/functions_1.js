@@ -4,5 +4,6 @@ var searchData=
   ['checkownedcountry',['checkOwnedCountry',['../class_player.html#ad76483fc68374a60523313c76eb1c7eb',1,'Player']]],
   ['computetotalbonus',['computeTotalBonus',['../class_map.html#a298df883f71e4a7164a626df80078566',1,'Map']]],
   ['continent',['Continent',['../struct_continent.html#ae2bd322d891547d02ecfd28c29be3fec',1,'Continent']]],
+  ['continentcontrolobserverdecorator',['ContinentControlObserverDecorator',['../class_continent_control_observer_decorator.html#a9f9047c3d2195f6819359e6f05dc28e3',1,'ContinentControlObserverDecorator']]],
   ['contiupdate',['contiUpdate',['../struct_continent.html#a02fef66abea07f17a4ad9e700082fae1',1,'Continent']]]
 ];

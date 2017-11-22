@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['_7eabstractgamestatistics',['~AbstractGameStatistics',['../class_abstract_game_statistics.html#af06a365e4d667e04de05be7432078902',1,'AbstractGameStatistics']]],
   ['_7edeck',['~Deck',['../class_deck.html#a7d1331cc558c302fdf44e5ae8aae1a95',1,'Deck']]],
   ['_7egameinit',['~GameInit',['../class_game_init.html#a1b50f5c75a233b3548f2a4b3d0e27eec',1,'GameInit']]],
   ['_7egameloop',['~GameLoop',['../class_game_loop.html#ae6c558d0d751a068dbafe2cae465ec1f',1,'GameLoop']]],
@@ -8,7 +9,9 @@ var searchData=
   ['_7emap',['~Map',['../class_map.html#aa403fbe09394ccf39747588f5168e3b2',1,'Map']]],
   ['_7emaploader',['~MapLoader',['../class_map_loader.html#a6055310649b9a926301d7fb2b83cb1b1',1,'MapLoader']]],
   ['_7eobserver',['~Observer',['../class_observer.html#a450645e61c136826f09940a1334c7f34',1,'Observer']]],
+  ['_7eobserverdecorator',['~ObserverDecorator',['../class_observer_decorator.html#a6a6f55d3d8903141da2a9e4d47240d02',1,'ObserverDecorator']]],
   ['_7ephaseobserver',['~PhaseObserver',['../class_phase_observer.html#ac9fd9c5a2f3a40acd5f8b2d58b2f9561',1,'PhaseObserver']]],
   ['_7estartup',['~Startup',['../class_startup.html#a2070f70b87df61bfb3b655db9ec29ff4',1,'Startup']]],
-  ['_7esubject',['~Subject',['../class_subject.html#a7c4f522850f718466e5be7eb55ba1969',1,'Subject']]]
+  ['_7esubject',['~Subject',['../class_subject.html#a7c4f522850f718466e5be7eb55ba1969',1,'Subject']]],
+  ['_7etournamentinit',['~TournamentInit',['../class_tournament_init.html#a82cfd20449b3db23323a591636a307d5',1,'TournamentInit']]]
 ];

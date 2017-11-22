@@ -1,0 +1,91 @@
+[Map]
+author=Stewart Ainsworth
+image=discworld mappe.bmp
+wrap=no
+scroll=horizontal
+warn=yes
+
+[Continents]
+Rim and Turnwise Oceans=3
+Counterweight Continent=5
+XXXX=2
+Hublands=8
+Turnwise Klatch=10
+Widdershins Klatch=4
+
+[Territories]
+Krull,99,388,Rim and Turnwise Oceans,Ymitury,Goruna
+Goruna,104,334,Rim and Turnwise Oceans,Wyrmberg,Krull,Brown Islands,Mithos
+Brown Islands,109,289,Rim and Turnwise Oceans,Mithos,Goruna
+Mithos,86,263,Rim and Turnwise Oceans,Brown Islands,Goruna,Turnwise Island,be Trobi Islands
+Turnwise Island,57,278,Rim and Turnwise Oceans,Mithos,be Trobi Islands
+be Trobi Islands,67,200,Rim and Turnwise Oceans,Bes Pelargic,Turnwise Island,Mithos
+
+Rimwards Wall,82,145,Counterweight Continent,W'Ung District
+W'Ung District,102,146,Counterweight Continent,Bes Pelargic,Hunghung,Tito Desert,Rimwards Wall
+Bes Pelargic,121,172,Counterweight Continent,Whale Bay,be Trobi Islands,Hunghung,W'Ung District,Bes Pelargic
+Hunghung,135,147,Counterweight Continent,Tito Desert,Sum Dim,W'Ung District,Bes Pelargic
+Tito Desert,132,111,Counterweight Continent,Tito Peninsula,Bhangbhangduc,Sum Dim,Hunghung,W'Ung District
+Tito Peninsula,172,81,Counterweight Continent,Tito Desert,Bhangbhangduc,Nafooi
+Sum Dim,169,141,Counterweight Continent,Hubward Peninsula,Hunghung,Tito Desert
+Hubward Peninsula,209,158,Counterweight Continent,Escalpon,Sum Dim
+Bhangbhangduc,170,99,Counterweight Continent,Tito Desert,Tito Peninsula,Nafooi
+Nafooi,196,86,Counterweight Continent,Slakki,Bhangbhangduc,Tito Peninsula
+Slakki,214,79,Counterweight Continent,Land of Fog,Nafooi
+
+Land of Fog,271,71,XXXX,Slakki,The Big Bight
+The Big Bight,319,82,XXXX,Land of Fog,Terror Incognita
+Terror Incognita,341,102,XXXX,The Big Bight,Purdeighsland
+Purdeighsland,318,141,XXXX,Terror Incognita
+
+Escalpon,236,204,Hublands,Hubward Peninsula,No Thingfjord,Vortex Plains,Hubland Steppes,Caderack Mountains,Whale Bay
+No Thingfjord,292,223,Hublands,Hammerock Mountains,Vortex Plains, Escalpon
+Vortex Plains,261,222,Hublands,No Thingfjord,Hammerock Mountains,Trollbone Mountains,Hubland Steppes,Escalpon
+Hubland Steppes,230,221,Hublands,Escalpon,Vortex Plains,Trollbone Mountains,Cori Celesti,Caderack Mountains
+Cori Celesti,233,240,Hublands,Hubland Steppes,Trollbone Mountains,Ramtops,Caderack Mountains
+Caderack Mountains,202,229,Hublands,Cori Celesti,Ramtops,Llamedos,Hergen,Whale Bay,Escalpon,Hubland Steppes
+Whale Bay,176,232,Hublands,Bes Pelargic,Escalpon,Caderack Mountains,Hergen
+Hergen,166,252,Hublands,Whale bay,Caderack Mountains,Llamedos,Wyrmberg
+Llamedos,195,265,Hublands,hergen,Caderack Mountains,Ramtops,Cutshade Forest,Octarine Grass Country,Wyrmberg
+Ramtops,233,266,Hublands,Caderack Mountains,Cori Celesti,Trollbone Mountains,Lancre,Cutshade Forest,Llamedos
+Trollbone Mountains,271,255,Hublands,Cori celesti,Hubland Steppes,Vortex Plains,Hammerock Mountains,Genua,Überwald,Lancre,Ramtops
+Überwald,295,285,Hublands,Trollbone Mountains,Genua,Borogravia,Forest of Skud,Lancre
+Lancre,252,287,Hublands,Trollbone Mountains,Überwald,Forest of Skud,Carrack Mountains,Cutshade Forest,Ramtops
+Cutshade Forest,216,285,Hublands,Ramtops,Lancre,Carrack Mountains,Octarine Grass Country,Llamedos
+Octarine Grass Country,198,290,Hublands,Llamedos,Cutshade Forest,Carrack Mountains,Chimeria,Wyrmberg
+Wyrmberg,167,276,Hublands,Goruna,Hergen,Llamedos,Octarine Grass Country,Chimeria
+Chimeria,185,302,Hublands,Wyrmberg,Octarine Grass Country
+Carrack Mountains,228,302,Hublands,Octarine Grass Country,Sto Plains,Forest of Skud,Lancre,Cutshade Forest
+
+Sto Plains,232,316,Turnwise Klatch,Carrack Mountains,Forest of Skud,Ankh-Morpork,Tsort
+Forest of Skud,259,309,Turnwise Klatch,Sto Plains,Carrack Mountains,Lancre,Überwald,Borogravia,Istanzia,Ankh-Morpork
+Ankh-Morpork,250,329,Turnwise Klatch,Sto Plains,Forest of Skud,Istanzia
+Istanzia,277,338,Turnwise Klatch,Ankh-Morpork,Forest of Skud,Borogravia,Muntab,Klatchistan,Omnia
+Omnia,256,362,Turnwise Klatch,Istanzia,Klatchistan,Tezuman Empire,Djelibeybi
+Klatchistan,293,363,Turnwise Klatch,Istanzia,Muntab,Khanli,Tezuman Empire,Omnia
+Khanli,316,375,Turnwise Klatch,Sumtri,Tezuman Empire,Klatchistan,Muntab
+Sumtri,316,397,Turnwise Klatch,Tezuman Empire,Khanli
+Tezuman Empire,274,394,Turnwise Klatch,Sumtri,T'Etse,S'Belinde,Great Nef,Ephibe,Djelibeybi,Omnia,Klatchistan,Khanli
+Djelibeybi,234,362,Turnwise Klatch,Omnia,Tezuman Empire,Ephibe
+Ephibe,221,370,Turnwise Klatch,Djelibeybi,Tezuman Empire,Great Nef,Laotan,Klatch,Tsort
+T'Etse,257,418,Turnwise Klatch,Tezuman Empire,S'Belinde
+S'Belinde,241,423,Turnwise Klatch,Tezuman Empire,T'Etse,Great Nef
+Great Nef,226,408,Turnwise Klatch,Tezuman Empire,S'Belinde,Urabewe,Laotan,Ephibe
+Urabewe,203,410,Turnwise Klatch,Laotan,Great Nef
+Laotan,203,388,Turnwise Klatch,Urabewe,Howondaland,Klatch,Ephibe,Great Nef
+Howondaland,175,396,Turnwise Klatch,Ymitury,Klatch,Laotan
+Ymitury,176,378,Turnwise Klatch,Krull,Howondaland,Klatch
+Klatch,191,366,Turnwise Klatch,Ymitury,Hersheba,Tsort,Ephibe,Laotan,Howondaland
+Hersheba,190,351,Turnwise Klatch,Klatch,Tsort
+Tsort,219,348,Turnwise Klatch,Hersheba,Klatch,Ephibe,Sto Plains
+
+Muntab,319,345,Widdershins Klatch,Borogravia,Brindisi,Rehigreed Province,Farferee,Khanli,Klatchistan,Istanzia
+Borogravia,303,310,Widdershins Klatch,Überwald,Genua,Brindisi,Muntab,Istanzia,Forest of Skud
+Farferee,348,354,Widdershins Klatch,Muntab,Rehigreed Province
+Rehigreed Province,370,342,Widdershins Klatch,Farferee,Muntab,Brindisi,Orohai Peninsula
+Orohai Peninsula,402,293,Widdershins Klatch,Rehigreed Province,Kythia
+Brindisi,353,313,Widdershins Klatch,Rehigreed Province,Borogravia,Genua,Kythia,Muntab
+Genua,335,268,Widdershins Klatch,Überwald,Hammerock Mountains,Blade Mountains,Kythia,Brindisi,Borogravia,Trollbone Mountains
+Hammerock Mountains,309,236,Widdershins Klatch,No Thingfjord,Vortex Plains,Trollbone Mountains,Genua,Blade Mountains
+Blade Mountains,348,225,Widdershins Klatch,Hammerock Mountains,Genua,Kythia
+Kythia,379,243,Widdershins Klatch,Blade Mountains,Genua,Orohai Peninsula,Brindisi

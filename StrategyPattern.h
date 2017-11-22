@@ -10,7 +10,7 @@ using namespace std;
 class Player; 
 class Map;
 
-static enum PlayerPhase {
+enum PlayerPhase {
 	REINFORCEMENT, ATTACK, FORTIFICATION, DEFENSE, DEFAULT
 };
 
