@@ -192,6 +192,7 @@ vector<int> Strategy::shakeDiceCup(int armiesOfATerri, PlayerPhase phase, Player
 }
 
 
+
 /**
 * The method for the reinforcement phase during the human player's turn.
 * \param player A pointer to the current player
@@ -1588,7 +1589,7 @@ void RandomAI::reinforce(Player* player, Map* map, Deck& deck)
 	cout << player->getName() << " (random AI) has " << valid_assigned_armies << " troop(s) left to deploy." << endl;
 	cout << player->getName() << " wants to assign their armies to : ";
 
-	int assign_terri_ID = getRandomPlayerTerritory(player, map);
+	int assign_terri_ID = getRandomPlayerTerritory(player, map, DEFAULT);
 
 	cout << map->getTerritoryName(assign_terri_ID) << endl;
 
@@ -1618,13 +1619,25 @@ void RandomAI::reinforce(Player* player, Map* map, Deck& deck)
 * \param player A pointer to the current player
 * \param map A pointer to the map
 */
-int RandomAI::getRandomPlayerTerritory(Player* player, Map* map)
+int RandomAI::getRandomPlayerTerritory(Player* player, Map* map, PlayerPhase phase)
 {
-	srand(time(0));
 	vector<string> playerTerritories = player->getPlayerTerritoryNames();
 	int randomTerritory = rand() % playerTerritories.size();
+	int randomID = map->seekTerritoryID(playerTerritories[randomTerritory]);
+	int randomArmies = map->getArmyNumOfTheTerritory(randomID);
+
+	if (phase == ATTACK)
+	{
+		if (map->enemyNeighbourExists(randomID) == false || randomArmies == 1)
+			return -1;
+	}
+	else if (phase == FORTIFICATION)
+	{
+		if (map->friendNeighbourExists(randomID) == false)
+			return -1;
+	}
 	
-	return map->seekTerritoryID(playerTerritories[randomTerritory]);
+	return randomID;
 }
 
 /**
@@ -1634,7 +1647,6 @@ int RandomAI::getRandomPlayerTerritory(Player* player, Map* map)
 */
 int RandomAI::getRandomEnemyTerritory(Player* player, Map* map, int attack_from)
 {
-	srand(time(0));
 	vector<string> neighbourTerritories = map->getEnemyAdjacentTerritoryNames(attack_from);
 	int randomTerritory = rand() % neighbourTerritories.size();
 
@@ -1664,10 +1676,10 @@ bool RandomAI::attack(Player* player, Map* map)
 	cout << "***************************************\n" << endl;
 
 
-	int attack_from = getRandomPlayerTerritory(player, map);
-	if (attack_from == -1) // Not enough armies to attack
+	int attack_from = getRandomPlayerTerritory(player, map, ATTACK);
+	if (attack_from == -1) // Not enough armies to attack from that territory
 	{
-		cout << player->getName() << " has too few armies! " << endl;
+		cout << player->getName() << " stops attacking!" << endl;
 		//Attack, notify, end of phase
 		player->m_StatusInfo.statusType = myPhaseEnded;
 		player->notify();
@@ -1721,13 +1733,14 @@ bool RandomAI::attack(Player* player, Map* map)
 			else
 			{
 				cout << player->getName() << " won the battle! " << endl;
-				int numberOfArmies = map->getArmyNumOfTheTerritory(attack_from);
-				for (int i = 0; i < numberOfArmies - 1; i++)
+				int armiesToMove = rand() % map->getArmyNumOfTheTerritory(attack_from);
+
+				for (int i = 0; i < armiesToMove - 1; i++)
 				{
 					map->removeArmies(player, map->getTerritoryName(attack_from));
 					map->assignArmies(player, map->getTerritoryName(attack_to));
 				}
-				cout << player->getName() << " moved " << numberOfArmies - 1 << " armies to " << map->getTerritoryName(attack_to) << endl;
+				cout << player->getName() << " moved " << armiesToMove << " armies to " << map->getTerritoryName(attack_to) << endl;
 				territoryCaptured = true;
 				//Attack, notify player status
 				player->m_StatusInfo.statusType = myTerritories;
@@ -1761,7 +1774,6 @@ bool RandomAI::attack(Player* player, Map* map)
 */
 bool RandomAI::fortify(Player* player, Map* map)
 {
-	srand(time(0));
 	
 	//Fortify, notify  PLAYER STATUS
 	player->m_StatusInfo.phaseView = true;
@@ -1771,15 +1783,38 @@ bool RandomAI::fortify(Player* player, Map* map)
 	player->notify();
 	player->m_StatusInfo.globalView = false;
 
-	int move_from = getRandomPlayerTerritory(player, map);
+	int move_to = getRandomPlayerTerritory(player, map, FORTIFICATION); // Selects random player territory to fortify
+	
+	int count = player->getNumberOfTerritories();
 
-	while (map->getArmyNumOfTheTerritory(move_from) < 2)
+	while (move_to < 0 && count > 0)
 	{
-		move_from = getRandomPlayerTerritory(player, map);
+		move_to = getRandomPlayerTerritory(player, map, FORTIFICATION);
+		cout << endl;
+		cout << "MOVE TO NUMBER: " << move_to <<endl;
+		count--;
 	}
 
-	int move_to = getRandomFriendTerritory(player, map, move_from);
-	int move_num = 0;
+	if (move_to < 0)
+	{
+		cout << endl;
+		cout << player->getName() << " cannot fortify at the moment. " << move_to << endl;
+		//Fortify, notify, end of phase
+		player->m_StatusInfo.statusType = myPhaseEnded;
+		player->notify();
+		return false;
+	}
+	
+	int move_from = territoryToMoveArmyFrom(player, map, move_to);
+
+	count = map->getFriendlyAdjacentTerritoryNames(move_to).size();
+	while (map->getArmyNumOfTheTerritory(move_from) < 2 && count > 0)
+	{
+		move_from = territoryToMoveArmyFrom(player, map, move_to);
+		--count;
+	}
+
+	int move_num;
 	vector<string> fortifyPath;
 
 	if (move_to > -1 && move_from > -1 && map->getArmyNumOfTheTerritory(move_from) > 1)
@@ -1791,7 +1826,12 @@ bool RandomAI::fortify(Player* player, Map* map)
 			cout << player->getName() << " wants to fortify! " << endl;
 			cout << "***************************************\n" << endl;
 
-			move_num = rand() % map->getArmyNumOfTheTerritory(move_from); // moves all armies except one
+			move_num = rand() % map->getArmyNumOfTheTerritory(move_from); // moves a random number of armies (but always leaves at least one)
+			if (move_num == 0)
+			{
+				move_num = 1;
+			}
+
 			moveArmiesDuringFortification(move_from, move_to, move_num, player, map);
 			cout << endl;
 			cout << player->getName() << " Moved " << move_num << " armies from " << map->getTerritoryName(move_from) << " to " << map->getTerritoryName(move_to) << endl;
@@ -1800,7 +1840,7 @@ bool RandomAI::fortify(Player* player, Map* map)
 	else
 	{
 		cout << endl;
-		cout << player->getName() << " cannot fortify at the moment (too few countries). " << endl;
+		cout << player->getName() << " does not want to fortify at the moment. " << endl;
 		//Fortify, notify, end of phase
 		player->m_StatusInfo.statusType = myPhaseEnded;
 		player->notify();
@@ -1814,15 +1854,15 @@ bool RandomAI::fortify(Player* player, Map* map)
 	return false;
 }
 
+
 /**
-* Returns a random adjacent friend territory to move armies to.
+* Returns a random adjacent friend territory to move armies from.
 * \param player A pointer to the current player
 * \param map A pointer to the map
 */
-int RandomAI::getRandomFriendTerritory(Player* player, Map* map, int move_from)
+int RandomAI::territoryToMoveArmyFrom(Player* player, Map* map, int move_to)
 {
-	srand(time(0));
-	vector<string> neighbourTerritories = map->getFriendlyAdjacentTerritoryNames(move_from);
+	vector<string> neighbourTerritories = map->getFriendlyAdjacentTerritoryNames(move_to);
 	int randomTerritory = rand() % neighbourTerritories.size();
 
 	return map->seekTerritoryID(neighbourTerritories[randomTerritory]);
@@ -1904,7 +1944,7 @@ bool CheaterAI::attack(Player* player, Map* map) {
         //if we haven't already stolen that land steal it now!!!
         if(enemies.size()>0) {
             for (int j = 0; j < enemies.size(); ++j) {
-                map->setTerritoryOwner(enemies[i], player);
+                map->setTerritoryOwner(enemies[j], player);
 
             }
 			player->m_StatusInfo.statusType = myTerritories;
@@ -1953,8 +1993,6 @@ bool CheaterAI::fortify(Player *player, Map *map) {
 	return false;
 }
 
-
-
 /**
  * Doubles the number of armies in the given territory.
  * \param map the map
@@ -1985,6 +2023,20 @@ vector<string> CheaterAI::getTerritoriesWithEnemies (Player *player, Map *map){
 	return toReturn;
 }
 
+/**
+* Virtual method from Strategy, implementation is not relevant for CheaterAI.
+*/
+int CheaterAI::territoryToMoveArmyFrom(Player* player, Map* map, int move_to)
+{
+	return 0;
+}
+
+
+/**
+* Calls the methods for the different phases of the cheater player's turn.
+* \param player A pointer to the current player
+* \param map A pointer to the map
+*/
 void CheaterAI::play(Player *player, Map *map, Deck &deck) {
     reinforce(player, map, deck);
     while(attack(player, map));

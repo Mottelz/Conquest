@@ -98,9 +98,9 @@ public:
 	void play(Player* player, Map* map, Deck& deck);
 
 private:
-	int getRandomPlayerTerritory(Player* player, Map* map);
+	int getRandomPlayerTerritory(Player* player, Map* map, PlayerPhase phase);
 	int getRandomEnemyTerritory(Player* player, Map* map, int attack_from);
-	int getRandomFriendTerritory(Player* player, Map* map, int move_from);
+	int territoryToMoveArmyFrom(Player* player, Map* map, int move_to);
 
 };
 
@@ -116,6 +116,7 @@ class CheaterAI : public Strategy {
     private:
         void doubleArmies (Map *map, Player *player, string territoryName);
         vector<string> getTerritoriesWithEnemies(Player *player, Map *map);
+		int territoryToMoveArmyFrom(Player* player, Map* map, int move_to);
 };
 
 
