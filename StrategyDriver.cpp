@@ -47,6 +47,10 @@
 //	int playerCards;
 //
 //	srand((unsigned)time(NULL));
+//	vector<PhaseObserver*> playerPhaseObservers;
+//
+//	AbstractGameStatistics* gameObserver = new gameStatistics(&players, mapp);
+//
 //
 //	do
 //	{
@@ -63,31 +67,10 @@
 //
 //		cin >> type;
 //
-//		playerCards = rand() % 6 + 1;
-//
-//		for (int i = 0; i < playerCards; i++)
-//		{
-//			players[0]->drawCard(deck);
-//			players[1]->drawCard(deck);
-//			players[2]->drawCard(deck);
-//			players[3]->drawCard(deck);
-//			players[4]->drawCard(deck);
-//		}
-//
-//		vector<PhaseObserver*> playerPhaseObservers;
-//
-//		AbstractGameStatistics* gameObserver = new gameStatistics(&players, mapp);
 //		//apply decorators
 //		gameObserver = new PlayerDominationObserverDecorator(gameObserver);
 //		gameObserver = new PlayerHandsObserverDecorator(gameObserver);
 //		gameObserver = new ContinentControlObserverDecorator(gameObserver);
-//
-//		//gameObserver = gameObserver->removeCurrentDecorator();
-//		//gameObserver = gameObserver->removeCurrentDecorator();
-//		//gameObserver = gameObserver->removeCurrentDecorator();
-//
-//		//gameObserver = gameObserver->removeCurrentDecorator();
-//		//gameObserver = gameObserver->removeCurrentDecorator();
 //
 //
 //		for (unsigned int i = 0; i < players.size(); i++)
