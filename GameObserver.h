@@ -47,6 +47,7 @@ public:
 	virtual Player* getCurrentPlayer() = 0;
 	virtual Map* getMap() = 0;
 	virtual vector<Player*> getPlayerList() = 0;
+	virtual AbstractGameStatistics* removeCurrentDecorator() = 0;
 
 };
 
@@ -65,7 +66,7 @@ public:
 	bool isGlobalView();
 	bool isCardsView(); 
 	bool isContiView();
-
+	AbstractGameStatistics* removeCurrentDecorator() { return this; }
 	Map * getMap();
 	Player * getCurrentPlayer();
 	vector<Player*> getPlayerList();
@@ -96,10 +97,10 @@ private:
 class ObserverDecorator : public AbstractGameStatistics {
 public:
 	ObserverDecorator();
-	ObserverDecorator(AbstractGameStatistics * decoratedStatistics, vector<Player*> *playerList, Map * map);
+	ObserverDecorator(AbstractGameStatistics * decoratedStatistics);
 	~ObserverDecorator();
 	//void update();
-	void display() = 0;
+	void display()=0;
 	Map * getMap();
 	Player * getCurrentPlayer();
 	vector<Player*> getPlayerList();
@@ -107,6 +108,8 @@ public:
 	bool isGlobalView();
 	bool isCardsView();
 	bool isContiView();
+
+	AbstractGameStatistics * removeCurrentDecorator();
 	//void setCurrentPlayer();
 	//string getDisplayString();
 protected:
@@ -129,14 +132,14 @@ class PlayerDominationObserverDecorator : public ObserverDecorator
 {
 public:
 	
-	PlayerDominationObserverDecorator(AbstractGameStatistics * decoratedStatistics, vector<Player*> *playerList, Map * map) : ObserverDecorator(decoratedStatistics,  playerList,   map) {};
+	PlayerDominationObserverDecorator(AbstractGameStatistics * decoratedStatistics) : ObserverDecorator(decoratedStatistics) {};
 	//~PlayerDominationObserverDecorator();
 	void update();
 	void display();
 	bool isGlobalView();
-	//Map * getMap();
-	//Player * getCurrentPlayer();
-	//vector<Player*> getPlayerList();
+	Map * getMap();
+	Player * getCurrentPlayer();
+	vector<Player*> getPlayerList();
 	//string getDisplayString();
 	//AbstractGameStatistics * m_DecoratedStatistics;
 
@@ -155,14 +158,14 @@ public:
 class PlayerHandsObserverDecorator : public ObserverDecorator
 {
 public:
-	PlayerHandsObserverDecorator(AbstractGameStatistics * decoratedStatistics, vector<Player*> *playerList, Map * map) : ObserverDecorator(decoratedStatistics, playerList, map) {};
+	PlayerHandsObserverDecorator(AbstractGameStatistics * decoratedStatistics) : ObserverDecorator(decoratedStatistics) {};
 	//~PlayerHandsObserverDecorator();
 	void update();
 	void display();
 	bool isCardsView();
-	//Map * getMap();
-	//Player * getCurrentPlayer();
-	//vector<Player*> getPlayerList();
+	Map * getMap();
+	Player * getCurrentPlayer();
+	vector<Player*> getPlayerList();
 
 
 
@@ -174,11 +177,14 @@ public:
 class ContinentControlObserverDecorator : public ObserverDecorator
 {
 public:
-	ContinentControlObserverDecorator(AbstractGameStatistics * decoratedStatistics, vector<Player*> *playerList, Map * map) : ObserverDecorator(decoratedStatistics, playerList, map) {};
+	ContinentControlObserverDecorator(AbstractGameStatistics * decoratedStatistics) : ObserverDecorator(decoratedStatistics) {};
 	//~ContinentControlObserverDecorator();
 	void update();
 	void display();
 	bool isContinentView();
+	Map * getMap();
+	Player * getCurrentPlayer();
+	vector<Player*> getPlayerList();
 
 
 };

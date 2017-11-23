@@ -78,9 +78,16 @@
 //
 //		AbstractGameStatistics* gameObserver = new gameStatistics(&players, mapp);
 //		//apply decorators
-//		gameObserver = new PlayerDominationObserverDecorator(gameObserver, &players, map);
-//		gameObserver = new PlayerHandsObserverDecorator(gameObserver, &players, map);
-//		gameObserver = new ContinentControlObserverDecorator(gameObserver, &players, map);
+//		gameObserver = new PlayerDominationObserverDecorator(gameObserver);
+//		gameObserver = new PlayerHandsObserverDecorator(gameObserver);
+//		gameObserver = new ContinentControlObserverDecorator(gameObserver);
+//
+//		//gameObserver = gameObserver->removeCurrentDecorator();
+//		//gameObserver = gameObserver->removeCurrentDecorator();
+//		//gameObserver = gameObserver->removeCurrentDecorator();
+//
+//		//gameObserver = gameObserver->removeCurrentDecorator();
+//		//gameObserver = gameObserver->removeCurrentDecorator();
 //
 //
 //		for (unsigned int i = 0; i < players.size(); i++)

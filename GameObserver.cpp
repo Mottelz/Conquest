@@ -542,42 +542,6 @@ void gameStatistics::update() {
 
 }
 
-//void gameStatistics::display() {
-//	if (!isCurrentPlayer())
-//	{
-//		cout << m_display << endl;
-//
-//	}
-//}
-
-//void gameStatistics::displayPlayerControl() {
-//
-//	int m_TotalTerritory = m_MapSubject->getTotalNumberOfTerritories();
-//
-//
-//	//to properly print out after 2 decimal
-//	cout.setf(ios::fixed);
-//	cout.setf(ios::showpoint);
-//	cout.precision(2);
-//	cout << "Total territory in game: " << m_MapSubject->getTotalNumberOfTerritories() << endl;
-//	for (int i = 0; i < m_PlayerList->size(); i++) {
-//
-//		//calculate the percentage of players owned country
-//		double percentage = ((double)m_PlayerList->at(i)->getNumberOfTerritories() / m_TotalTerritory) * 100;
-//
-//		//print the percentage of owned country
-//		cout << m_PlayerList->at(i)->getName() << ": (" << percentage << "%) \t";
-//
-//		//output percentage in form of stars
-//		for (int j = 0; j < m_PlayerList->at(i)->getNumberOfTerritories(); j++) {
-//			if (j % 5 == 0)
-//				cout << " ";
-//			cout << "*";
-//		}
-//		cout << endl;
-//	}
-//}
-
 /**
 * bool function of gameStatistics, return true if globalView is true
 */
@@ -622,7 +586,7 @@ bool gameStatistics::isContiView()
 */
 Map * gameStatistics::getMap()
 {
-	return this->m_MapSubject;
+	return m_MapSubject;
 }
 
 /**
@@ -630,7 +594,7 @@ Map * gameStatistics::getMap()
 */
 Player * gameStatistics::getCurrentPlayer()
 {
-	return this->m_CurrentPlayer;
+	return m_CurrentPlayer;
 }
 
 /**
@@ -639,7 +603,7 @@ Player * gameStatistics::getCurrentPlayer()
 vector<Player*>  gameStatistics::getPlayerList()
 {
 	
-	return gameStatistics::m_PlayerList;
+	return m_PlayerList;
 }
 
 /**
@@ -651,12 +615,13 @@ void gameStatistics::display()
 	//m_display += 
 	if (!isCurrentPlayer())
 	{
+	//this->isCurrentPlayer();
 		cout << "=================Game Statistics==================\n";
 		cout << "Game round ---- Turn " << std::to_string(m_TurnNumber / (getPlayerList().size()) + 1) << endl;
 		cout << "==================================================\n";
 	}
 	//return m_display;
-	//cout << getPlayerList().size() << ", " << getCurrentPlayer()->getName() << "\n";
+	//cout << "######## current player --- " << getCurrentPlayer()->getName() << "\n";
 }
 
 /**
@@ -666,17 +631,21 @@ bool gameStatistics::isCurrentPlayer()
 {
 	Player * currentPlayer = NULL;
 
-	for (unsigned int i = 0; i < m_PlayerList.size(); i++)
+	for (unsigned int i = 0; i < getPlayerList().size(); i++)
 	{
-		if (m_PlayerList.at(i)->m_StatusInfo.currentPhase != DEFAULT && m_PlayerList.at(i)->m_StatusInfo.currentPhase != DEFENSE)
-			currentPlayer = m_PlayerList.at(i);
+		//if (m_PlayerList.at(i)->m_StatusInfo.currentPhase != DEFAULT && m_PlayerList.at(i)->m_StatusInfo.currentPhase != DEFENSE)
+		if (getPlayerList().at(i)->m_StatusInfo.currentPhase == REINFORCEMENT)
+		{
+			currentPlayer = getPlayerList().at(i);
+			if (m_CurrentPlayer != currentPlayer)
+			{
+				m_TurnNumber++;
+				m_CurrentPlayer = currentPlayer;
+				return false;
+			}
+		}
 	}
-	if (m_CurrentPlayer != currentPlayer)
-	{
-		m_TurnNumber++;
-		m_CurrentPlayer = currentPlayer;
-		return false;
-	}
+
 	return true;
 }
 
@@ -697,19 +666,17 @@ ObserverDecorator::ObserverDecorator()
 /**
 * A constructor takes a pointer of gameStatistics
 * \param AbstractGameStatistics * 
-* \param vector<Player*> *
-* \param Map *
 */
-ObserverDecorator::ObserverDecorator(AbstractGameStatistics * decoratedStatistics, vector<Player*> *playerList, Map * map)
+ObserverDecorator::ObserverDecorator(AbstractGameStatistics * decoratedStatistics)
 {
 	this->m_DecoratedStatistics = decoratedStatistics;
-	m_MapSubject = map;
-	m_PlayerList = *playerList;
 	//setCurrentPlayer();
-		//decoratedStatistics->getCurrentPlayer()->attach(this);
-		m_MapSubject->attach(this);
+	this->m_MapSubject = getMap();
+	this->m_CurrentPlayer = getCurrentPlayer();
+	this->m_PlayerList = getPlayerList();
+	m_MapSubject->attach(this);
 
-	for (unsigned int i = 0; i <m_DecoratedStatistics->getPlayerList().size(); i++)
+	for (unsigned int i = 0; i < m_PlayerList.size(); i++)
 	{
 		m_PlayerList.at(i)->attach(this);
 	}
@@ -721,12 +688,12 @@ ObserverDecorator::ObserverDecorator(AbstractGameStatistics * decoratedStatistic
 */
 ObserverDecorator::~ObserverDecorator()
 {
-	m_DecoratedStatistics->getMap()->detach(this);
+	getMap()->detach(this);
 	for (unsigned int i = 0; i <getPlayerList().size(); i++)
 	{
 		getPlayerList().at(i)->detach(this);
 	}
-	delete m_DecoratedStatistics;
+	//delete m_DecoratedStatistics;
 }
 
 /**
@@ -734,9 +701,9 @@ ObserverDecorator::~ObserverDecorator()
 */
 bool ObserverDecorator::isGlobalView()
 {
-	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
+	for (unsigned int i = 0; i < getPlayerList().size(); i++)
 	{
-		if (m_PlayerList.at(i)->m_StatusInfo.globalView)
+		if (getPlayerList().at(i)->m_StatusInfo.globalView)
 			return true;
 	}
 	return false;
@@ -747,9 +714,9 @@ bool ObserverDecorator::isGlobalView()
 */
 bool ObserverDecorator::isCardsView()
 {
-	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
+	for (unsigned int i = 0; i < getPlayerList().size(); i++)
 	{
-		if (m_PlayerList.at(i)->m_StatusInfo.cardsView)
+		if (getPlayerList().at(i)->m_StatusInfo.cardsView)
 			return true;
 	}
 	return false;
@@ -760,14 +727,31 @@ bool ObserverDecorator::isCardsView()
 */
 bool ObserverDecorator::isContiView()
 {
-	for (unsigned int i = 0; i < ObserverDecorator::m_PlayerList.size(); i++)
+	for (unsigned int i = 0; i < getPlayerList().size(); i++)
 	{
-		if (m_PlayerList.at(i)->m_StatusInfo.contiView)
+		if (getPlayerList().at(i)->m_StatusInfo.contiView)
 			return true;
 	}
 	return false;
 }
 
+/**
+* undecorator function of ObserverDecorator, return a pointer of its component -- AbstractGameStatistics*
+*/
+AbstractGameStatistics * ObserverDecorator::removeCurrentDecorator()
+{
+	this->~ObserverDecorator();
+	return m_DecoratedStatistics;
+}
+
+
+/**
+*  function of ObserverDecorator, call component's display
+*/
+void ObserverDecorator::display()
+{
+	m_DecoratedStatistics->display();
+}
 
 /**
 * function of ObserverDecorator, return pointer of Map
@@ -786,7 +770,7 @@ Player * ObserverDecorator::getCurrentPlayer()
 }
 
 /**
-* function of ObserverDecorator, return pointer of vector<Player*>
+* function of ObserverDecorator, return vector<Player*>
 */
 vector<Player*> ObserverDecorator::getPlayerList()
 {
@@ -795,16 +779,13 @@ vector<Player*> ObserverDecorator::getPlayerList()
 
 
 /**
-* function of ObserverDecorator, call display()
+* function of PlayerDominationObserverDecorator, call display()
 */
 void PlayerDominationObserverDecorator::update()
 {
+	
 	display();
 	
-	//PlayerDominationObserverDecorator::display();
-
-	//this->PlayerDominationObserverDecorator::display();
-	//return;
 }
 
 /**
@@ -848,11 +829,35 @@ void PlayerDominationObserverDecorator::display()
 }
 
 /**
-* bool function of ObserverDecorator, call isGlobalView() from parent
+* bool function of PlayerDominationObserverDecorator, call isGlobalView() from parent
 */
 bool PlayerDominationObserverDecorator::isGlobalView()
 {
 	return ObserverDecorator::isGlobalView();
+}
+
+/**
+* function of PlayerDominationObserverDecorator, return pointer of Map
+*/
+Map * PlayerDominationObserverDecorator::getMap()
+{
+	return ObserverDecorator::getMap();
+}
+
+/**
+* function of PlayerDominationObserverDecorator, return pointer of Player
+*/
+Player * PlayerDominationObserverDecorator::getCurrentPlayer()
+{
+	return ObserverDecorator::getCurrentPlayer();
+}
+
+/**
+* function of PlayerDominationObserverDecorator, return vector<Player*>
+*/
+vector<Player*> PlayerDominationObserverDecorator::getPlayerList()
+{
+	return ObserverDecorator::getPlayerList();
 }
 
 
@@ -897,6 +902,30 @@ void PlayerHandsObserverDecorator::display()
 bool PlayerHandsObserverDecorator::isCardsView()
 {
 	return ObserverDecorator::isCardsView();
+}
+
+/**
+* function of PlayerHandsObserverDecorator, return pointer of Map
+*/
+Map * PlayerHandsObserverDecorator::getMap()
+{
+	return ObserverDecorator::getMap();
+}
+
+/**
+* function of PlayerHandsObserverDecorator, return pointer of Player
+*/
+Player * PlayerHandsObserverDecorator::getCurrentPlayer()
+{
+	return ObserverDecorator::getCurrentPlayer();
+}
+
+/**
+* function of PlayerHandsObserverDecorator, return vector<Player*>
+*/
+vector<Player*> PlayerHandsObserverDecorator::getPlayerList()
+{
+	return ObserverDecorator::getPlayerList();
 }
 
 
@@ -945,6 +974,30 @@ void ContinentControlObserverDecorator::display()
 bool ContinentControlObserverDecorator::isContinentView()
 {
 	return ObserverDecorator::isContiView();
+}
+
+/**
+* function of ObserverDecorator, return pointer of Map
+*/
+Map * ContinentControlObserverDecorator::getMap()
+{
+	return ObserverDecorator::getMap();
+}
+
+/**
+* function of ContinentControlObserverDecorator, return pointer of Player
+*/
+Player * ContinentControlObserverDecorator::getCurrentPlayer()
+{
+	return ObserverDecorator::getCurrentPlayer();
+}
+
+/**
+* function of ContinentControlObserverDecorator, return vector<Player*>
+*/
+vector<Player*> ContinentControlObserverDecorator::getPlayerList()
+{
+	return ObserverDecorator::getPlayerList();
 }
 
 AbstractGameStatistics::AbstractGameStatistics()
