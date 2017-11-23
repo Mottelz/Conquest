@@ -49,6 +49,10 @@ int main() {
 	vector<int*> lastAddedDecorator;
 	srand((unsigned)time(NULL));
 
+	vector<PhaseObserver*> playerPhaseObservers;
+
+	AbstractGameStatistics* gameObserver = new gameStatistics(&players, mapp);
+
 	do
 	{
 		again = false;
@@ -75,9 +79,7 @@ int main() {
 			//players[4]->drawCard(deck);
 		}
 
-		vector<PhaseObserver*> playerPhaseObservers;
-
-		AbstractGameStatistics* gameObserver = new gameStatistics(&players, mapp);
+		
 		//apply decorators
 		//gameObserver = new PlayerDominationObserverDecorator(gameObserver);
 		//gameObserver = new PlayerHandsObserverDecorator(gameObserver);
