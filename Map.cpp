@@ -818,7 +818,6 @@ void MapLoader::readMapFile(string &mapFile,  Map &mapObject) throw(string)
 	{
 		mapObject.setMapValidate(false);
 		throw string("ERROR: Unable to open the file. ");
-
 		return;
 	}
 	

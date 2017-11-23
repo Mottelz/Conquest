@@ -8,7 +8,7 @@
  * Initializes tournaments.
  */
 TournamentInit::TournamentInit() {
-    m_MapNames = {"Canada.map", "Earth.map", "Discworld.map", "Metro.map", "World.map"};
+    m_MapNames = {"maps/Canada.map", "maps/Earth.map", "maps/Discworld.map", "maps/Metro.map", "World.map"};
     m_PlayerNames = {"Marc Spector", "Steven Grant", "Jake Lockley", "Yitzak Topol", "Mr. Knight", "The Fist of Khonshu"};
     m_PlayerTypes = {"Aggressive", "Benevolent", "Random", "Cheater"};
     m_Players = {};
@@ -71,7 +71,7 @@ void TournamentInit::getUserPreferences() {
  */
 void TournamentInit::askUserForMapSelection() {
     m_SelectedMaps = {};
-    for(int i = 0; i <= m_M; i++) {
+    for(int i = 0; i < m_M; i++) {
         int tempMap = -1;
         do {
             cout << "Use the numbers to select a map" << endl;
@@ -90,7 +90,7 @@ void TournamentInit::askUserForMapSelection() {
  */
 void TournamentInit::askUserForPlayerTypes() {
     m_SelectedPlayerTypes = {};
-    for(int i = 0; i <= m_P; i++) {
+    for(int i = 0; i < m_P; i++) {
         int tempType = -1;
         do {
             cout << "Use the numbers to select the strategy for player " << i << endl;
@@ -106,10 +106,24 @@ void TournamentInit::askUserForPlayerTypes() {
 void TournamentInit::runTournament() {
     getUserPreferences();
     MapLoader mapLoader;
+	string selectedMap;
     //Make maps
     for (int i = 0; i < m_SelectedMaps.size(); i++) {
         m_Maps.push_back(new Map(m_MapNames[m_SelectedMaps[i]]));
-        mapLoader.readMapFile(("maps/"+m_SelectedMaps[i]), m_Maps[i]);
+		//selectedMap = "maps/" + m_SelectedMaps[i];
+		
+		try 
+		{
+			mapLoader.readMapFile(m_MapNames[m_SelectedMaps[i]], *m_Maps[i]);
+		}
+		catch (const string e) {
+			cout << "*****************************************" << endl;
+			cout << "Failed loading map file: " << m_MapNames[m_SelectedMaps[i]] << endl;
+			cout << e << endl;
+			cout << "*****************************************" << endl;
+			cout << endl;
+		}
+
 
         //Make players
         for (int j = 0; j < m_P; j++) {
@@ -135,18 +149,18 @@ void TournamentInit::runTournament() {
             //start the game
             Startup startup = Startup(m_Players);
             GameLoop game = GameLoop(startup);
-            startup.distributeTerritories(m_Maps[i]);
-            startup.placeArmies(m_Maps[i]);
-            vector<string> cards = map->getAllTerritoryNames();
-            Deck* deck = new deck(cards, cards.size());
-            m_Winners.push_back(game.loop(m_Maps[i], deck, m_D));
+            startup.distributeTerritories(*m_Maps[i]);
+            startup.placeArmies(*m_Maps[i]);
+            vector<string> cards = m_Maps[i]->getAllTerritoryNames();
+            Deck* deck = new Deck(cards, cards.size());
+            m_Winners.push_back(game.loop(m_Maps[i], *deck, m_D));
         }
 
 
     }
 
     //Print end result.
-    for (int l = 0; l < m_Winners; ++l) {
+    for (int l = 0; l < m_Winners.size(); ++l) {
         cout << m_Winners[l] << endl;
     }
 }
