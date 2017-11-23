@@ -8,7 +8,7 @@
  * Initializes tournaments.
  */
 TournamentInit::TournamentInit() {
-    m_MapNames = {"maps/Canada.map", "maps/Earth.map", "maps/Discworld.map", "maps/Metro.map", "World.map"};
+    m_MapNames = {"maps/Canada.map", "maps/Earth.map", "maps/Discworld.map", "maps/Metro.map", "maps/World.map"};
     m_PlayerNames = {"Marc Spector", "Steven Grant", "Jake Lockley", "Yitzak Topol", "Mr. Knight", "The Fist of Khonshu"};
     m_PlayerTypes = {"Aggressive", "Benevolent", "Random", "Cheater"};
     m_Players = {};

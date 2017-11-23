@@ -1790,8 +1790,6 @@ bool RandomAI::fortify(Player* player, Map* map)
 	while (move_to < 0 && count > 0)
 	{
 		move_to = getRandomPlayerTerritory(player, map, FORTIFICATION);
-		cout << endl;
-		cout << "MOVE TO NUMBER: " << move_to <<endl;
 		count--;
 	}
 

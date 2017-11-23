@@ -78,7 +78,7 @@ string GameLoop::loop(Map* map, Deck& deck, int rounds) {
 	int numberOfPlayers = m_Startup.m_NumberOfPlayers;
 	bool winnerFound = false;
 
-	while (!winnerFound && (((count / numberOfPlayers)-rounds) > 0))
+	while (!winnerFound && ((rounds - (count / numberOfPlayers)) > 0))
 	{
 		index = count % numberOfPlayers;  // For the round-robin rotation
 		count++;
