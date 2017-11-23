@@ -8,24 +8,24 @@
 //
 //int main() {
 //
-//	//LOAD THE MAP
+//	LOAD THE MAP
 //	Map * map;
 //	MapLoader maploader;
 //	string mapFile = "maps/World.map";
 //	map = new Map(mapFile);
 //	maploader.readMapFile(mapFile, *map);
 //
-//	//CREATE PLAYERS
-//	// Comment or uncomment to test with different number of players
+//	CREATE PLAYERS
+//	 Comment or uncomment to test with different number of players
 //	vector<Player*> players;
 //	players.push_back(new Player("Jon", map));
 //	players.push_back(new Player("Daenerys", map));
 //	players.push_back(new Player("Cersei", map));
 //	players.push_back(new Player("Tyrion", map));
 //	players.push_back(new Player("Arya", map));
-//	//players.push_back(new Player("Sansa", map));
+//	players.push_back(new Player("Sansa", map));
 //
-//	//TEST THE STARTUP CLASS
+//	TEST THE STARTUP CLASS
 //	Startup startup(players);
 //
 //	startup.distributeTerritories(*map);
@@ -67,7 +67,7 @@
 //
 //		cin >> type;
 //
-//		//apply decorators
+//		apply decorators
 //		gameObserver = new PlayerDominationObserverDecorator(gameObserver);
 //		gameObserver = new PlayerHandsObserverDecorator(gameObserver);
 //		gameObserver = new ContinentControlObserverDecorator(gameObserver);

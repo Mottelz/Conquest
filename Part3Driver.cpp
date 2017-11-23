@@ -1,5 +1,5 @@
-//#include "TournamentInit.h"
-//int main(){
-//    TournamentInit theGame = TournamentInit();
-//    theGame.runTournament();
-//}
+#include "TournamentInit.h"
+int main(){
+    TournamentInit theGame = TournamentInit();
+    theGame.runTournament();
+}

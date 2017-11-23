@@ -1561,7 +1561,7 @@ void BenevolentAI::play(Player* player, Map* map, Deck& deck)
 	
 	while(attack(player, map));
 
-	while (fortify(player, map));
+	fortify(player, map);
 
 	cout << "\n***************************************" << endl;
 	cout << "End of  " << player->getName() << "'s turn! " << endl;
@@ -1942,8 +1942,12 @@ bool CheaterAI::attack(Player* player, Map* map) {
         //if we haven't already stolen that land steal it now!!!
         if(enemies.size()>0) {
             for (int j = 0; j < enemies.size(); ++j) {
-                map->setTerritoryOwner(enemies[j], player);
-
+				if (map->getOwnerOfTheTerritory(map->seekTerritoryID(enemies[j])) != player)
+				{
+					player->assignTerritory(enemies[j], *map);
+					player->deallocateTerritory(enemies[j], map);
+				}
+					
             }
 			player->m_StatusInfo.statusType = myTerritories;
 			player->m_StatusInfo.globalView = true;
@@ -1999,8 +2003,7 @@ bool CheaterAI::fortify(Player *player, Map *map) {
  */
 void CheaterAI::doubleArmies (Map *map, Player *player, string territoryName){
 		int territoryID = map->seekTerritoryID(territoryName);
-		int newArmySize = (map->getArmyNumOfTheTerritory(territoryID)*2);
-		placeArmiesDuringReinforcement(territoryID, newArmySize, player, map);
+		placeArmiesDuringReinforcement(territoryID, map->getArmyNumOfTheTerritory(territoryID), player, map);
 };
 
 /**

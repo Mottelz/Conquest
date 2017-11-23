@@ -8,7 +8,7 @@
  * Initializes tournaments.
  */
 TournamentInit::TournamentInit() {
-    m_MapNames = {"maps/Canada.map", "maps/Earth.map", "maps/Discworld.map", "maps/Metro.map", "maps/World.map"};
+    m_MapNames = {"maps/Canada.map", "maps/Earth.map", "maps/Caribbean.map", "maps/Landscape.map", "maps/World.map"};
     m_PlayerNames = {"Marc Spector", "Steven Grant", "Jake Lockley", "Yitzak Topol", "Mr. Knight", "The Fist of Khonshu"};
     m_PlayerTypes = {"Aggressive", "Benevolent", "Random", "Cheater"};
     m_Players = {};
@@ -124,21 +124,22 @@ void TournamentInit::runTournament() {
 			cout << endl;
 		}
 
+		m_Players.clear();
 
         //Make players
         for (int j = 0; j < m_P; j++) {
             m_Players.push_back(new Player(m_PlayerNames[j], m_Maps[i]));
             //set strategy
-            if(m_SelectedPlayerTypes[j]==1){
+            if(m_SelectedPlayerTypes[j]==0){
                 AggressiveAI* aggressiveAI = new AggressiveAI();
                 m_Players[j]->setStrategy(aggressiveAI);
-            } else if (m_SelectedPlayerTypes[j]==2) {
+            } else if (m_SelectedPlayerTypes[j]==1) {
                 BenevolentAI* benevolentAI = new BenevolentAI();
                 m_Players[j]->setStrategy(benevolentAI);
-            } else if (m_SelectedPlayerTypes[j]==3) {
+            } else if (m_SelectedPlayerTypes[j]==2) {
                 RandomAI* randomAI = new RandomAI();
                 m_Players[j]->setStrategy(randomAI);
-            } else if (m_SelectedPlayerTypes[j]==4) {
+            } else if (m_SelectedPlayerTypes[j]==3) {
                 CheaterAI* cheaterAI = new CheaterAI();
                 m_Players[j]->setStrategy(cheaterAI);
             }

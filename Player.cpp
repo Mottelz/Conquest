@@ -268,12 +268,17 @@ void Player::assignTerritory(string territoryName, Map& map)
 /**
  * Talkes a territory away from the player. 
  */
-string Player::deallocateTerritory()
+void Player::deallocateTerritory(string territory, Map* map)
 {
-	// Delete and return the last element in the vector. For now this is just to facilitate Driver 2.3
-	string territory = m_PlayerTerritories[m_PlayerTerritories.size() - 1]->m_TerritoryName;
-	m_PlayerTerritories.pop_back();
-	return territory;
+	for (int i = 0; i < m_PlayerTerritories.size(); i++)
+	{
+		if (m_PlayerTerritories[i]->m_TerritoryName == territory)
+		{
+			swap(m_PlayerTerritories[i], m_PlayerTerritories[m_PlayerTerritories.size() - 1]);
+			m_PlayerTerritories.pop_back();
+			return;
+		}
+	}
 }
 
 /**

@@ -79,7 +79,7 @@ public:
 	vector<int> shakeDiceCup(int numberOfDice);
 
 	void assignTerritory(string territoryName, Map& map);
-	string deallocateTerritory();
+	void deallocateTerritory(string territory, Map* map);
 	void displayPlayerTerritories();
 	int numberOfArmiesAssigned();
 	bool checkOwnedCountry(string territory, Player p);
