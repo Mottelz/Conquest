@@ -25,7 +25,6 @@ int main() {
 	//players.push_back(new Player("Arya", map));
 	//players.push_back(new Player("Sansa", map));
 
-	//TEST THE STARTUP CLASS
 	Startup startup(players);
 
 	startup.distributeTerritories(*map);
@@ -76,14 +75,7 @@ int main() {
 			players[1]->drawCard(deck);
 			players[2]->drawCard(deck);
 			players[3]->drawCard(deck);
-			//players[4]->drawCard(deck);
 		}
-
-		
-		//apply decorators
-		//gameObserver = new PlayerDominationObserverDecorator(gameObserver);
-		//gameObserver = new PlayerHandsObserverDecorator(gameObserver);
-		//gameObserver = new ContinentControlObserverDecorator(gameObserver);
 
 
 		do {

@@ -1218,6 +1218,15 @@ bool AggressiveAI::fortify(Player* player, Map* map)
 	player->m_StatusInfo.globalView = false;
 
 	int move_to = getStrongestTerritory(player, map, FORTIFICATION); 
+
+	if (move_to == -1)
+	{
+		//Fortify, notify, end of phase
+		player->m_StatusInfo.statusType = myPhaseEnded;
+		player->notify();
+		return false;
+	}
+
 	int move_from = territoryToMoveArmyFrom(player, map, move_to);
 	int move_num = 0;
 	vector<string> fortifyPath;

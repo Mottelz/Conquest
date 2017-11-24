@@ -26,7 +26,6 @@ public:
     TournamentInit();
     ~TournamentInit();
     void getUserPreferences();
-    void loadMaps();
     void runTournament();
     void askUserForMapSelection();
     void askUserForPlayerTypes();
@@ -43,4 +42,7 @@ private:
     vector<string> m_PlayerTypes;
     vector<int> m_SelectedPlayerTypes;
     vector<int> m_SelectedMaps;
+	string displaySelectedMaps();
+	string displayPlayerStrategies();
+	void displayTable();
 };

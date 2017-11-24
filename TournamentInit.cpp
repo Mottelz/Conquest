@@ -3,6 +3,7 @@
  * The h for the TournamentInit.cpp. Includes definitions for TournamentInit.
  */
 #include "TournamentInit.h"
+#include <iomanip>
 
 /**
  * Initializes tournaments.
@@ -161,7 +162,48 @@ void TournamentInit::runTournament() {
     }
 
     //Print end result.
-    for (int l = 0; l < m_Winners.size(); ++l) {
-        cout << m_Winners[l] << endl;
-    }
+    cout << "M: " << displaySelectedMaps() << endl;
+	cout << "P: " << displayPlayerStrategies() << endl;
+	cout << "G: " << m_G << endl;
+	cout << "D: " << m_D << endl;
+
+	displayTable();
+
+}
+
+string TournamentInit::displaySelectedMaps() {
+
+	string display;
+	for (int i = 0; i < m_SelectedMaps.size(); i++) {
+		display += (m_MapNames[m_SelectedMaps[i]] + " ");
+	}
+
+	return display;
+}
+
+string TournamentInit::displayPlayerStrategies() {
+
+	string display;
+	for (int i = 0; i < m_PlayerTypes.size(); i++)
+	{
+		display += (m_PlayerTypes[i] + " ");
+	}
+
+	return display;
+}
+
+void TournamentInit::displayTable() {
+	int num;
+	for (int i = 0; i < m_SelectedMaps.size(); i++)
+	{
+		cout << "MAP " << m_SelectedMaps[i] << endl;
+
+		for (int j = 0; j < m_G; j++)
+		{
+			num = j + 1;
+			cout << "\t GAME " << num << endl;
+			cout << "\t\t WINNER: " << m_Winners[i*m_G+j] << endl;
+		}
+	}
+
 }
